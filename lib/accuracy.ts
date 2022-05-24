@@ -66,4 +66,6 @@ function storeVerdict (challengeKey: string, phase: Phase, verdict: boolean) {
     solves[challengeKey][phase] = verdict
     solves[challengeKey].attempts[phase]++
   }
+
+  console.log("verdict for", verdict);
 }
