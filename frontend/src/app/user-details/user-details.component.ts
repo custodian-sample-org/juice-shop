@@ -24,6 +24,6 @@ export class UserDetailsComponent implements OnInit {
   ngOnInit () {
     this.userService.get(this.dialogData.id).subscribe((user) => {
       this.user = user
-    }, (err) => console.log(err))
+    }, err => {})
   }
 }
