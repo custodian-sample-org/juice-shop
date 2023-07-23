@@ -66,7 +66,6 @@ export class TwoFactorAuthComponent {
         this.setupToken = setupToken
       }
     }, () => {
-      console.log('Failed to fetch 2fa status')
     })
     return status
   }

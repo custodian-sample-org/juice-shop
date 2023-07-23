@@ -81,7 +81,7 @@ export class PaymentComponent implements OnInit {
     this.walletService.get().subscribe((balance) => {
       this.walletBalance = balance
       this.walletBalanceStr = parseFloat(balance).toFixed(2)
-    }, (err) => console.log(err))
+    }, (err) => )
     this.couponPanelExpanded = localStorage.getItem('couponPanelExpanded') ? JSON.parse(localStorage.getItem('couponPanelExpanded')) : false
     this.paymentPanelExpanded = localStorage.getItem('paymentPanelExpanded') ? JSON.parse(localStorage.getItem('paymentPanelExpanded')) : false
 
@@ -97,7 +97,7 @@ export class PaymentComponent implements OnInit {
           this.applicationName = config.application.name
         }
       }
-    }, (err) => console.log(err))
+    }, (err) => )
   }
 
   initTotal () {
@@ -108,7 +108,7 @@ export class PaymentComponent implements OnInit {
       } else if (this.mode === 'deluxe') {
         this.userService.deluxeStatus().subscribe((res) => {
           this.totalPrice = res.membershipCost
-        }, (err) => console.log(err))
+        }, (err) => )
       } else {
         const itemTotal = parseFloat(sessionStorage.getItem('itemTotal'))
         const promotionalDiscount = sessionStorage.getItem('couponDiscount') ? (parseFloat(sessionStorage.getItem('couponDiscount')) / 100) * itemTotal : 0
@@ -117,7 +117,7 @@ export class PaymentComponent implements OnInit {
           this.totalPrice = itemTotal + deliveryPrice - promotionalDiscount
         })
       }
-    }, (err) => console.log(err))
+    }, (err) => )
   }
 
   applyCoupon () {
@@ -182,7 +182,7 @@ export class PaymentComponent implements OnInit {
         this.ngZone.run(async () => await this.router.navigate(['/wallet']))
         this.snackBarHelperService.open('CHARGED_WALLET', 'confirmBar')
       }, (err) => {
-        console.log(err)
+        
         this.snackBarHelperService.open(err.error?.message, 'errorBar')
       })
     } else if (this.mode === 'deluxe') {
@@ -190,7 +190,7 @@ export class PaymentComponent implements OnInit {
         localStorage.setItem('token', data.token)
         this.cookieService.put('token', data.token)
         this.ngZone.run(async () => await this.router.navigate(['/deluxe-membership']))
-      }, (err) => console.log(err))
+      }, (err) => )
     } else {
       if (this.paymentMode === 'wallet') {
         if (this.walletBalance < this.totalPrice) {

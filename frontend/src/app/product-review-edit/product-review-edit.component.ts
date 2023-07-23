@@ -37,8 +37,7 @@ export class ProductReviewEditComponent implements OnInit {
     this.productReviewService.patch({ id: this.data.reviewData._id, message: this.editReviewControl.value }).subscribe(() => {
       this.dialogRef.close()
     }, (err) => {
-      console.log(err)
-      this.error = err
+      this.error = err;
     })
     this.snackBarHelperService.open('CONFIRM_CHANGES_SAVED')
   }

@@ -21,7 +21,6 @@ describe('/api', () => {
           const xhttp = new XMLHttpRequest()
           xhttp.onreadystatechange = function () {
             if (this.status === 200) {
-              console.log('Success')
             }
           }
           xhttp.open('POST', `${baseUrl}/api/Products`, true)
@@ -45,12 +44,11 @@ describe('/api', () => {
             // Disarm XSS payload so subsequent tests do not run into unexpected alert boxes
             ProductModel.findOne({ where: { name: 'RestXSS' } }).then((product: any) => {
               product.update({ description: '&lt;iframe src="javascript:alert(`xss`)"&gt;' }).catch((error: Error) => {
-                console.log(error)
-                fail()
+                fail();
               })
             }).catch((error: Error) => {
-              console.log(error)
-              fail()
+              
+              fail();
             })
           })
         void browser.waitForAngularEnabled(true)
@@ -78,7 +76,6 @@ describe('/api', () => {
         const xhttp = new XMLHttpRequest()
         xhttp.onreadystatechange = function () {
           if (this.status === 200) {
-            console.log('Success')
           }
         }
         xhttp.open('PUT', `${baseUrl}/api/Products/${tamperingProductId}`, true)
@@ -108,10 +105,10 @@ describe('/rest/saveLoginIp', () => {
           const xhttp = new XMLHttpRequest()
           xhttp.onreadystatechange = function () {
             if (this.status === 200) {
-              console.log('Success')
+              
             }
           }
-          xhttp.open('GET', `${baseUrl}/rest/saveLoginIp`, true)
+          xhttp.open("GET", `${baseUrl}/rest/saveLoginIp`, true);
           xhttp.setRequestHeader('Authorization', `Bearer ${localStorage.getItem('token')}`)
           xhttp.setRequestHeader('True-Client-IP', '<iframe src="javascript:alert(`xss`)">')
           xhttp.send()

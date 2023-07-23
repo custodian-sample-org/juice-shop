@@ -49,7 +49,7 @@ export class CodeSnippetComponent implements OnInit {
   ngOnInit () {
     this.configurationService.getApplicationConfiguration().subscribe((config) => {
       this.showFeedbackButtons = config.challenges.showFeedbackButtons
-    }, (err) => console.log(err))
+    }, (err) => )
 
     this.codeSnippetService.get(this.dialogData.key).subscribe((snippet) => {
       this.snippet = snippet
@@ -138,9 +138,9 @@ export class CodeSnippetComponent implements OnInit {
           }
           const expires = new Date()
           expires.setFullYear(expires.getFullYear() + 1)
-          console.log(continueCode)
+          
           this.cookieService.put('continueCodeFindIt', continueCode, { expires })
-        }, (err) => console.log(err))
+        }, (err) => )
       } else {
         this.solved.fixIt = true
         this.challengeService.continueCodeFixIt().subscribe((continueCode) => {
@@ -149,9 +149,9 @@ export class CodeSnippetComponent implements OnInit {
           }
           const expires = new Date()
           expires.setFullYear(expires.getFullYear() + 1)
-          console.log(continueCode)
+          
           this.cookieService.put('continueCodeFixIt', continueCode, { expires })
-        }, (err) => console.log(err))
+        }, (err) => )
       }
       this.result = ResultState.Right
       this.lock = ResultState.Right

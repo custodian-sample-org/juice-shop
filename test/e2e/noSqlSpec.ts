@@ -24,7 +24,6 @@ describe('/rest/products/reviews', () => {
           const xhttp = new XMLHttpRequest()
           xhttp.onreadystatechange = function () {
             if (this.status === 200) {
-              console.log('Success')
             }
           }
           xhttp.open('GET', `${baseUrl}/rest/products/sleep(1000)/reviews`, true)
@@ -44,7 +43,6 @@ describe('/rest/products/reviews', () => {
           const xhttp = new XMLHttpRequest()
           xhttp.onreadystatechange = function () {
             if (this.status === 200) {
-              console.log('Success')
             }
           }
           xhttp.open('GET', `${baseUrl}/rest/track-order/%27%20%7C%7C%20true%20%7C%7C%20%27`, true)
@@ -90,7 +88,6 @@ describe('/rest/products/reviews', () => {
           const xhttp = new XMLHttpRequest()
           xhttp.onreadystatechange = function () {
             if (this.status === 200) {
-              console.log('Success')
             }
           }
           xhttp.open('PATCH', `${baseUrl}/rest/products/reviews`, true)
@@ -129,10 +126,10 @@ describe('/rest/products/reviews', () => {
           const xhttp = new XMLHttpRequest()
           xhttp.onreadystatechange = function () {
             if (this.status === 200) {
-              console.log('Success')
+              
             }
           }
-          xhttp.open('POST', `${baseUrl}/rest/products/reviews`, true)
+          xhttp.open("POST", `${baseUrl}/rest/products/reviews`, true);
           xhttp.setRequestHeader('Content-type', 'application/json')
           xhttp.setRequestHeader('Authorization', `Bearer ${localStorage.getItem('token')}`)
           xhttp.send(JSON.stringify({ id: reviewId }))

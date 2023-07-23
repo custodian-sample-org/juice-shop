@@ -27,6 +27,6 @@ export class TokenSaleComponent implements OnInit {
       if (config?.application?.altcoinName) {
         this.altcoinName = config.application.altcoinName
       }
-    }, (err) => console.log(err))
+    }, (err) => )
   }
 }

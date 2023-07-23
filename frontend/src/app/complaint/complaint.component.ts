@@ -64,8 +64,7 @@ export class ComplaintComponent implements OnInit {
       this.userEmail = user.email
       this.customerControl.setValue(this.userEmail)
     }, (err) => {
-      this.complaint = undefined
-      console.log(err)
+      this.complaint = undefined;
     })
   }
 

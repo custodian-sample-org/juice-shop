@@ -48,7 +48,7 @@ export class RecycleComponent implements OnInit {
         // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
         this.bottomImage = `assets/public/images/products/${config.application.recyclePage.bottomProductImage}`
       }
-    }, (err) => console.log(err))
+    }, (err) => )
 
     this.initRecycle()
     this.findAll()
@@ -62,7 +62,7 @@ export class RecycleComponent implements OnInit {
       this.recycle.UserId = data.id
       this.userEmail = data.email
       this.requestorControl.setValue(this.userEmail)
-    }, (err) => console.log(err))
+    }, (err) => )
   }
 
   save () {
@@ -92,7 +92,7 @@ export class RecycleComponent implements OnInit {
       this.resetForm()
     }, (err) => {
       this.snackBarHelperService.open(err.error?.error, 'errorBar')
-      console.log(err)
+      
     })
   }
 
@@ -100,7 +100,7 @@ export class RecycleComponent implements OnInit {
     this.recycleService.find().subscribe((recycles) => {
       this.recycles = recycles
     }, (error) => {
-      console.log(error)
+      
     })
   }
 

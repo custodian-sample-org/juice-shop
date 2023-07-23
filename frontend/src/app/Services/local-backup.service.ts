@@ -69,7 +69,7 @@ export class LocalBackupService {
           const fixItProgress = backup.continueCodeFixIt ? this.challengeService.restoreProgressFixIt(encodeURIComponent(backup.continueCodeFixIt)) : of(true)
           forkJoin([hackingProgress, findItProgress, fixItProgress]).subscribe(() => {
             location.reload()
-          }, (err) => console.log(err))
+          }, (err) => )
         })
       } else {
         this.snackBarHelperService.open(`Version ${backup.version} is incompatible with expected version ${this.VERSION}`, 'errorBar')

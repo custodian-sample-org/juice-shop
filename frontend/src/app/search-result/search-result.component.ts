@@ -118,7 +118,7 @@ export class SearchResultComponent implements OnDestroy, AfterViewInit {
         this.breakpoint = 6
       }
       this.cdRef.detectChanges()
-    }, (err) => console.log(err))
+    }, (err) => )
   }
 
   trustProductDescription (tableData: any[]) { // vuln-code-snippet neutral-line restfulXssChallenge
@@ -166,7 +166,7 @@ export class SearchResultComponent implements OnDestroy, AfterViewInit {
   // vuln-code-snippet end localXssChallenge xssBonusChallenge
 
   startHackingInstructor (challengeName: string) {
-    console.log(`Starting instructions for challenge "${challengeName}"`)
+    
     import(/* webpackChunkName: "tutorial" */ '../../hacking-instructor').then(module => {
       module.startHackingInstructorFor(challengeName)
     })
@@ -201,12 +201,12 @@ export class SearchResultComponent implements OnDestroy, AfterViewInit {
                   this.snackBarHelperService.open(translationId, 'confirmBar')
                   this.basketService.updateNumberOfCartItems()
                 })
-              }, (err) => console.log(err))
+              }, (err) => )
             }, (err) => {
               this.snackBarHelperService.open(err.error?.error, 'errorBar')
-              console.log(err)
+              
             })
-          }, (err) => console.log(err))
+          }, (err) => )
           break
         }
       }
@@ -220,13 +220,13 @@ export class SearchResultComponent implements OnDestroy, AfterViewInit {
               this.snackBarHelperService.open(translationId, 'confirmBar')
               this.basketService.updateNumberOfCartItems()
             })
-          }, (err) => console.log(err))
+          }, (err) => )
         }, (err) => {
           this.snackBarHelperService.open(err.error?.error, 'errorBar')
-          console.log(err)
+          
         })
       }
-    }, (err) => console.log(err))
+    }, (err) => )
   }
 
   isLoggedIn () {

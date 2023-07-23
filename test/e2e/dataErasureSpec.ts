@@ -18,7 +18,6 @@ describe('/dataerasure', () => {
         const xhttp = new XMLHttpRequest()
         xhttp.onreadystatechange = function () {
           if (this.status === 200) {
-            console.log('Success')
           }
         }
         const params = 'layout=../package.json'

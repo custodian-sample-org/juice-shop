@@ -45,8 +45,7 @@ export class ContactComponent implements OnInit {
       // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
       this.authorControl.setValue(data.email ? `***${data.email.slice(3)}` : 'anonymous')
     }, (err) => {
-      this.feedback = undefined
-      console.log(err)
+      this.feedback = undefined;
     })
     this.getNewCaptcha()
 
@@ -85,10 +84,9 @@ export class ContactComponent implements OnInit {
       this.ngOnInit()
       this.resetForm()
     }, (err) => {
-      console.log(err)
-      this.snackBarHelperService.open(err.error, 'errorBar')
-      this.feedback = {}
-      this.resetCaptcha()
+      this.snackBarHelperService.open(err.error, "errorBar");
+      this.feedback = {};
+      this.resetCaptcha();
     })
   }
 

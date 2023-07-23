@@ -72,7 +72,7 @@ export class ChallengeSolvedNotificationComponent implements OnInit {
           if (config.ctf.showCountryDetailsInNotifications !== 'none') {
             this.countryMappingService.getCountryMapping().subscribe((countryMap: any) => {
               this.countryMap = countryMap
-            }, (err) => console.log(err))
+            }, (err) => )
           }
         } else {
           this.showCtfCountryDetailsInNotifications = 'none'
@@ -115,6 +115,6 @@ export class ChallengeSolvedNotificationComponent implements OnInit {
       const expires = new Date()
       expires.setFullYear(expires.getFullYear() + 1)
       this.cookieService.put('continueCode', continueCode, { expires })
-    }, (err) => console.log(err))
+    }, (err) => )
   }
 }

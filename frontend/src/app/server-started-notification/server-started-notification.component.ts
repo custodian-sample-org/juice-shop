@@ -39,25 +39,34 @@ export class ServerStartedNotificationComponent implements OnInit {
               this.hackingProgress.autoRestoreMessage = translationId
             })
           }, (error) => {
-            console.log(error)
-            this.translate.get('AUTO_RESTORE_PROGRESS_FAILED', { error: error }).subscribe((notificationServerStarted) => {
-              this.hackingProgress.autoRestoreMessage = notificationServerStarted
-            }, (translationId) => {
-              this.hackingProgress.autoRestoreMessage = translationId
-            })
+            this.translate
+              .get("AUTO_RESTORE_PROGRESS_FAILED", { error: error })
+              .subscribe(
+                (notificationServerStarted) => {
+                  this.hackingProgress.autoRestoreMessage =
+                    notificationServerStarted;
+                },
+                (translationId) => {
+                  this.hackingProgress.autoRestoreMessage = translationId;
+                }
+              );
           })
         }
         if (continueCodeFindIt) {
-          this.challengeService.restoreProgressFindIt(encodeURIComponent(continueCodeFindIt)).subscribe(() => {
-          }, (error) => {
-            console.log(error)
-          })
+          this.challengeService
+            .restoreProgressFindIt(encodeURIComponent(continueCodeFindIt))
+            .subscribe(
+              () => {},
+              (error) => {}
+            );
         }
         if (continueCodeFixIt) {
-          this.challengeService.restoreProgressFixIt(encodeURIComponent(continueCodeFixIt)).subscribe(() => {
-          }, (error) => {
-            console.log(error)
-          })
+          this.challengeService
+            .restoreProgressFixIt(encodeURIComponent(continueCodeFixIt))
+            .subscribe(
+              () => {},
+              (error) => {}
+            );
         }
         this.ref.detectChanges()
       })

@@ -50,14 +50,14 @@ export class PhotoWallComponent implements OnInit {
         }
         this.slideshowDataSource.push({ url: memory.imagePath, caption: memory.caption })
       }
-    }, (err) => console.log(err))
+    }, (err) => )
     this.configurationService.getApplicationConfiguration().subscribe((config) => {
       if (config?.application?.social) {
         if (config.application.social.twitterUrl) {
           this.twitterHandle = config.application.social.twitterUrl.replace('https://twitter.com/', '@')
         }
       }
-    }, (err) => console.log(err))
+    }, (err) => )
   }
 
   onImagePicked (event: Event) {
@@ -78,7 +78,7 @@ export class PhotoWallComponent implements OnInit {
       this.snackBarHelperService.open('IMAGE_UPLOAD_SUCCESS', 'confirmBar')
     }, (err) => {
       this.snackBarHelperService.open(err.error?.error, 'errorBar')
-      console.log(err)
+      
     })
   }
 

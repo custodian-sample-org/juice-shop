@@ -23,7 +23,6 @@ export class WalletComponent implements OnInit {
     this.walletService.get().subscribe((balance) => {
       this.balance = parseFloat(balance).toFixed(2)
     }, (err) => {
-      console.log(err)
     })
   }
 
