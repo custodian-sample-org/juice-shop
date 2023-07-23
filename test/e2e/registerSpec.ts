@@ -23,7 +23,6 @@ describe('/#/register', () => {
           const xhttp = new XMLHttpRequest()
           xhttp.onreadystatechange = function () {
             if (this.status === 201) {
-              console.log('Success')
             }
           }
 
@@ -49,12 +48,11 @@ describe('/#/register', () => {
           // Disarm XSS payload so subsequent tests do not run into unexpected alert boxes
           UserModel.findOne({ where: { email: '<iframe src="javascript:alert(`xss`)">' } }).then((user: any) => {
             user.update({ email: '&lt;iframe src="javascript:alert(`xss`)"&gt;' }).catch((error: Error) => {
-              console.log(error)
-              fail()
+              fail();
             })
           }).catch((error: Error) => {
-            console.log(error)
-            fail()
+            
+            fail();
           })
         })
         void browser.waitForAngularEnabled(true)
@@ -70,7 +68,6 @@ describe('/#/register', () => {
         const xhttp = new XMLHttpRequest()
         xhttp.onreadystatechange = function () {
           if (this.status === 201) {
-            console.log('Success')
           }
         }
 
@@ -89,11 +86,11 @@ describe('/#/register', () => {
         const xhttp = new XMLHttpRequest()
         xhttp.onreadystatechange = function () {
           if (this.status === 201) {
-            console.log('Success')
+            
           }
         }
 
-        xhttp.open('POST', `${baseUrl}/api/Users/`, true)
+        xhttp.open("POST", `${baseUrl}/api/Users/`, true);
         xhttp.setRequestHeader('Content-type', 'application/json')
         xhttp.send(JSON.stringify({ email: 'uncle@bob.com', password: 'ThereCanBeOnlyOne' }))
       }, browser.baseUrl)

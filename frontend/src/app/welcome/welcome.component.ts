@@ -34,7 +34,7 @@ export class WelcomeComponent implements OnInit {
             top: '50px'
           }
         })
-      }, (err) => console.log(err))
+      }, (err) => )
     }
   }
 }

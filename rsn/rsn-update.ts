@@ -3,12 +3,9 @@ const colors = require('colors/safe')
 
 const keys = readFiles()
 checkDiffs(keys)
-  .then(data => {
-    console.log(('---------------------------------------'))
-    writeToFile(data)
-    console.log(`${colors.bold('All file diffs have been locked!')} Commit changed cache.json to git.`)
+  .then((data) => {
+    writeToFile(data);
   })
-  .catch(err => {
-    console.log(err)
-    process.exitCode = 1
-  })
+  .catch((err) => {
+    process.exitCode = 1;
+  });

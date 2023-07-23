@@ -49,7 +49,7 @@ export class RegisterComponent implements OnInit {
   ngOnInit () {
     this.securityQuestionService.find(null).subscribe((securityQuestions: any) => {
       this.securityQuestions = securityQuestions
-    }, (err) => console.log(err))
+    }, (err) => )
 
     this.formSubmitService.attachEnterKeyHandler('registration-form', 'registerButton', () => this.save())
   }
@@ -73,7 +73,7 @@ export class RegisterComponent implements OnInit {
         this.snackBarHelperService.open('CONFIRM_REGISTER')
       })
     }, (err) => {
-      console.log(err)
+      
       if (err.error?.errors) {
         const error = err.error.errors[0]
         if (error.message) {

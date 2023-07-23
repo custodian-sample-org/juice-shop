@@ -53,8 +53,7 @@ export class AddressComponent implements OnInit {
       this.storedAddresses = addresses
       this.dataSource = new MatTableDataSource<Element>(this.storedAddresses)
     }, (err) => {
-      this.snackBarHelperService.open(err.error?.error, 'errorBar')
-      console.log(err)
+      this.snackBarHelperService.open(err.error?.error, "errorBar");
     })
   }
 
@@ -83,8 +82,7 @@ export class AddressComponent implements OnInit {
       })
       this.load()
     }, (err) => {
-      this.snackBarHelperService.open(err.error?.error, 'errorBar')
-      console.log(err)
+      this.snackBarHelperService.open(err.error?.error, "errorBar");
     })
   }
 }

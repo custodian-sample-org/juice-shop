@@ -30,6 +30,6 @@ export class PrivacyPolicyComponent implements OnInit {
       } else {
         this.privacyContactEmail = `donotreply@${this._document.location.hostname}`
       }
-    }, (err) => console.log(err))
+    }, (err) => )
   }
 }

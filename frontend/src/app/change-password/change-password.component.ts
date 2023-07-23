@@ -50,8 +50,8 @@ export class ChangePasswordComponent {
       })
       this.resetForm()
     }, (error) => {
-      console.log(error)
-      this.error = error
+      
+      this.error = error;
       this.confirmation = undefined
       this.resetPasswords()
     })

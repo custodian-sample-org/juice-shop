@@ -58,7 +58,7 @@ export class PaymentMethodComponent implements OnInit {
       this.cardsExist = cards.length
       this.storedCards = cards
       this.dataSource = new MatTableDataSource<Element>(this.storedCards)
-    }, (err) => console.log(err))
+    }, (err) => )
   }
 
   save () {
@@ -84,7 +84,7 @@ export class PaymentMethodComponent implements OnInit {
   delete (id) {
     this.paymentService.del(id).subscribe(() => {
       this.load()
-    }, (err) => console.log(err))
+    }, (err) => )
   }
 
   emitSelectionToParent (id: number) {

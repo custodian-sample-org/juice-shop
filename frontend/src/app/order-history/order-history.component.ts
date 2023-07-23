@@ -68,7 +68,7 @@ export class OrderHistoryComponent implements OnInit {
           delivered: order.delivered
         })
       }
-    }, (err) => console.log(err))
+    }, (err) => )
   }
 
   showDetail (id: number) {
@@ -88,7 +88,7 @@ export class OrderHistoryComponent implements OnInit {
           productData: element
         }
       })
-    }, (err) => console.log(err))
+    }, (err) => )
   }
 
   openConfirmationPDF (orderId: string) {

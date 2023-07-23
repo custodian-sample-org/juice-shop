@@ -42,7 +42,7 @@ export class PurchaseBasketComponent implements OnInit {
     this.userService.whoAmI().subscribe((data) => {
       this.userEmail = data.email || 'anonymous'
       this.userEmail = '(' + this.userEmail + ')'
-    }, (err) => console.log(err))
+    }, (err) => )
   }
 
   load () {
@@ -58,14 +58,14 @@ export class PurchaseBasketComponent implements OnInit {
       // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
       this.bonus = basket.Products.reduce((bonusPoints, product) => bonusPoints + Math.round(product.price / 10) * product.BasketItem.quantity, 0)
       this.sendToParent(this.dataSource.length)
-    }, (err) => console.log(err))
+    }, (err) => )
   }
 
   delete (id) {
     this.basketService.del(id).subscribe(() => {
       this.load()
       this.basketService.updateNumberOfCartItems()
-    }, (err) => console.log(err))
+    }, (err) => )
   }
 
   inc (id) {
@@ -85,9 +85,9 @@ export class PurchaseBasketComponent implements OnInit {
         this.basketService.updateNumberOfCartItems()
       }, (err) => {
         this.snackBarHelperService.open(err.error?.error, 'errorBar')
-        console.log(err)
+        
       })
-    }, (err) => console.log(err))
+    }, (err) => )
   }
 
   sendToParent (count) {

@@ -62,12 +62,12 @@ export class OrderCompletionComponent implements OnInit {
               this.tweetText += config.application.name
             }
           }
-        }, (err) => console.log(err))
+        }, (err) => )
         this.addressService.getById(this.orderDetails.addressId).subscribe((address) => {
           this.address = address
-        }, (error) => console.log(error))
-      }, (err) => console.log(err))
-    }, (err) => console.log(err))
+        }, (error) => )
+      }, (err) => )
+    }, (err) => )
   }
 
   openConfirmationPDF () {

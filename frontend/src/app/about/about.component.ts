@@ -70,7 +70,7 @@ export class AboutComponent implements OnInit {
           this.pressKitUrl = config.application.social.pressKitUrl
         }
       }
-    }, (err) => console.log(err))
+    }, (err) => )
   }
 
   populateSlideshowFromFeedbacks () {
@@ -82,7 +82,7 @@ export class AboutComponent implements OnInit {
         this.slideshowDataSource.push({ url: this.images[i % this.images.length], caption: feedbacks[i].comment })
       }
     }, (err) => {
-      console.log(err)
+      
     })
   }
 }

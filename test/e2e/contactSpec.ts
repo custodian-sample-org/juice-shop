@@ -164,8 +164,7 @@ describe('/#/contact', () => {
           const xhttp = new XMLHttpRequest()
           xhttp.onreadystatechange = function () {
             if (this.status === 201) {
-              console.log('Success')
-              callback()
+              callback();
             }
           }
 

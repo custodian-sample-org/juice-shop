@@ -79,7 +79,7 @@ export class NavbarComponent implements OnInit {
         // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
         this.version = `v${version}`
       }
-    }, (err) => console.log(err))
+    }, (err) => )
 
     this.configurationService.getApplicationConfiguration().subscribe((config: any) => {
       if (config?.application?.name) {
@@ -97,7 +97,7 @@ export class NavbarComponent implements OnInit {
         }
         this.logoSrc = 'assets/public/images/' + logo
       }
-    }, (err) => console.log(err))
+    }, (err) => )
 
     if (localStorage.getItem('token')) {
       this.getUserDetails()
@@ -149,7 +149,7 @@ export class NavbarComponent implements OnInit {
   getUserDetails () {
     this.userService.whoAmI().subscribe((user: any) => {
       this.userEmail = user.email
-    }, (err) => console.log(err))
+    }, (err) => )
   }
 
   isLoggedIn () {
@@ -157,7 +157,7 @@ export class NavbarComponent implements OnInit {
   }
 
   logout () {
-    this.userService.saveLastLoginIp().subscribe((user: any) => { this.noop() }, (err) => console.log(err))
+    this.userService.saveLastLoginIp().subscribe((user: any) => { this.noop() }, (err) => )
     localStorage.removeItem('token')
     this.cookieService.remove('token')
     sessionStorage.removeItem('bid')
@@ -189,7 +189,7 @@ export class NavbarComponent implements OnInit {
       this.ngZone.run(() => {
         this.scoreBoardVisible = challenges[0].solved
       })
-    }, (err) => console.log(err))
+    }, (err) => )
   }
 
   goToProfilePage () {

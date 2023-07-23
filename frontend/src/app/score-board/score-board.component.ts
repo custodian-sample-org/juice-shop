@@ -130,9 +130,9 @@ export class ScoreBoardComponent implements OnInit {
         })
       }, (err) => {
         this.challenges = []
-        console.log(err)
+        
       })
-    }, (err) => console.log(err))
+    }, (err) => )
 
     this.ngZone.runOutsideAngular(() => {
       this.io.socket().on('challenge solved', (data: any) => {
@@ -348,7 +348,7 @@ export class ScoreBoardComponent implements OnInit {
   }
 
   startHackingInstructor (challengeName: string) {
-    console.log(`Starting instructions for challenge "${challengeName}"`)
+    
     import(/* webpackChunkName: "tutorial" */ '../../hacking-instructor').then(module => {
       module.startHackingInstructorFor(challengeName)
     })

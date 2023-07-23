@@ -46,7 +46,7 @@ export class DeluxeUserComponent implements OnInit {
           this.io.socket().emit('verifySvgInjectionChallenge', decalParam)
         })
       }
-    }, (err) => console.log(err))
+    }, (err) => )
     this.userService.deluxeStatus().subscribe((res) => {
       this.membershipCost = res.membershipCost
     }, (err) => {

@@ -20,14 +20,12 @@ if (process.argv && process.argv.length >= 3 && process.argv[2] === 'subfolder')
 server.start(() => {
   const protractor = spawn('protractor', [confName])
   function logToConsole (data: any) {
-    console.log(String(data))
   }
 
   if (protractor.stdout) protractor.stdout.on('data', logToConsole)
   if (protractor.stderr) protractor.stderr.on('data', logToConsole)
 
   protractor.on('exit', exitCode => {
-    console.log(`Protractor exited with code ${exitCode} (${exitCode === 0 ? colors.green('SUCCESS') : colors.red('FAILED')})`)
-    server.close(exitCode)
+    server.close(exitCode);
   })
 })

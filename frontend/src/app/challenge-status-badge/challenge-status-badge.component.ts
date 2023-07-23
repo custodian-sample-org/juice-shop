@@ -30,7 +30,7 @@ export class ChallengeStatusBadgeComponent {
     if (this.allowRepeatNotifications) {
       this.challengeService.repeatNotification(encodeURIComponent(this.challenge.name)).subscribe(() => {
         this.windowRefService.nativeWindow.scrollTo(0, 0)
-      }, (err) => console.log(err))
+      }, (err) => )
     }
   }
 

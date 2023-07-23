@@ -36,13 +36,13 @@ export class DeliveryMethodComponent implements OnInit {
   ngOnInit () {
     this.addressService.getById(sessionStorage.getItem('addressId')).subscribe((address) => {
       this.address = address
-    }, (error) => console.log(error))
+    }, (error) => )
 
     this.deliverySerivce.get().subscribe((methods) => {
-      console.log(methods)
+      
       this.methods = methods
       this.dataSource = new MatTableDataSource<DeliveryMethod>(this.methods)
-    }, (error) => console.log(error))
+    }, (error) => )
   }
 
   selectMethod (id) {

@@ -32,13 +32,13 @@ export class OrderSummaryComponent implements OnInit {
 
     this.addressService.getById(sessionStorage.getItem('addressId')).subscribe((address) => {
       this.address = address
-    }, (error) => console.log(error))
+    }, (error) => )
 
     if (sessionStorage.getItem('paymentId') !== 'wallet') {
       this.paymentService.getById(sessionStorage.getItem('paymentId')).subscribe((card) => {
         card.cardNum = String(card.cardNum).substring(String(card.cardNum).length - 4)
         this.paymentMethod = card
-      }, (err) => console.log(err))
+      }, (err) => )
     } else if (sessionStorage.getItem('paymentId') === 'wallet') {
       this.paymentMethod = 'wallet'
     }
@@ -65,7 +65,7 @@ export class OrderSummaryComponent implements OnInit {
       this.basketService.updateNumberOfCartItems()
       this.ngZone.run(async () => await this.router.navigate(['/order-completion', orderConfirmationId]))
     }, (err) => {
-      console.log(err)
+      
       this.snackBarHelperService.open(err.error?.error.message, 'errorBar')
     })
   }

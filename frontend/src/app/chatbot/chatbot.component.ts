@@ -64,7 +64,6 @@ export class ChatbotComponent implements OnInit {
     this.userService.whoAmI().subscribe((user: any) => {
       this.profileImageSrc = user.profileImage
     }, (err) => {
-      console.log(err)
     })
   }
 

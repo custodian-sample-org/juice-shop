@@ -100,7 +100,6 @@ describe('/profile', () => {
         const xhttp = new XMLHttpRequest()
         xhttp.onreadystatechange = function () {
           if (this.status === 200) {
-            console.log('Success')
           }
         }
 

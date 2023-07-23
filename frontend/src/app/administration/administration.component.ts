@@ -54,8 +54,7 @@ export class AdministrationComponent implements OnInit {
       this.userDataSource.paginator = this.paginatorUsers
       this.resultsLengthUser = users.length
     }, (err) => {
-      this.error = err
-      console.log(this.error)
+      this.error = err;
     })
   }
 
@@ -69,18 +68,19 @@ export class AdministrationComponent implements OnInit {
       this.feedbackDataSource.paginator = this.paginatorFeedb
       this.resultsLengthFeedback = feedbacks.length
     }, (err) => {
-      this.error = err
-      console.log(this.error)
+      this.error = err;
     })
   }
 
   deleteFeedback (id: number) {
-    this.feedbackService.del(id).subscribe(() => {
-      this.findAllFeedbacks()
-    }, (err) => {
-      this.error = err
-      console.log(this.error)
-    })
+    this.feedbackService.del(id).subscribe(
+      () => {
+        this.findAllFeedbacks();
+      },
+      (err) => {
+        this.error = err;
+      }
+    );
   }
 
   showUserDetail (id: number) {

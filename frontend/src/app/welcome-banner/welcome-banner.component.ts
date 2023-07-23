@@ -38,12 +38,12 @@ export class WelcomeBannerComponent implements OnInit {
         this.dialogRef.disableClose = true
         this.showDismissBtn = false
       }
-    }, (err) => console.log(err))
+    }, (err) => )
   }
 
   startHackingInstructor () {
     this.closeWelcome()
-    console.log('Starting instructions for challenge "Score Board"')
+    
     import(/* webpackChunkName: "tutorial" */ '../../hacking-instructor').then(module => {
       module.startHackingInstructorFor('Score Board')
     })
