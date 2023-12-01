@@ -48,7 +48,7 @@ describe('verify', () => {
 
       verify.forgedFeedbackChallenge()(req, res, next)
 
-      expect(challenges.forgedFeedbackChallenge.solved).to.equal(false)
+      expect(challenges.forgedFeedbackChallenge.solved).toBe(false)
     })
 
     it('is not solved when an authenticated user passes no ID when writing feedback', () => {
@@ -57,7 +57,7 @@ describe('verify', () => {
 
       verify.forgedFeedbackChallenge()(req, res, next)
 
-      expect(challenges.forgedFeedbackChallenge.solved).to.equal(false)
+      expect(challenges.forgedFeedbackChallenge.solved).toBe(false)
     })
 
     it('is solved when an authenticated user passes someone elses ID when writing feedback', () => {
@@ -66,7 +66,7 @@ describe('verify', () => {
 
       verify.forgedFeedbackChallenge()(req, res, next)
 
-      expect(challenges.forgedFeedbackChallenge.solved).to.equal(true)
+      expect(challenges.forgedFeedbackChallenge.solved).toBe(true)
     })
 
     it('is solved when an unauthenticated user passes someones ID when writing feedback', () => {
@@ -75,7 +75,7 @@ describe('verify', () => {
 
       verify.forgedFeedbackChallenge()(req, res, next)
 
-      expect(challenges.forgedFeedbackChallenge.solved).to.equal(true)
+      expect(challenges.forgedFeedbackChallenge.solved).toBe(true)
     })
   })
 
@@ -86,7 +86,7 @@ describe('verify', () => {
 
       verify.accessControlChallenges()(req, res, next)
 
-      expect(challenges.scoreBoardChallenge.solved).to.equal(true)
+      expect(challenges.scoreBoardChallenge.solved).toBe(true)
     })
 
     it('"adminSectionChallenge" is solved when the 19px.png transpixel is requested', () => {
@@ -95,7 +95,7 @@ describe('verify', () => {
 
       verify.accessControlChallenges()(req, res, next)
 
-      expect(challenges.adminSectionChallenge.solved).to.equal(true)
+      expect(challenges.adminSectionChallenge.solved).toBe(true)
     })
 
     it('"tokenSaleChallenge" is solved when the 56px.png transpixel is requested', () => {
@@ -104,7 +104,7 @@ describe('verify', () => {
 
       verify.accessControlChallenges()(req, res, next)
 
-      expect(challenges.tokenSaleChallenge.solved).to.equal(true)
+      expect(challenges.tokenSaleChallenge.solved).toBe(true)
     })
 
     it('"extraLanguageChallenge" is solved when the Klingon translation file is requested', () => {
@@ -113,7 +113,7 @@ describe('verify', () => {
 
       verify.accessControlChallenges()(req, res, next)
 
-      expect(challenges.extraLanguageChallenge.solved).to.equal(true)
+      expect(challenges.extraLanguageChallenge.solved).toBe(true)
     })
 
     it('"retrieveBlueprintChallenge" is solved when the blueprint file is requested', () => {
@@ -123,7 +123,7 @@ describe('verify', () => {
 
       verify.accessControlChallenges()(req, res, next)
 
-      expect(challenges.retrieveBlueprintChallenge.solved).to.equal(true)
+      expect(challenges.retrieveBlueprintChallenge.solved).toBe(true)
     })
 
     it('"missingEncodingChallenge" is solved when the crazy cat photo is requested', () => {
@@ -132,7 +132,7 @@ describe('verify', () => {
 
       verify.accessControlChallenges()(req, res, next)
 
-      expect(challenges.missingEncodingChallenge.solved).to.equal(true)
+      expect(challenges.missingEncodingChallenge.solved).toBe(true)
     })
 
     it('"accessLogDisclosureChallenge" is solved when any server access log file is requested', () => {
@@ -141,7 +141,7 @@ describe('verify', () => {
 
       verify.accessControlChallenges()(req, res, next)
 
-      expect(challenges.accessLogDisclosureChallenge.solved).to.equal(true)
+      expect(challenges.accessLogDisclosureChallenge.solved).toBe(true)
     })
   })
 
@@ -156,7 +156,7 @@ describe('verify', () => {
 
       verify.errorHandlingChallenge()(err, req, res, next)
 
-      expect(challenges.errorHandlingChallenge.solved).to.equal(true)
+      expect(challenges.errorHandlingChallenge.solved).toBe(true)
     })
 
     describe('is solved when an error occurs on a response with error', () => {
@@ -168,7 +168,7 @@ describe('verify', () => {
 
           verify.errorHandlingChallenge()(err, req, res, next)
 
-          expect(challenges.errorHandlingChallenge.solved).to.equal(true)
+          expect(challenges.errorHandlingChallenge.solved).toBe(true)
         })
       })
     })
@@ -179,7 +179,7 @@ describe('verify', () => {
 
       verify.errorHandlingChallenge()(err, req, res, next)
 
-      expect(challenges.errorHandlingChallenge.solved).to.equal(false)
+      expect(challenges.errorHandlingChallenge.solved).toBe(false)
     })
 
     describe('is not solved when no error occurs on a response with error', () => {
@@ -191,7 +191,7 @@ describe('verify', () => {
 
           verify.errorHandlingChallenge()(err, req, res, next)
 
-          expect(challenges.errorHandlingChallenge.solved).to.equal(false)
+          expect(challenges.errorHandlingChallenge.solved).toBe(false)
         })
       })
     })
@@ -220,7 +220,7 @@ describe('verify', () => {
 
         verify.databaseRelatedChallenges()(req, res, next)
 
-        expect(challenges.changeProductChallenge.solved).to.equal(true)
+        expect(challenges.changeProductChallenge.solved).toBe(true)
       })
 
       it('is not solved when the link in the O-Saft product is changed to an arbitrary URL', () => {
@@ -228,7 +228,7 @@ describe('verify', () => {
 
         verify.databaseRelatedChallenges()(req, res, next)
 
-        expect(challenges.changeProductChallenge.solved).to.equal(false)
+        expect(challenges.changeProductChallenge.solved).toBe(false)
       })
 
       it('is not solved when the link in the O-Saft product remained unchanged', () => {
@@ -243,7 +243,7 @@ describe('verify', () => {
 
         verify.databaseRelatedChallenges()(req, res, next)
 
-        expect(challenges.changeProductChallenge.solved).to.equal(false)
+        expect(challenges.changeProductChallenge.solved).toBe(false)
       })
     })
   })
@@ -263,7 +263,7 @@ describe('verify', () => {
 
       verify.jwtChallenges()(req, res, next)
 
-      expect(challenges.jwtUnsignedChallenge.solved).to.equal(true)
+      expect(challenges.jwtUnsignedChallenge.solved).toBe(true)
     })
 
     it('"jwtUnsignedChallenge" is solved when forged unsigned token has string "jwtn3d@" in the payload', () => {
@@ -275,7 +275,7 @@ describe('verify', () => {
 
       verify.jwtChallenges()(req, res, next)
 
-      expect(challenges.jwtUnsignedChallenge.solved).to.equal(true)
+      expect(challenges.jwtUnsignedChallenge.solved).toBe(true)
     })
 
     it('"jwtUnsignedChallenge" is not solved via regularly signed token even with email jwtn3d@juice-sh.op in the payload', () => {
@@ -284,7 +284,7 @@ describe('verify', () => {
 
       verify.jwtChallenges()(req, res, next)
 
-      expect(challenges.jwtForgedChallenge.solved).to.equal(false)
+      expect(challenges.jwtForgedChallenge.solved).toBe(false)
     })
 
     if (!utils.disableOnWindowsEnv()) {
@@ -297,7 +297,7 @@ describe('verify', () => {
 
         verify.jwtChallenges()(req, res, next)
 
-        expect(challenges.jwtForgedChallenge.solved).to.equal(true)
+        expect(challenges.jwtForgedChallenge.solved).toBe(true)
       })
 
       it('"jwtForgedChallenge" is solved when forged token HMAC-signed with public RSA-key has string "rsa_lord@" in the payload', () => {
@@ -309,7 +309,7 @@ describe('verify', () => {
 
         verify.jwtChallenges()(req, res, next)
 
-        expect(challenges.jwtForgedChallenge.solved).to.equal(true)
+        expect(challenges.jwtForgedChallenge.solved).toBe(true)
       })
 
       it('"jwtForgedChallenge" is not solved when token regularly signed with private RSA-key has email rsa_lord@juice-sh.op in the payload', () => {
@@ -318,7 +318,7 @@ describe('verify', () => {
 
         verify.jwtChallenges()(req, res, next)
 
-        expect(challenges.jwtForgedChallenge.solved).to.equal(false)
+        expect(challenges.jwtForgedChallenge.solved).toBe(false)
       })
     }
   })

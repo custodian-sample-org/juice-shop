@@ -35,7 +35,7 @@ describe('angular', () => {
     serveAngularClient()(req, res, next)
 
     expect(res.sendFile).to.have.not.been.calledWith(sinon.match.any)
-    expect(next).to.have.been.calledWith(sinon.match.instanceOf(Error))
+    expect(next).to.have.been.calledWith(sinon.match.toBeInstanceOf(Error))
   })
 
   it('should raise error for /rest endpoint URL', () => {
@@ -44,6 +44,6 @@ describe('angular', () => {
     serveAngularClient()(req, res, next)
 
     expect(res.sendFile).to.have.not.been.calledWith(sinon.match.any)
-    expect(next).to.have.been.calledWith(sinon.match.instanceOf(Error))
+    expect(next).to.have.been.calledWith(sinon.match.toBeInstanceOf(Error))
   })
 })

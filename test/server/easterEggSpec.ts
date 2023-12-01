@@ -35,6 +35,6 @@ describe('easterEgg', () => {
 
     serveEasterEgg()(req, res)
 
-    expect(challenges.easterEggLevelTwoChallenge.solved).to.equal(true)
+    expect(challenges.easterEggLevelTwoChallenge.solved).toBe(true)
   })
 })
