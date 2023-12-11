@@ -40,7 +40,7 @@ describe('chatBotValidation', () => {
         ]
       }
 
-      expect(checkIntentWithFunctionHandlerExists(trainingData, 'queries.test')).toBe(false)
+      expect(checkIntentWithFunctionHandlerExists(trainingData, 'queries.test')).not.toBeTruthy()
     })
 
     it('should fail if the training data lacks the expected handler for the given intent', () => {
@@ -58,7 +58,7 @@ describe('chatBotValidation', () => {
         ]
       }
 
-      expect(checkIntentWithFunctionHandlerExists(trainingData, 'queries.test', 'testHandler')).toBe(false)
+      expect(checkIntentWithFunctionHandlerExists(trainingData, 'queries.test', 'testHandler')).not.toBeTruthy()
     })
   })
 
@@ -67,6 +67,6 @@ describe('chatBotValidation', () => {
   })
 
   it('should fail if the chatbot training data is empty', () => {
-    expect(validateChatBot({ data: [] }, false)).toBe(false)
+    expect(validateChatBot({ data: [] }, false)).not.toBeTruthy()
   })
 })

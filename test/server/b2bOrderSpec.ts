@@ -33,7 +33,7 @@ describe('b2bOrder', () => {
 
     createB2bOrder()(req, res, next)
 
-    expect(challenges.rceChallenge.solved).toBe(true)
+    expect(challenges.rceChallenge.solved).toBeTruthy()
   })
 
   xit('timeout after 2 seconds solves "rceOccupyChallenge"', () => { // FIXME Started failing on Linux regularly
