@@ -20,7 +20,7 @@ describe('codingChallengeFixes', () => {
   it('should have a correct fix for each coding challenge', async () => {
     for (const challenge of codingChallenges) {
       const fixes = readFixes(challenge)
-      expect(fixes.correct, `Coding challenge ${challenge} does not have a correct fix file`).to.be.greaterThan(-1)
+      expect(fixes.correct, `Coding challenge ${challenge} does not have a correct fix file`).toBeGreaterThan(-1)
     }
   })
 
@@ -33,7 +33,7 @@ describe('codingChallengeFixes', () => {
 
   it('should have an info YAML file for each coding challenge', async () => {
     for (const challenge of codingChallenges) {
-      expect(fs.existsSync('./data/static/codefixes/' + challenge + '.info.yml'), `Coding challenge ${challenge} does not have an info YAML file`).to.equal(true)
+      expect(fs.existsSync('./data/static/codefixes/' + challenge + '.info.yml'), `Coding challenge ${challenge} does not have an info YAML file`).toBe(true)
     }
   })
 })
