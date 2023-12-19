@@ -36,7 +36,7 @@ describe('blueprint', () => {
               }
               const properties = Object.values(exifData.image)
               product.exifForBlueprintChallenge.forEach((property: string) => {
-                expect(properties).to.include(property)
+                expect(properties).toContain(property)
               })
             })
           }
