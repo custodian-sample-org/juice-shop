@@ -44,7 +44,7 @@ describe('redirect', () => {
     performRedirect()(req, res, next)
 
     expect(res.redirect).to.have.not.been.calledWith(sinon.match.any)
-    expect(next).to.have.been.calledWith(sinon.match.instanceOf(Error))
+    expect(next).to.have.been.calledWith(sinon.match.toBeInstanceOf(Error))
   })
 
   it('redirecting to https://blockchain.info/address/1AbKfgvw9psQ41NbLi8kufDQTezwG8DRZm should solve the "redirectCryptoCurrencyChallenge"', () => {
@@ -53,7 +53,7 @@ describe('redirect', () => {
 
     performRedirect()(req, res)
 
-    expect(challenges.redirectCryptoCurrencyChallenge.solved).to.equal(true)
+    expect(challenges.redirectCryptoCurrencyChallenge.solved).toBe(true)
   })
 
   it('redirecting to https://explorer.dash.org/address/Xr556RzuwX6hg5EGpkybbv5RanJoZN17kW should solve the "redirectCryptoCurrencyChallenge"', () => {
@@ -62,7 +62,7 @@ describe('redirect', () => {
 
     performRedirect()(req, res)
 
-    expect(challenges.redirectCryptoCurrencyChallenge.solved).to.equal(true)
+    expect(challenges.redirectCryptoCurrencyChallenge.solved).toBe(true)
   })
 
   it('redirecting to https://etherscan.io/address/0x0f933ab9fcaaa782d0279c300d73750e1311eae6 should solve the "redirectCryptoCurrencyChallenge"', () => {
@@ -71,7 +71,7 @@ describe('redirect', () => {
 
     performRedirect()(req, res)
 
-    expect(challenges.redirectCryptoCurrencyChallenge.solved).to.equal(true)
+    expect(challenges.redirectCryptoCurrencyChallenge.solved).toBe(true)
   })
 
   it('tricking the allowlist should solve "redirectChallenge"', () => {
@@ -80,6 +80,6 @@ describe('redirect', () => {
 
     performRedirect()(req, res)
 
-    expect(challenges.redirectChallenge.solved).to.equal(true)
+    expect(challenges.redirectChallenge.solved).toBe(true)
   })
 })

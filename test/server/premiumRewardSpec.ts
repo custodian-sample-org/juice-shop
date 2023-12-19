@@ -35,6 +35,6 @@ describe('premiumReward', () => {
 
     servePremiumContent()(req, res)
 
-    expect(challenges.premiumPaywallChallenge.solved).to.equal(true)
+    expect(challenges.premiumPaywallChallenge.solved).toBe(true)
   })
 })
