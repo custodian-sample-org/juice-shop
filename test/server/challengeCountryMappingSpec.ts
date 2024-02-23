@@ -47,7 +47,7 @@ describe('challengeCountryMapping', () => {
     for (const key of Object.keys(countryCodeCounts)) {
       const count = countryCodeCounts[key]
 
-      expect(count, `Country "${key}" is used for multiple country mappings.`).to.equal(1)
+      expect(count, `Country "${key}" is used for multiple country mappings.`).toBe(1)
     }
   })
 })

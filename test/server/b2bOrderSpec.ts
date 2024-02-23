@@ -33,7 +33,7 @@ describe('b2bOrder', () => {
 
     createB2bOrder()(req, res, next)
 
-    expect(challenges.rceChallenge.solved).to.equal(true)
+    expect(challenges.rceChallenge.solved).toBe(true)
   })
 
   xit('timeout after 2 seconds solves "rceOccupyChallenge"', () => { // FIXME Started failing on Linux regularly
@@ -43,7 +43,7 @@ describe('b2bOrder', () => {
 
     createB2bOrder()(req, res, next)
 
-    expect(challenges.rceOccupyChallenge.solved).to.equal(true)
+    expect(challenges.rceOccupyChallenge.solved).toBe(true)
   }, 3000)
 
   it('deserializing JSON as documented in Swagger should not solve "rceChallenge"', () => {
@@ -53,7 +53,7 @@ describe('b2bOrder', () => {
 
     createB2bOrder()(req, res, next)
 
-    expect(challenges.rceChallenge.solved).to.equal(false)
+    expect(challenges.rceChallenge.solved).toBe(false)
   })
 
   it('deserializing arbitrary JSON should not solve "rceChallenge"', () => {
@@ -62,7 +62,7 @@ describe('b2bOrder', () => {
     req.body.orderLinesData = '{"hello": "world", "foo": 42, "bar": [false, true]}'
 
     createB2bOrder()(req, res, next)
-    expect(challenges.rceChallenge.solved).to.equal(false)
+    expect(challenges.rceChallenge.solved).toBe(false)
   })
 
   it('deserializing broken JSON should not solve "rceChallenge"', () => {
@@ -72,6 +72,6 @@ describe('b2bOrder', () => {
 
     createB2bOrder()(req, res, next)
 
-    expect(challenges.rceChallenge.solved).to.equal(false)
+    expect(challenges.rceChallenge.solved).toBe(false)
   })
 })
