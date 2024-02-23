@@ -41,7 +41,7 @@ describe('challengeTutorialSequence', () => {
     for (const order of Object.keys(tutorialOrderCounts)) {
       const count = tutorialOrderCounts[order]
 
-      expect(count, `Tutorial order "${order}" is used for multiple challenges.`).to.equal(1)
+      expect(count, `Tutorial order "${order}" is used for multiple challenges.`).toBe(1)
     }
   })
 })

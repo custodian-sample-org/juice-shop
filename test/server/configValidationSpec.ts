@@ -34,7 +34,7 @@ describe('configValidation', () => {
         }
       ]
 
-      expect(checkUnambiguousMandatorySpecialProducts(products)).to.equal(true)
+      expect(checkUnambiguousMandatorySpecialProducts(products)).toBe(true)
     })
 
     it('should fail if multiple products are configured for the same challenge', () => {
@@ -58,7 +58,7 @@ describe('configValidation', () => {
         }
       ]
 
-      expect(checkUnambiguousMandatorySpecialProducts(products)).to.equal(false)
+      expect(checkUnambiguousMandatorySpecialProducts(products)).toBe(false)
     })
 
     it('should fail if a required challenge product is missing', () => {
@@ -73,7 +73,7 @@ describe('configValidation', () => {
         }
       ]
 
-      expect(checkUnambiguousMandatorySpecialProducts(products)).to.equal(false)
+      expect(checkUnambiguousMandatorySpecialProducts(products)).toBe(false)
     })
   })
 
@@ -99,7 +99,7 @@ describe('configValidation', () => {
         }
       ]
 
-      expect(checkNecessaryExtraKeysOnSpecialProducts(products)).to.equal(true)
+      expect(checkNecessaryExtraKeysOnSpecialProducts(products)).toBe(true)
     })
 
     it('should fail if product has no exifForBlueprintChallenge', () => {
@@ -122,7 +122,7 @@ describe('configValidation', () => {
         }
       ]
 
-      expect(checkNecessaryExtraKeysOnSpecialProducts(products)).to.equal(false)
+      expect(checkNecessaryExtraKeysOnSpecialProducts(products)).toBe(false)
     })
   })
 
@@ -148,7 +148,7 @@ describe('configValidation', () => {
         }
       ]
 
-      expect(checkUniqueSpecialOnProducts(products)).to.equal(true)
+      expect(checkUniqueSpecialOnProducts(products)).toBe(true)
     })
 
     it('should fail if a product is configured for multiple challenges', () => {
@@ -160,7 +160,7 @@ describe('configValidation', () => {
         }
       ]
 
-      expect(checkUniqueSpecialOnProducts(products)).to.equal(false)
+      expect(checkUniqueSpecialOnProducts(products)).toBe(false)
     })
   })
 
@@ -181,7 +181,7 @@ describe('configValidation', () => {
         }
       ]
 
-      expect(checkMinimumRequiredNumberOfProducts(products)).to.equal(true)
+      expect(checkMinimumRequiredNumberOfProducts(products)).toBe(true)
     })
 
     it('should fail if less than 4 products are configured', () => {
@@ -197,7 +197,7 @@ describe('configValidation', () => {
         }
       ]
 
-      expect(checkMinimumRequiredNumberOfProducts(products)).to.equal(false)
+      expect(checkMinimumRequiredNumberOfProducts(products)).toBe(false)
     })
   })
 
@@ -216,7 +216,7 @@ describe('configValidation', () => {
         }
       ]
 
-      expect(checkUnambiguousMandatorySpecialMemories(memories)).to.equal(true)
+      expect(checkUnambiguousMandatorySpecialMemories(memories)).toBe(true)
     })
 
     it('should fail if multiple memories are configured for the same challenge', () => {
@@ -238,7 +238,7 @@ describe('configValidation', () => {
         }
       ]
 
-      expect(checkUnambiguousMandatorySpecialMemories(memories)).to.equal(false)
+      expect(checkUnambiguousMandatorySpecialMemories(memories)).toBe(false)
     })
 
     it('should fail if a required challenge memory is missing', () => {
@@ -250,7 +250,7 @@ describe('configValidation', () => {
         }
       ]
 
-      expect(checkUnambiguousMandatorySpecialMemories(memories)).to.equal(false)
+      expect(checkUnambiguousMandatorySpecialMemories(memories)).toBe(false)
     })
 
     it('should fail if memories have mixed up the required challenge keys', () => {
@@ -267,7 +267,7 @@ describe('configValidation', () => {
         }
       ]
 
-      expect(checkUnambiguousMandatorySpecialMemories(memories)).to.equal(false)
+      expect(checkUnambiguousMandatorySpecialMemories(memories)).toBe(false)
     })
   })
 
@@ -286,7 +286,7 @@ describe('configValidation', () => {
         }
       ]
 
-      expect(checkUniqueSpecialOnMemories(memories)).to.equal(true)
+      expect(checkUniqueSpecialOnMemories(memories)).toBe(true)
     })
 
     it('should fail if a memory is configured for multiple challenges', () => {
@@ -301,7 +301,7 @@ describe('configValidation', () => {
         }
       ]
 
-      expect(checkUniqueSpecialOnMemories(memories)).to.equal(false)
+      expect(checkUniqueSpecialOnMemories(memories)).toBe(false)
     })
   })
 
@@ -320,7 +320,7 @@ describe('configValidation', () => {
         }
       ]
 
-      expect(checkSpecialMemoriesHaveNoUserAssociated(memories)).to.equal(true)
+      expect(checkSpecialMemoriesHaveNoUserAssociated(memories)).toBe(true)
     })
 
     it('should accept a config where the default users are associated', () => {
@@ -339,7 +339,7 @@ describe('configValidation', () => {
         }
       ]
 
-      expect(checkSpecialMemoriesHaveNoUserAssociated(memories)).to.equal(true)
+      expect(checkSpecialMemoriesHaveNoUserAssociated(memories)).toBe(true)
     })
 
     it('should fail if a memory is linked to another user', () => {
@@ -353,7 +353,7 @@ describe('configValidation', () => {
         }
       ]
 
-      expect(checkSpecialMemoriesHaveNoUserAssociated(memories)).to.equal(false)
+      expect(checkSpecialMemoriesHaveNoUserAssociated(memories)).toBe(false)
     })
   })
 
@@ -370,7 +370,7 @@ describe('configValidation', () => {
         }
       ]
 
-      expect(checkMinimumRequiredNumberOfMemories(memories)).to.equal(true)
+      expect(checkMinimumRequiredNumberOfMemories(memories)).toBe(true)
     })
 
     it('should fail if less than 2 memories are configured', () => {
@@ -381,16 +381,16 @@ describe('configValidation', () => {
         }
       ]
 
-      expect(checkMinimumRequiredNumberOfMemories(memories)).to.equal(false)
+      expect(checkMinimumRequiredNumberOfMemories(memories)).toBe(false)
     })
   })
 
   it(`should accept the active config from config/${process.env.NODE_ENV}.yml`, () => {
-    expect(validateConfig({ exitOnFailure: false })).to.equal(true)
+    expect(validateConfig({ exitOnFailure: false })).toBe(true)
   })
 
   it('should fail if the config is invalid', () => {
-    expect(validateConfig({ products: [], exitOnFailure: false })).to.equal(false)
+    expect(validateConfig({ products: [], exitOnFailure: false })).toBe(false)
   })
 
   it('should accept a config with valid schema', () => {
@@ -407,7 +407,7 @@ describe('configValidation', () => {
       }
     }
 
-    expect(checkYamlSchema(config)).to.equal(true)
+    expect(checkYamlSchema(config)).toBe(true)
   })
 
   it('should fail for a config with schema errors', () => {
@@ -424,6 +424,6 @@ describe('configValidation', () => {
       }
     }
 
-    expect(checkYamlSchema(config)).to.equal(false)
+    expect(checkYamlSchema(config)).toBe(false)
   })
 })

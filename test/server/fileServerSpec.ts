@@ -56,7 +56,7 @@ describe('fileServer', () => {
     servePublicFiles()(req, res, next)
 
     expect(res.sendFile).to.have.not.been.calledWith(sinon.match.any)
-    expect(next).to.have.been.calledWith(sinon.match.instanceOf(Error))
+    expect(next).to.have.been.calledWith(sinon.match.toBeInstanceOf(Error))
   })
 
   it('should raise error for disallowed file type', () => {
@@ -65,7 +65,7 @@ describe('fileServer', () => {
     servePublicFiles()(req, res, next)
 
     expect(res.sendFile).to.have.not.been.calledWith(sinon.match.any)
-    expect(next).to.have.been.calledWith(sinon.match.instanceOf(Error))
+    expect(next).to.have.been.calledWith(sinon.match.toBeInstanceOf(Error))
   })
 
   it('should solve "directoryListingChallenge" when requesting acquisitions.md', () => {
@@ -75,7 +75,7 @@ describe('fileServer', () => {
     servePublicFiles()(req, res, next)
 
     expect(res.sendFile).to.have.been.calledWith(sinon.match(/ftp[/\\]acquisitions\.md/))
-    expect(challenges.directoryListingChallenge.solved).to.equal(true)
+    expect(challenges.directoryListingChallenge.solved).toBe(true)
   })
 
   it('should solve "easterEggLevelOneChallenge" when requesting eastere.gg with Poison Null Byte attack', () => {
@@ -85,7 +85,7 @@ describe('fileServer', () => {
     servePublicFiles()(req, res, next)
 
     expect(res.sendFile).to.have.been.calledWith(sinon.match(/ftp[/\\]eastere\.gg/))
-    expect(challenges.easterEggLevelOneChallenge.solved).to.equal(true)
+    expect(challenges.easterEggLevelOneChallenge.solved).toBe(true)
   })
 
   it('should solve "forgottenDevBackupChallenge" when requesting package.json.bak with Poison Null Byte attack', () => {
@@ -95,7 +95,7 @@ describe('fileServer', () => {
     servePublicFiles()(req, res, next)
 
     expect(res.sendFile).to.have.been.calledWith(sinon.match(/ftp[/\\]package\.json\.bak/))
-    expect(challenges.forgottenDevBackupChallenge.solved).to.equal(true)
+    expect(challenges.forgottenDevBackupChallenge.solved).toBe(true)
   })
 
   it('should solve "forgottenBackupChallenge" when requesting coupons_2013.md.bak with Poison Null Byte attack', () => {
@@ -105,7 +105,7 @@ describe('fileServer', () => {
     servePublicFiles()(req, res, next)
 
     expect(res.sendFile).to.have.been.calledWith(sinon.match(/ftp[/\\]coupons_2013\.md\.bak/))
-    expect(challenges.forgottenBackupChallenge.solved).to.equal(true)
+    expect(challenges.forgottenBackupChallenge.solved).toBe(true)
   })
 
   it('should solve "misplacedSignatureFileChallenge" when requesting suspicious_errors.yml with Poison Null Byte attack', () => {
@@ -115,6 +115,6 @@ describe('fileServer', () => {
     servePublicFiles()(req, res, next)
 
     expect(res.sendFile).to.have.been.calledWith(sinon.match(/ftp[/\\]suspicious_errors\.yml/))
-    expect(challenges.misplacedSignatureFileChallenge.solved).to.equal(true)
+    expect(challenges.misplacedSignatureFileChallenge.solved).toBe(true)
   })
 })

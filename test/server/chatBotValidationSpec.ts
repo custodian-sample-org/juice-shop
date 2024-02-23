@@ -28,7 +28,7 @@ describe('chatBotValidation', () => {
         ]
       }
 
-      expect(checkIntentWithFunctionHandlerExists(trainingData, 'queries.test', 'testHandler')).to.equal(true)
+      expect(checkIntentWithFunctionHandlerExists(trainingData, 'queries.test', 'testHandler')).toBe(true)
     })
 
     it('should fail if the training data lacks the expected intent', () => {
@@ -40,7 +40,7 @@ describe('chatBotValidation', () => {
         ]
       }
 
-      expect(checkIntentWithFunctionHandlerExists(trainingData, 'queries.test')).to.equal(false)
+      expect(checkIntentWithFunctionHandlerExists(trainingData, 'queries.test')).toBe(false)
     })
 
     it('should fail if the training data lacks the expected handler for the given intent', () => {
@@ -58,15 +58,15 @@ describe('chatBotValidation', () => {
         ]
       }
 
-      expect(checkIntentWithFunctionHandlerExists(trainingData, 'queries.test', 'testHandler')).to.equal(false)
+      expect(checkIntentWithFunctionHandlerExists(trainingData, 'queries.test', 'testHandler')).toBe(false)
     })
   })
 
   it('should accept the default chatbot training data', () => {
-    expect(validateChatBot(require('../../data/static/botDefaultTrainingData.json'))).to.equal(true)
+    expect(validateChatBot(require('../../data/static/botDefaultTrainingData.json'))).toBe(true)
   })
 
   it('should fail if the chatbot training data is empty', () => {
-    expect(validateChatBot({ data: [] }, false)).to.equal(false)
+    expect(validateChatBot({ data: [] }, false)).toBe(false)
   })
 })
