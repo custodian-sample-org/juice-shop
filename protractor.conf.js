@@ -41,13 +41,13 @@ exports.config = {
     showColors: true,
     defaultTimeoutInterval: 90000
   },
-  beforeLaunch: function () {
-    require('ts-node').register({
+  beforeLaunch: () => {
+  require('ts-node').register({
       project: 'tsconfig.json'
     })
-  },
-  onPrepare: function () {
-    const jasmineReporters = require('jasmine-reporters')
+},
+  onPrepare: () => {
+  const jasmineReporters = require('jasmine-reporters')
     jasmine.getEnv().addReporter(new jasmineReporters.JUnitXmlReporter({
       consolidateAll: true,
       savePath: 'build/reports/e2e_results'
@@ -64,7 +64,7 @@ exports.config = {
     // Ensure score board shows all challenges (by default only 1-star challenges are shown)
     browser.get(basePath + '/#/score-board')
     element(by.id('btnToggleAllDifficulties')).click()
-  }
+}
 }
 
 if (process.env.CI) {
