@@ -20,7 +20,7 @@ global.sleep = (time: number) => {
   }
   const stop = new Date().getTime()
   while (new Date().getTime() < stop + time) {
-    ;
+    
   }
 }
 
@@ -32,7 +32,7 @@ module.exports = function productReviews () {
     const t0 = new Date().getTime()
     db.reviews.find({ $where: 'this.product == ' + id }).then((reviews: Review[]) => {
       const t1 = new Date().getTime()
-      utils.solveIf(challenges.noSqlCommandChallenge, () => { return (t1 - t0) > 2000 })
+      utils.solveIf(challenges.noSqlCommandChallenge, () => (t1 - t0) > 2000)
       const user = security.authenticatedUsers.from(req)
       for (let i = 0; i < reviews.length; i++) {
         if (user === undefined || reviews[i].likedBy.includes(user.data.email)) {

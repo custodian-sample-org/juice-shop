@@ -18,11 +18,9 @@ module.exports = function updateUserProfile () {
     if (loggedInUser) {
       UserModel.findByPk(loggedInUser.data.id).then((user: UserModel | null) => {
         if (user) {
-          utils.solveIf(challenges.csrfChallenge, () => {
-            return ((req.headers.origin?.includes('://htmledit.squarefree.com')) ??
+          utils.solveIf(challenges.csrfChallenge, () => ((req.headers.origin?.includes('://htmledit.squarefree.com')) ??
               (req.headers.referer?.includes('://htmledit.squarefree.com'))) &&
-              req.body.username !== user.username
-          })
+              req.body.username !== user.username)
           void user.update({ username: req.body.username }).then((savedUser: UserModel) => {
             savedUser = utils.queryResultToJson(savedUser)
             const updatedToken = security.authorize(savedUser)

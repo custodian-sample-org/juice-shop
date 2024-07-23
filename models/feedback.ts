@@ -43,12 +43,10 @@ const FeedbackModelInit = (sequelize: Sequelize) => {
           let sanitizedComment: string
           if (!utils.disableOnContainerEnv()) {
             sanitizedComment = security.sanitizeHtml(comment)
-            utils.solveIf(challenges.persistedXssFeedbackChallenge, () => {
-              return utils.contains(
+            utils.solveIf(challenges.persistedXssFeedbackChallenge, () => utils.contains(
                 sanitizedComment,
                 '<iframe src="javascript:alert(`xss`)">'
-              )
-            })
+              ))
           } else {
             sanitizedComment = security.sanitizeSecure(comment)
           }
@@ -60,9 +58,7 @@ const FeedbackModelInit = (sequelize: Sequelize) => {
         allowNull: false,
         set (rating: number) {
           this.setDataValue('rating', rating)
-          utils.solveIf(challenges.zeroStarsChallenge, () => {
-            return rating === 0
-          })
+          utils.solveIf(challenges.zeroStarsChallenge, () => rating === 0)
         }
       }
     },

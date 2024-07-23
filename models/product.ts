@@ -43,12 +43,10 @@ const ProductModelInit = (sequelize: Sequelize) => {
         type: DataTypes.STRING,
         set (description: string) {
           if (!utils.disableOnContainerEnv()) {
-            utils.solveIf(challenges.restfulXssChallenge, () => {
-              return utils.contains(
+            utils.solveIf(challenges.restfulXssChallenge, () => utils.contains(
                 description,
                 '<iframe src="javascript:alert(`xss`)">'
-              )
-            })
+              ))
           } else {
             description = security.sanitizeSecure(description)
           }

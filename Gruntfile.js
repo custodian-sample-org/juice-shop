@@ -5,7 +5,7 @@
 
 'use strict'
 
-module.exports = function (grunt) {
+module.exports = (grunt) => {
   const os = grunt.option('os') || process.env.PCKG_OS_NAME || ''
   const platform = grunt.option('platform') || process.env.PCKG_CPU_ARCH || ''
   const node = grunt.option('node') || process.env.nodejs_version || process.env.PCKG_NODE_VERSION || ''
@@ -65,8 +65,8 @@ module.exports = function (grunt) {
     }
   })
 
-  grunt.registerTask('checksum', 'Create .md5 checksum files', function () {
-    const fs = require('fs')
+  grunt.registerTask('checksum', 'Create .md5 checksum files', () => {
+  const fs = require('fs')
     const crypto = require('crypto')
     fs.readdirSync('dist/').forEach(file => {
       const buffer = fs.readFileSync('dist/' + file)
@@ -78,7 +78,7 @@ module.exports = function (grunt) {
       grunt.log.write(`Checksum ${md5Hash} written to file ${md5FileName}.`).verbose.write('...').ok()
       grunt.log.writeln()
     })
-  })
+})
 
   grunt.loadNpmTasks('grunt-replace-json')
   grunt.loadNpmTasks('grunt-contrib-compress')

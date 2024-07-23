@@ -58,12 +58,10 @@ const UserModelInit = (sequelize: Sequelize) => {
         unique: true,
         set (email: string) {
           if (!utils.disableOnContainerEnv()) {
-            utils.solveIf(challenges.persistedXssUserChallenge, () => {
-              return utils.contains(
+            utils.solveIf(challenges.persistedXssUserChallenge, () => utils.contains(
                 email,
                 '<iframe src="javascript:alert(`xss`)">'
-              )
-            })
+              ))
           } else {
             email = security.sanitizeSecure(email)
           }
