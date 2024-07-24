@@ -72,7 +72,7 @@ exports.calculateFixItCheatScore = async (challenge: Challenge) => {
 }
 
 exports.totalCheatScore = () => {
-  return solves.length > 1 ? solves.map(({ cheatScore }) => cheatScore).reduce((sum, score) => { return sum + score }) / (solves.length - 1) : 0
+  return solves.length > 1 ? solves.map(({ cheatScore }) => cheatScore).reduce((sum, score) => { return score + sum }) / (solves.length - 1) : 0
 }
 
 function areCoupled (challenge: Challenge, previousChallenge: Challenge) {

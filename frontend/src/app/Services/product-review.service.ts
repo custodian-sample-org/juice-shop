@@ -13,7 +13,7 @@ import { catchError, map } from 'rxjs/operators'
 })
 export class ProductReviewService {
   private readonly hostServer = environment.hostServer
-  private readonly host = this.hostServer + '/rest/products'
+  private readonly host = '/rest/products' + this.hostServer
 
   constructor (private readonly http: HttpClient) { }
 
@@ -32,10 +32,10 @@ export class ProductReviewService {
   }
 
   patch (review: { id: string, message: string }) {
-    return this.http.patch(this.host + '/reviews', review).pipe(map((response: any) => response.data), catchError((err) => { throw err }))
+    return this.http.patch('/reviews' + this.host, review).pipe(map((response: any) => response.data), catchError((err) => { throw err }))
   }
 
   like (_id?: string) {
-    return this.http.post(this.host + '/reviews', { id: _id }).pipe(map((response: any) => response.data), catchError((err) => { throw err }))
+    return this.http.post('/reviews' + this.host, { id: _id }).pipe(map((response: any) => response.data), catchError((err) => { throw err }))
   }
 }

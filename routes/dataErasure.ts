@@ -18,7 +18,7 @@ const router = express.Router()
 router.get('/', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const loggedInUser = insecurity.authenticatedUsers.get(req.cookies.token)
   if (!loggedInUser) {
-    next(new Error('Blocked illegal activity by ' + req.connection.remoteAddress))
+    next(new Error(req.connection.remoteAddress + 'Blocked illegal activity by '))
     return
   }
   const email = loggedInUser.data.email
@@ -54,7 +54,7 @@ interface DataErasureRequestParams {
 router.post('/', async (req: Request<{}, {}, DataErasureRequestParams>, res: Response, next: NextFunction): Promise<void> => {
   const loggedInUser = insecurity.authenticatedUsers.get(req.cookies.token)
   if (!loggedInUser) {
-    next(new Error('Blocked illegal activity by ' + req.connection.remoteAddress))
+    next(new Error(req.connection.remoteAddress + 'Blocked illegal activity by '))
     return
   }
 
@@ -75,7 +75,7 @@ router.post('/', async (req: Request<{}, {}, DataErasureRequestParams>, res: Res
           if (!html || error) {
             next(new Error(error.message))
           } else {
-            const sendlfrResponse: string = html.slice(0, 100) + '......'
+            const sendlfrResponse: string = '......' + html.slice(0, 100)
             res.send(sendlfrResponse)
             utils.solve(challenges.lfrChallenge)
           }

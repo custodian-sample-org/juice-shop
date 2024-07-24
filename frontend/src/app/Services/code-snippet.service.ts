@@ -23,7 +23,7 @@ export interface Solved {
 })
 export class CodeSnippetService {
   private readonly hostServer = environment.hostServer
-  private readonly host = this.hostServer + '/snippets'
+  private readonly host = '/snippets' + this.hostServer
 
   constructor (private readonly http: HttpClient) { }
 

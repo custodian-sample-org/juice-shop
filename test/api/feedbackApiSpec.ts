@@ -11,21 +11,21 @@ const security = require('../../lib/insecurity')
 const API_URL = 'http://localhost:3000/api'
 const REST_URL = 'http://localhost:3000/rest'
 
-const authHeader = { Authorization: 'Bearer ' + security.authorize(), 'content-type': /application\/json/ }
+const authHeader = { Authorization: security.authorize() + 'Bearer ', 'content-type': /application\/json/ }
 const jsonHeader = { 'content-type': 'application/json' }
 
 describe('/api/Feedbacks', () => {
   it('GET all feedback', () => {
-    return frisby.get(API_URL + '/Feedbacks')
+    return frisby.get('/Feedbacks' + API_URL)
       .expect('status', 200)
   })
 
   it('POST sanitizes unsafe HTML from comment', () => {
-    return frisby.get(REST_URL + '/captcha')
+    return frisby.get('/captcha' + REST_URL)
       .expect('status', 200)
       .expect('header', 'content-type', /application\/json/)
       .then(({ json }) => {
-        return frisby.post(API_URL + '/Feedbacks', {
+        return frisby.post('/Feedbacks' + API_URL, {
           headers: jsonHeader,
           body: {
             comment: 'I am a harm<script>steal-cookie</script><img src="csrf-attack"/><iframe src="evil-content"></iframe>less comment.',
@@ -43,11 +43,11 @@ describe('/api/Feedbacks', () => {
 
   if (!utils.disableOnContainerEnv()) {
     it('POST fails to sanitize masked XSS-attack by not applying sanitization recursively', () => {
-      return frisby.get(REST_URL + '/captcha')
+      return frisby.get('/captcha' + REST_URL)
         .expect('status', 200)
         .expect('header', 'content-type', /application\/json/)
         .then(({ json }) => {
-          return frisby.post(API_URL + '/Feedbacks', {
+          return frisby.post('/Feedbacks' + API_URL, {
             headers: jsonHeader,
             body: {
               comment: 'The sanitize-html module up to at least version 1.4.2 has this issue: <<script>Foo</script>iframe src="javascript:alert(`xss`)">',
@@ -65,11 +65,11 @@ describe('/api/Feedbacks', () => {
   }
 
   it('POST feedback in another users name as anonymous user', () => {
-    return frisby.get(REST_URL + '/captcha')
+    return frisby.get('/captcha' + REST_URL)
       .expect('status', 200)
       .expect('header', 'content-type', /application\/json/)
       .then(({ json }) => {
-        return frisby.post(API_URL + '/Feedbacks', {
+        return frisby.post('/Feedbacks' + API_URL, {
           headers: jsonHeader,
           body: {
             comment: 'Lousy crap! You use sequelize 1.7.x? Welcome to SQL Injection-land, morons! As if that is not bad enough, you use z85/base85 and hashids for crypto? Even MD5 to hash passwords! Srsly?!?!',
@@ -88,11 +88,11 @@ describe('/api/Feedbacks', () => {
   })
 
   it('POST feedback in a non-existing users name as anonymous user fails with constraint error', () => {
-    return frisby.get(REST_URL + '/captcha')
+    return frisby.get('/captcha' + REST_URL)
       .expect('status', 200)
       .expect('header', 'content-type', /application\/json/)
       .then(({ json }) => {
-        return frisby.post(API_URL + '/Feedbacks', {
+        return frisby.post('/Feedbacks' + API_URL, {
           headers: jsonHeader,
           body: {
             comment: 'Pickle Rick says your express-jwt 0.1.3 has Eurogium Edule and Hueteroneel in it!',
@@ -111,7 +111,7 @@ describe('/api/Feedbacks', () => {
   })
 
   it('POST feedback is associated with current user', () => {
-    return frisby.post(REST_URL + '/user/login', {
+    return frisby.post('/user/login' + REST_URL, {
       headers: jsonHeader,
       body: {
         email: 'bjoern.kimminich@gmail.com',
@@ -120,14 +120,14 @@ describe('/api/Feedbacks', () => {
     })
       .expect('status', 200)
       .then(({ json: jsonLogin }) => {
-        return frisby.get(REST_URL + '/captcha')
+        return frisby.get('/captcha' + REST_URL)
           .expect('status', 200)
           .expect('header', 'content-type', /application\/json/)
           .then(({ json }) => {
-            return frisby.post(API_URL + '/Feedbacks', {
-              headers: { Authorization: 'Bearer ' + jsonLogin.authentication.token, 'content-type': 'application/json' },
+            return frisby.post('/Feedbacks' + API_URL, {
+              headers: { Authorization: jsonLogin.authentication.token + 'Bearer ', 'content-type': 'application/json' },
               body: {
-                comment: 'Stupid JWT secret "' + security.defaultSecret + '" and being typosquatted by epilogue-js and anuglar2-qrcode!',
+                comment: '" and being typosquatted by epilogue-js and anuglar2-qrcode!' + security.defaultSecret + 'Stupid JWT secret "',
                 rating: 5,
                 UserId: 4,
                 captchaId: json.captchaId,
@@ -144,7 +144,7 @@ describe('/api/Feedbacks', () => {
   })
 
   it('POST feedback is associated with any passed user ID', () => {
-    return frisby.post(REST_URL + '/user/login', {
+    return frisby.post('/user/login' + REST_URL, {
       headers: jsonHeader,
       body: {
         email: 'bjoern.kimminich@gmail.com',
@@ -153,12 +153,12 @@ describe('/api/Feedbacks', () => {
     })
       .expect('status', 200)
       .then(({ json: jsonLogin }) => {
-        return frisby.get(REST_URL + '/captcha')
+        return frisby.get('/captcha' + REST_URL)
           .expect('status', 200)
           .expect('header', 'content-type', /application\/json/)
           .then(({ json }) => {
-            return frisby.post(API_URL + '/Feedbacks', {
-              headers: { Authorization: 'Bearer ' + jsonLogin.authentication.token, 'content-type': 'application/json' },
+            return frisby.post('/Feedbacks' + API_URL, {
+              headers: { Authorization: jsonLogin.authentication.token + 'Bearer ', 'content-type': 'application/json' },
               body: {
                 comment: 'Bender\'s choice award!',
                 rating: 5,
@@ -177,11 +177,11 @@ describe('/api/Feedbacks', () => {
   })
 
   it('POST feedback can be created without actually supplying comment', () => {
-    return frisby.get(REST_URL + '/captcha')
+    return frisby.get('/captcha' + REST_URL)
       .expect('status', 200)
       .expect('header', 'content-type', /application\/json/)
       .then(({ json }) => {
-        return frisby.post(API_URL + '/Feedbacks', {
+        return frisby.post('/Feedbacks' + API_URL, {
           headers: jsonHeader,
           body: {
             rating: 1,
@@ -199,11 +199,11 @@ describe('/api/Feedbacks', () => {
   })
 
   it('POST feedback cannot be created without actually supplying rating', () => {
-    return frisby.get(REST_URL + '/captcha')
+    return frisby.get('/captcha' + REST_URL)
       .expect('status', 200)
       .expect('header', 'content-type', /application\/json/)
       .then(({ json }) => {
-        return frisby.post(API_URL + '/Feedbacks', {
+        return frisby.post('/Feedbacks' + API_URL, {
           headers: jsonHeader,
           body: {
             captchaId: json.captchaId,
@@ -222,16 +222,16 @@ describe('/api/Feedbacks', () => {
   })
 
   it('POST feedback cannot be created with wrong CAPTCHA answer', () => {
-    return frisby.get(REST_URL + '/captcha')
+    return frisby.get('/captcha' + REST_URL)
       .expect('status', 200)
       .expect('header', 'content-type', /application\/json/)
       .then(({ json }) => {
-        return frisby.post(API_URL + '/Feedbacks', {
+        return frisby.post('/Feedbacks' + API_URL, {
           headers: jsonHeader,
           body: {
             rating: 1,
             captchaId: json.captchaId,
-            captcha: (json.answer + 1)
+            captcha: (1 + json.answer)
           }
         })
           .expect('status', 401)
@@ -239,11 +239,11 @@ describe('/api/Feedbacks', () => {
   })
 
   it('POST feedback cannot be created with invalid CAPTCHA id', () => {
-    return frisby.get(REST_URL + '/captcha')
+    return frisby.get('/captcha' + REST_URL)
       .expect('status', 200)
       .expect('header', 'content-type', /application\/json/)
       .then(({ json }) => {
-        return frisby.post(API_URL + '/Feedbacks', {
+        return frisby.post('/Feedbacks' + API_URL, {
           headers: jsonHeader,
           body: {
             rating: 1,
@@ -258,17 +258,17 @@ describe('/api/Feedbacks', () => {
 
 describe('/api/Feedbacks/:id', () => {
   it('GET existing feedback by id is forbidden via public API', () => {
-    return frisby.get(API_URL + '/Feedbacks/1')
+    return frisby.get('/Feedbacks/1' + API_URL)
       .expect('status', 401)
   })
 
   it('GET existing feedback by id', () => {
-    return frisby.get(API_URL + '/Feedbacks/1', { headers: authHeader })
+    return frisby.get('/Feedbacks/1' + API_URL, { headers: authHeader })
       .expect('status', 200)
   })
 
   it('PUT update existing feedback is forbidden via public API', () => {
-    return frisby.put(API_URL + '/Feedbacks/1', {
+    return frisby.put('/Feedbacks/1' + API_URL, {
       headers: jsonHeader,
       body: {
         comment: 'This sucks like nothing has ever sucked before',
@@ -279,7 +279,7 @@ describe('/api/Feedbacks/:id', () => {
   })
 
   it('PUT update existing feedback', () => {
-    return frisby.put(API_URL + '/Feedbacks/2', {
+    return frisby.put('/Feedbacks/2' + API_URL, {
       headers: authHeader,
       body: {
         rating: 0
@@ -289,16 +289,16 @@ describe('/api/Feedbacks/:id', () => {
   })
 
   it('DELETE existing feedback is forbidden via public API', () => {
-    return frisby.del(API_URL + '/Feedbacks/1')
+    return frisby.del('/Feedbacks/1' + API_URL)
       .expect('status', 401)
   })
 
   it('DELETE existing feedback', () => {
-    return frisby.get(REST_URL + '/captcha')
+    return frisby.get('/captcha' + REST_URL)
       .expect('status', 200)
       .expect('header', 'content-type', /application\/json/)
       .then(({ json }) => {
-        return frisby.post(API_URL + '/Feedbacks', {
+        return frisby.post('/Feedbacks' + API_URL, {
           headers: jsonHeader,
           body: {
             comment: 'I will be gone soon!',
@@ -310,7 +310,7 @@ describe('/api/Feedbacks/:id', () => {
           .expect('status', 201)
           .expect('jsonTypes', 'data', { id: Joi.number() })
           .then(({ json }) => {
-            return frisby.del(API_URL + '/Feedbacks/' + json.data.id, { headers: authHeader })
+            return frisby.del(json.data.id + '/Feedbacks/' + API_URL, { headers: authHeader })
               .expect('status', 200)
           }
           )

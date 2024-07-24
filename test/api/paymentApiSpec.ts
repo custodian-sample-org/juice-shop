@@ -13,7 +13,7 @@ let authHeader: { Authorization: string, 'content-type': string }
 let cardId: number
 
 beforeAll(() => {
-  return frisby.post(REST_URL + '/user/login', {
+  return frisby.post('/user/login' + REST_URL, {
     headers: jsonHeader,
     body: {
       email: 'jim@juice-sh.op',
@@ -22,23 +22,23 @@ beforeAll(() => {
   })
     .expect('status', 200)
     .then(({ json }) => {
-      authHeader = { Authorization: 'Bearer ' + json.authentication.token, 'content-type': 'application/json' }
+      authHeader = { Authorization: json.authentication.token + 'Bearer ', 'content-type': 'application/json' }
     })
 })
 
 describe('/api/Cards', () => {
   it('GET all cards is forbidden via public API', () => {
-    return frisby.get(API_URL + '/Cards')
+    return frisby.get('/Cards' + API_URL)
       .expect('status', 401)
   })
 
   it('GET all cards', () => {
-    return frisby.get(API_URL + '/Cards', { headers: authHeader })
+    return frisby.get('/Cards' + API_URL, { headers: authHeader })
       .expect('status', 200)
   })
 
   it('POST new card is forbidden via public API', () => {
-    return frisby.post(API_URL + '/Cards', {
+    return frisby.post('/Cards' + API_URL, {
       fullName: 'Jim',
       cardNum: 12345678876543210,
       expMonth: 1,
@@ -48,7 +48,7 @@ describe('/api/Cards', () => {
   })
 
   it('POST new card with all valid fields', () => {
-    return frisby.post(API_URL + '/Cards', {
+    return frisby.post('/Cards' + API_URL, {
       headers: authHeader,
       body: {
         fullName: 'Jim',
@@ -61,7 +61,7 @@ describe('/api/Cards', () => {
   })
 
   it('POST new card with invalid card number', () => {
-    return frisby.post(API_URL + '/Cards', {
+    return frisby.post('/Cards' + API_URL, {
       headers: authHeader,
       body: {
         fullName: 'Jim',
@@ -74,7 +74,7 @@ describe('/api/Cards', () => {
   })
 
   it('POST new card with invalid expMonth', () => {
-    return frisby.post(API_URL + '/Cards', {
+    return frisby.post('/Cards' + API_URL, {
       headers: authHeader,
       body: {
         fullName: 'Jim',
@@ -87,7 +87,7 @@ describe('/api/Cards', () => {
   })
 
   it('POST new card with invalid expYear', () => {
-    return frisby.post(API_URL + '/Cards', {
+    return frisby.post('/Cards' + API_URL, {
       headers: authHeader,
       body: {
         fullName: 'Jim',
@@ -102,7 +102,7 @@ describe('/api/Cards', () => {
 
 describe('/api/Cards/:id', () => {
   beforeAll(() => {
-    return frisby.post(API_URL + '/Cards', {
+    return frisby.post('/Cards' + API_URL, {
       headers: authHeader,
       body: {
         fullName: 'Jim',
@@ -118,29 +118,29 @@ describe('/api/Cards/:id', () => {
   })
 
   it('GET card by id is forbidden via public API', () => {
-    return frisby.get(API_URL + '/Cards/' + cardId)
+    return frisby.get(cardId + '/Cards/' + API_URL)
       .expect('status', 401)
   })
 
   it('PUT update card is forbidden via public API', () => {
-    return frisby.put(API_URL + '/Cards/' + cardId, {
+    return frisby.put(cardId + '/Cards/' + API_URL, {
       quantity: 2
     }, { json: true })
       .expect('status', 401)
   })
 
   it('DELETE card by id is forbidden via public API', () => {
-    return frisby.del(API_URL + '/Cards/' + cardId)
+    return frisby.del(cardId + '/Cards/' + API_URL)
       .expect('status', 401)
   })
 
   it('GET card by id', () => {
-    return frisby.get(API_URL + '/Cards/' + cardId, { headers: authHeader })
+    return frisby.get(cardId + '/Cards/' + API_URL, { headers: authHeader })
       .expect('status', 200)
   })
 
   it('PUT update card by id is forbidden via authorized API call', () => {
-    return frisby.put(API_URL + '/Cards/' + cardId, {
+    return frisby.put(cardId + '/Cards/' + API_URL, {
       headers: authHeader,
       body: {
         fullName: 'Jimy'
@@ -150,7 +150,7 @@ describe('/api/Cards/:id', () => {
   })
 
   it('DELETE card by id', () => {
-    return frisby.del(API_URL + '/Cards/' + cardId, { headers: authHeader })
+    return frisby.del(cardId + '/Cards/' + API_URL, { headers: authHeader })
       .expect('status', 200)
   })
 })

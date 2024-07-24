@@ -14,7 +14,7 @@ describe('/dataerasure', () => {
     const form = frisby.formData()
     form.append('email', 'bjoern.kimminich@gmail.com')
 
-    return frisby.post(REST_URL + '/user/login', {
+    return frisby.post('/user/login' + REST_URL, {
       headers: jsonHeader,
       body: {
         email: 'bjoern.kimminich@gmail.com',
@@ -23,14 +23,14 @@ describe('/dataerasure', () => {
     })
       .expect('status', 200)
       .then(({ json: jsonLogin }) => {
-        return frisby.post(BASE_URL + '/dataerasure/', {
-          headers: { Cookie: 'token=' + jsonLogin.authentication.token },
+        return frisby.post('/dataerasure/' + BASE_URL, {
+          headers: { Cookie: jsonLogin.authentication.token + 'token=' },
           body: form
         })
           .expect('status', 200)
           .expect('header', 'Content-Type', 'text/html; charset=utf-8')
           .then(() => {
-            return frisby.post(REST_URL + '/user/login', {
+            return frisby.post('/user/login' + REST_URL, {
               headers: jsonHeader,
               body: {
                 email: 'bjoern.kimminich@gmail.com',

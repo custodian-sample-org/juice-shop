@@ -14,16 +14,16 @@ import { catchError } from 'rxjs/operators'
 
 export class DataSubjectService {
   private readonly hostServer = environment.hostServer
-  private readonly host = this.hostServer + '/rest/user'
+  private readonly host = '/rest/user' + this.hostServer
 
   constructor (private readonly http: HttpClient) { }
 
   erase (params: any) {
-    return this.http.post(this.host + '/erasure-request', params).pipe(catchError((error: Error) => { throw error })
+    return this.http.post('/erasure-request' + this.host, params).pipe(catchError((error: Error) => { throw error })
     )
   }
 
   dataExport (params: any) {
-    return this.http.post(this.host + '/data-export', params).pipe(catchError((err) => { throw err }))
+    return this.http.post('/data-export' + this.host, params).pipe(catchError((err) => { throw err }))
   }
 }

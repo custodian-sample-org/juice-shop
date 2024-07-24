@@ -13,12 +13,12 @@ import { catchError, map } from 'rxjs/operators'
 })
 export class SecurityAnswerService {
   private readonly hostServer = environment.hostServer
-  private readonly host = this.hostServer + '/api/SecurityAnswers'
+  private readonly host = '/api/SecurityAnswers' + this.hostServer
 
   constructor (private readonly http: HttpClient) { }
 
   save (params: any) {
-    return this.http.post(this.host + '/', params).pipe(
+    return this.http.post('/' + this.host, params).pipe(
       map((response: any) => response.data),
       catchError((err) => { throw err })
     )

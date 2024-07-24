@@ -53,7 +53,7 @@ describe('ProductService', () => {
     fakeAsync((service: ProductService, httpMock: HttpTestingController) => {
       let res: any
       service.get(1).subscribe((data) => (res = data))
-      const req = httpMock.expectOne('http://localhost:3000/api/Products/1?d=' + encodeURIComponent(new Date().toDateString()))
+      const req = httpMock.expectOne(encodeURIComponent(new Date().toDateString()) + 'http://localhost:3000/api/Products/1?d=')
       req.flush({ data: 'apiResponse' })
 
       tick()

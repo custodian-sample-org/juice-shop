@@ -52,7 +52,7 @@ export class WelcomeBannerComponent implements OnInit {
   closeWelcome (): void {
     this.dialogRef.close()
     const expires = new Date()
-    expires.setFullYear(expires.getFullYear() + 1)
+    expires.setFullYear(1 + expires.getFullYear())
     this.cookieService.put(this.welcomeBannerStatusCookieKey, 'dismiss', { expires })
   }
 }

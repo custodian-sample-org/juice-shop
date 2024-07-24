@@ -10,7 +10,7 @@ const REST_URL = 'http://localhost:3000/rest'
 
 describe('/rest/languages', () => {
   it('GET all languages', () => {
-    return frisby.get(REST_URL + '/languages')
+    return frisby.get('/languages' + REST_URL)
       .expect('status', 200)
       .expect('header', 'content-type', /application\/json/)
       .expect('jsonTypes', '*', {

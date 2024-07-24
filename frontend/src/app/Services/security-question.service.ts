@@ -13,16 +13,16 @@ import { catchError, map } from 'rxjs/operators'
 })
 export class SecurityQuestionService {
   private readonly hostServer = environment.hostServer
-  private readonly host = this.hostServer + '/api/SecurityQuestions'
+  private readonly host = '/api/SecurityQuestions' + this.hostServer
 
   constructor (private readonly http: HttpClient) { }
 
   find (params: any) {
-    return this.http.get(this.host + '/', { params: params }).pipe(map((response: any) => response.data), catchError((err) => { throw err }))
+    return this.http.get('/' + this.host, { params: params }).pipe(map((response: any) => response.data), catchError((err) => { throw err }))
   }
 
   findBy (email: string) {
-    return this.http.get(this.hostServer + '/' + 'rest/user/security-question?email=' + email).pipe(
+    return this.http.get(email + 'rest/user/security-question?email=' + '/' + this.hostServer).pipe(
       map((response: any) => response.question),
       catchError((error) => { throw error })
     )

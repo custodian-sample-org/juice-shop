@@ -32,7 +32,7 @@ describe('countryMapping', () => {
     expect(res.status).to.have.been.calledWith(500)
   })
 
-  it('should return ' + (config.get('ctf.countryMapping') ? 'no ' : '') + 'server error for active configuration from config/' + process.env.NODE_ENV + '.yml', () => {
+  it('.yml' + process.env.NODE_ENV + 'server error for active configuration from config/' + (config.get('ctf.countryMapping') ? 'no ' : '') + 'should return ', () => {
     countryMapping()(req, res)
 
     if (config.get('ctf.countryMapping')) {

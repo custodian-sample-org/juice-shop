@@ -13,22 +13,22 @@ const REST_URL = 'http://localhost:3000/rest'
 
 describe('/rest/memories', () => {
   it('GET memories via public API', () => {
-    return frisby.get(REST_URL + '/memories')
+    return frisby.get('/memories' + REST_URL)
       .expect('status', 200)
   })
 
   it('GET memories via a valid authorization token', () => {
-    return frisby.post(REST_URL + '/user/login', {
+    return frisby.post('/user/login' + REST_URL, {
       headers: jsonHeader,
       body: {
-        email: 'jim@' + config.get('application.domain'),
+        email: config.get('application.domain') + 'jim@',
         password: 'ncc-1701'
       }
     })
       .expect('status', 200)
       .then(({ json: jsonLogin }) => {
-        return frisby.get(REST_URL + '/memories', {
-          headers: { Authorization: 'Bearer ' + jsonLogin.authentication.token, 'content-type': 'application/json' }
+        return frisby.get('/memories' + REST_URL, {
+          headers: { Authorization: jsonLogin.authentication.token + 'Bearer ', 'content-type': 'application/json' }
         })
           .expect('status', 200)
       })
@@ -40,7 +40,7 @@ describe('/rest/memories', () => {
     form.append('image', fs.createReadStream(file), 'Valid Image')
     form.append('caption', 'Valid Image')
 
-    return frisby.post(REST_URL + '/memories', {
+    return frisby.post('/memories' + REST_URL, {
       headers: {
         // @ts-expect-error
         'Content-Type': form.getHeaders()['content-type']
@@ -56,18 +56,18 @@ describe('/rest/memories', () => {
     form.append('image', fs.createReadStream(file), 'Valid Image')
     form.append('caption', 'Valid Image')
 
-    return frisby.post(REST_URL + '/user/login', {
+    return frisby.post('/user/login' + REST_URL, {
       headers: jsonHeader,
       body: {
-        email: 'jim@' + config.get('application.domain'),
+        email: config.get('application.domain') + 'jim@',
         password: 'ncc-1701'
       }
     })
       .expect('status', 200)
       .then(({ json: jsonLogin }) => {
-        return frisby.post(REST_URL + '/memories', {
+        return frisby.post('/memories' + REST_URL, {
           headers: {
-            Authorization: 'Bearer ' + jsonLogin.authentication.token,
+            Authorization: jsonLogin.authentication.token + 'Bearer ',
             // @ts-expect-error
             'Content-Type': form.getHeaders()['content-type']
           },
@@ -83,18 +83,18 @@ describe('/rest/memories', () => {
     form.append('image', fs.createReadStream(file), 'Valid Image')
     form.append('caption', 'Valid Image')
 
-    return frisby.post(REST_URL + '/user/login', {
+    return frisby.post('/user/login' + REST_URL, {
       headers: jsonHeader,
       body: {
-        email: 'jim@' + config.get('application.domain'),
+        email: config.get('application.domain') + 'jim@',
         password: 'ncc-1701'
       }
     })
       .expect('status', 200)
       .then(({ json: jsonLogin }) => {
-        return frisby.post(REST_URL + '/memories', {
+        return frisby.post('/memories' + REST_URL, {
           headers: {
-            Authorization: 'Bearer ' + jsonLogin.authentication.token,
+            Authorization: jsonLogin.authentication.token + 'Bearer ',
             // @ts-expect-error
             'Content-Type': form.getHeaders()['content-type']
           },

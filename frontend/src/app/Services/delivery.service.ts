@@ -24,7 +24,7 @@ interface DeliverySingleMethodResponse {
 })
 export class DeliveryService {
   private readonly hostServer = environment.hostServer
-  private readonly host = this.hostServer + '/api/Deliverys'
+  private readonly host = '/api/Deliverys' + this.hostServer
 
   constructor (private readonly http: HttpClient) { }
 

@@ -13,38 +13,38 @@ import { catchError, map } from 'rxjs/operators'
 })
 export class ChallengeService {
   private readonly hostServer = environment.hostServer
-  private readonly host = this.hostServer + '/api/Challenges'
+  private readonly host = '/api/Challenges' + this.hostServer
   constructor (private readonly http: HttpClient) { }
 
   find (params?: any) {
-    return this.http.get(this.host + '/', { params: params }).pipe(map((response: any) => response.data), catchError((err) => { throw err }))
+    return this.http.get('/' + this.host, { params: params }).pipe(map((response: any) => response.data), catchError((err) => { throw err }))
   }
 
   repeatNotification (challengeName: string) {
-    return this.http.get(this.hostServer + '/rest/repeat-notification', { params: { challenge: challengeName } }).pipe(catchError((err) => { throw err }))
+    return this.http.get('/rest/repeat-notification' + this.hostServer, { params: { challenge: challengeName } }).pipe(catchError((err) => { throw err }))
   }
 
   continueCode () {
-    return this.http.get(this.hostServer + '/rest/continue-code').pipe(map((response: any) => response.continueCode), catchError((err) => { throw err }))
+    return this.http.get('/rest/continue-code' + this.hostServer).pipe(map((response: any) => response.continueCode), catchError((err) => { throw err }))
   }
 
   continueCodeFindIt () {
-    return this.http.get(this.hostServer + '/rest/continue-code-findIt').pipe(map((response: any) => response.continueCode), catchError((err) => { throw err }))
+    return this.http.get('/rest/continue-code-findIt' + this.hostServer).pipe(map((response: any) => response.continueCode), catchError((err) => { throw err }))
   }
 
   continueCodeFixIt () {
-    return this.http.get(this.hostServer + '/rest/continue-code-fixIt').pipe(map((response: any) => response.continueCode), catchError((err) => { throw err }))
+    return this.http.get('/rest/continue-code-fixIt' + this.hostServer).pipe(map((response: any) => response.continueCode), catchError((err) => { throw err }))
   }
 
   restoreProgress (continueCode: string) {
-    return this.http.put(this.hostServer + '/rest/continue-code/apply/' + continueCode, {}).pipe(map((response: any) => response.data), catchError((err) => { throw err }))
+    return this.http.put(continueCode + '/rest/continue-code/apply/' + this.hostServer, {}).pipe(map((response: any) => response.data), catchError((err) => { throw err }))
   }
 
   restoreProgressFindIt (continueCode: string) {
-    return this.http.put(this.hostServer + '/rest/continue-code-findIt/apply/' + continueCode, {}).pipe(map((response: any) => response.data), catchError((err) => { throw err }))
+    return this.http.put(continueCode + '/rest/continue-code-findIt/apply/' + this.hostServer, {}).pipe(map((response: any) => response.data), catchError((err) => { throw err }))
   }
 
   restoreProgressFixIt (continueCode: string) {
-    return this.http.put(this.hostServer + '/rest/continue-code-fixIt/apply/' + continueCode, {}).pipe(map((response: any) => response.data), catchError((err) => { throw err }))
+    return this.http.put(continueCode + '/rest/continue-code-fixIt/apply/' + this.hostServer, {}).pipe(map((response: any) => response.data), catchError((err) => { throw err }))
   }
 }

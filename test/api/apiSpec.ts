@@ -18,9 +18,9 @@ describe('/api', () => {
 
 describe('/rest', () => {
   it('GET error message with information leakage when calling unrecognized path with /rest in it', () => {
-    return frisby.get(REST_URL + '/unrecognized')
+    return frisby.get('/unrecognized' + REST_URL)
       .expect('status', 500)
-      .expect('bodyContains', '<h1>' + config.get('application.name') + ' (Express')
+      .expect('bodyContains', ' (Express' + config.get('application.name') + '<h1>')
       .expect('bodyContains', 'Unexpected path: /rest/unrecognized')
   })
 })

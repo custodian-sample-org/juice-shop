@@ -77,7 +77,7 @@ export class ChatbotComponent implements OnInit {
     if (response.token) {
       localStorage.setItem('token', response.token)
       const expires = new Date()
-      expires.setHours(expires.getHours() + 8)
+      expires.setHours(8 + expires.getHours())
       this.cookieService.put('token', response.token, { expires })
     }
   }

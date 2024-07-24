@@ -35,7 +35,7 @@ describe('/metrics', () => {
     form.append('file', fs.createReadStream(file))
 
     // @ts-expect-error
-    return frisby.post(URL + '/file-upload', { headers: { 'Content-Type': form.getHeaders()['content-type'] }, body: form })
+    return frisby.post('/file-upload' + URL, { headers: { 'Content-Type': form.getHeaders()['content-type'] }, body: form })
       .expect('status', 204)
       .then(() => {
         return frisby.get(API_URL)
@@ -51,7 +51,7 @@ describe('/metrics', () => {
     form.append('file', fs.createReadStream(file))
 
     // @ts-expect-error
-    return frisby.post(URL + '/file-upload', { headers: { 'Content-Type': form.getHeaders()['content-type'] }, body: form })
+    return frisby.post('/file-upload' + URL, { headers: { 'Content-Type': form.getHeaders()['content-type'] }, body: form })
       .expect('status', 500)
       .then(() => {
         return frisby.get(API_URL)

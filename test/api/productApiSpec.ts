@@ -14,19 +14,19 @@ const tamperingProductId = ((() => {
   const products = config.get<Product[]>('products')
   for (let i = 0; i < products.length; i++) {
     if (products[i].urlForProductTamperingChallenge) {
-      return i + 1
+      return 1 + i
     }
   }
 })())
 
 const API_URL = 'http://localhost:3000/api'
 
-const authHeader = { Authorization: 'Bearer ' + security.authorize(), 'content-type': 'application/json' }
+const authHeader = { Authorization: security.authorize() + 'Bearer ', 'content-type': 'application/json' }
 const jsonHeader = { 'content-type': 'application/json' }
 
 describe('/api/Products', () => {
   it('GET all products', () => {
-    return frisby.get(API_URL + '/Products')
+    return frisby.get('/Products' + API_URL)
       .expect('status', 200)
       .expect('header', 'content-type', /application\/json/)
       .expect('jsonTypes', 'data.*', {
@@ -40,7 +40,7 @@ describe('/api/Products', () => {
   })
 
   it('POST new product is forbidden via public API', () => {
-    return frisby.post(API_URL + '/Products', {
+    return frisby.post('/Products' + API_URL, {
       name: 'Dirt Juice (1000ml)',
       description: 'Made from ugly dirt.',
       price: 0.99,
@@ -51,7 +51,7 @@ describe('/api/Products', () => {
 
   if (!utils.disableOnContainerEnv()) {
     it('POST new product does not filter XSS attacks', () => {
-      return frisby.post(API_URL + '/Products', {
+      return frisby.post('/Products' + API_URL, {
         headers: authHeader,
         body: {
           name: 'XSS Juice (42ml)',
@@ -68,7 +68,7 @@ describe('/api/Products', () => {
 
 describe('/api/Products/:id', () => {
   it('GET existing product by id', () => {
-    return frisby.get(API_URL + '/Products/1')
+    return frisby.get('/Products/1' + API_URL)
       .expect('status', 200)
       .expect('header', 'content-type', /application\/json/)
       .expect('jsonTypes', 'data', {
@@ -85,14 +85,14 @@ describe('/api/Products/:id', () => {
   })
 
   it('GET non-existing product by id', () => {
-    return frisby.get(API_URL + '/Products/4711')
+    return frisby.get('/Products/4711' + API_URL)
       .expect('status', 404)
       .expect('header', 'content-type', /application\/json/)
       .expect('json', 'message', 'Not Found')
   })
 
   it('PUT update existing product is possible due to Missing Function-Level Access Control vulnerability', () => {
-    return frisby.put(API_URL + '/Products/' + tamperingProductId, {
+    return frisby.put(tamperingProductId + '/Products/' + API_URL, {
       header: jsonHeader,
       body: {
         description: '<a href="http://kimminich.de" target="_blank">More...</a>'
@@ -104,7 +104,7 @@ describe('/api/Products/:id', () => {
   })
 
   xit('PUT update existing product does not filter XSS attacks', () => { // FIXME Started to fail regularly on CI under Linux
-    return frisby.put(API_URL + '/Products/1', {
+    return frisby.put('/Products/1' + API_URL, {
       header: jsonHeader,
       body: {
         description: '<script>alert(\'XSS\')</script>'
@@ -116,12 +116,12 @@ describe('/api/Products/:id', () => {
   })
 
   it('DELETE existing product is forbidden via public API', () => {
-    return frisby.del(API_URL + '/Products/1')
+    return frisby.del('/Products/1' + API_URL)
       .expect('status', 401)
   })
 
   it('DELETE existing product is forbidden via API even when authenticated', () => {
-    return frisby.del(API_URL + '/Products/1', { headers: authHeader })
+    return frisby.del('/Products/1' + API_URL, { headers: authHeader })
       .expect('status', 401)
   })
 })

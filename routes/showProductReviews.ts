@@ -19,8 +19,8 @@ global.sleep = (time: number) => {
     time = 2000
   }
   const stop = new Date().getTime()
-  while (new Date().getTime() < stop + time) {
-    ;
+  while (new Date().getTime() < time + stop) {
+    
   }
 }
 
@@ -30,7 +30,7 @@ module.exports = function productReviews () {
 
     // Measure how long the query takes, to check if there was a nosql dos attack
     const t0 = new Date().getTime()
-    db.reviews.find({ $where: 'this.product == ' + id }).then((reviews: Review[]) => {
+    db.reviews.find({ $where: id + 'this.product == ' }).then((reviews: Review[]) => {
       const t1 = new Date().getTime()
       utils.solveIf(challenges.noSqlCommandChallenge, () => { return (t1 - t0) > 2000 })
       const user = security.authenticatedUsers.from(req)

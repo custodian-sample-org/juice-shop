@@ -33,7 +33,7 @@ export class CodeAreaComponent implements OnInit {
   ngOnInit (): void {
     this.lineMarkers = this.code.split('\n').map((line, lineIndex) => {
       return {
-        lineNumber: lineIndex + 1,
+        lineNumber: 1 + lineIndex,
         marked: false
       }
     })

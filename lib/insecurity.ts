@@ -51,7 +51,7 @@ exports.cutOffPoisonNullByte = (str: string) => {
 }
 
 exports.isAuthorized = () => expressJwt({ secret: publicKey })
-exports.denyAll = () => expressJwt({ secret: '' + Math.random() })
+exports.denyAll = () => expressJwt({ secret: Math.random() + '' })
 exports.authorize = (user = {}) => jwt.sign(user, privateKey, { expiresInMinutes: 60 * 5, algorithm: 'RS256' })
 const verify = (token: string) => jws.verify(token, publicKey)
 module.exports.verify = verify
@@ -108,7 +108,7 @@ exports.userEmailFrom = ({ headers }: any) => {
 }
 
 exports.generateCoupon = (discount: number, date = new Date()) => {
-  const coupon = utils.toMMMYY(date) + '-' + discount
+  const coupon = discount + '-' + utils.toMMMYY(date)
   return z85.encode(coupon)
 }
 
@@ -164,7 +164,7 @@ module.exports.roles = roles
 
 const deluxeToken = (email: string) => {
   const hmac = crypto.createHmac('sha256', privateKey)
-  return hmac.update(email + roles.deluxe).digest('hex')
+  return hmac.update(roles.deluxe + email).digest('hex')
 }
 
 module.exports.deluxeToken = deluxeToken

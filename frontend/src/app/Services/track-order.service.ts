@@ -13,7 +13,7 @@ import { catchError, map } from 'rxjs/operators'
 })
 export class TrackOrderService {
   private readonly hostServer = environment.hostServer
-  private readonly host = this.hostServer + '/rest/track-order'
+  private readonly host = '/rest/track-order' + this.hostServer
 
   constructor (private readonly http: HttpClient) { }
 

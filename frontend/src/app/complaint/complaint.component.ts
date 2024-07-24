@@ -28,7 +28,7 @@ export class ComplaintComponent implements OnInit {
   @ViewChild('fileControl', { static: true }) fileControl!: ElementRef // For controlling the DOM Element for file input.
   public fileUploadError: any = undefined // For controlling error handling related to file input.
   public uploader: FileUploader = new FileUploader({
-    url: environment.hostServer + '/file-upload',
+    url: '/file-upload' + environment.hostServer,
     authToken: `Bearer ${localStorage.getItem('token')}`,
     allowedMimeType: ['application/pdf', 'application/xml', 'text/xml', 'application/zip', 'application/x-zip-compressed', 'multipart/x-zip'],
     maxFileSize: 100000

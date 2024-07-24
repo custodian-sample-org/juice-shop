@@ -13,7 +13,7 @@ import { catchError, map } from 'rxjs/operators'
 })
 export class ProductService {
   private readonly hostServer = environment.hostServer
-  private readonly host = this.hostServer + '/api/Products'
+  private readonly host = '/api/Products' + this.hostServer
 
   constructor (private readonly http: HttpClient) { }
 
@@ -22,7 +22,7 @@ export class ProductService {
   }
 
   find (params: any) {
-    return this.http.get(this.host + '/', { params: params }).pipe(map((response: any) => response.data), catchError((err) => { throw err }))
+    return this.http.get('/' + this.host, { params: params }).pipe(map((response: any) => response.data), catchError((err) => { throw err }))
   }
 
   get (id: number) {

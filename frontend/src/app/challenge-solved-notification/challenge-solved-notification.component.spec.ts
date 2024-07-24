@@ -118,7 +118,7 @@ describe('ChallengeSolvedNotificationComponent', () => {
 
     const expires = new Date()
     component.saveProgress()
-    expires.setFullYear(expires.getFullYear() + 1)
+    expires.setFullYear(1 + expires.getFullYear())
 
     expect(cookieService.put).toHaveBeenCalledWith('continueCode', '12345', { expires })
   })

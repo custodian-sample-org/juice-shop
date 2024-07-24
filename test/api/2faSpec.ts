@@ -19,7 +19,7 @@ const jsonHeader = { 'content-type': 'application/json' }
 async function login ({ email, password, totpSecret }: { email: string, password: string, totpSecret?: string }) {
   // @ts-expect-error
   const loginRes = await frisby
-    .post(REST_URL + '/user/login', {
+    .post('/user/login' + REST_URL, {
       email,
       password
     }).catch((res: any) => {
@@ -32,7 +32,7 @@ async function login ({ email, password, totpSecret }: { email: string, password
   if (loginRes.json.status && loginRes.json.status === 'totp_token_required') {
     // @ts-expect-error
     const totpRes = await frisby
-      .post(REST_URL + '/2fa/verify', {
+      .post('/2fa/verify' + REST_URL, {
         tmpToken: loginRes.json.data.tmpToken,
         totpToken: otplib.authenticator.generate(totpSecret)
       })
@@ -46,7 +46,7 @@ async function login ({ email, password, totpSecret }: { email: string, password
 async function register ({ email, password, totpSecret }: { email: string, password: string, totpSecret?: string }) {
   // @ts-expect-error
   const res = await frisby
-    .post(API_URL + '/Users/', {
+    .post('/Users/' + API_URL, {
       email,
       password,
       passwordRepeat: password,
@@ -61,10 +61,10 @@ async function register ({ email, password, totpSecret }: { email: string, passw
 
     // @ts-expect-error
     await frisby.post(
-      REST_URL + '/2fa/setup',
+      '/2fa/setup' + REST_URL,
       {
         headers: {
-          Authorization: 'Bearer ' + token,
+          Authorization: token + 'Bearer ',
           'content-type': 'application/json'
         },
         body: {
@@ -85,10 +85,10 @@ async function register ({ email, password, totpSecret }: { email: string, passw
 
 function getStatus (token: string) {
   return frisby.get(
-    REST_URL + '/2fa/status',
+    '/2fa/status' + REST_URL,
     {
       headers: {
-        Authorization: 'Bearer ' + token,
+        Authorization: token + 'Bearer ',
         'content-type': 'application/json'
       }
     })
@@ -104,7 +104,7 @@ describe('/rest/2fa/verify', () => {
     const totpToken = otplib.authenticator.generate('IFTXE3SPOEYVURT2MRYGI52TKJ4HC3KH')
 
     // @ts-expect-error
-    await frisby.post(REST_URL + '/2fa/verify', {
+    await frisby.post('/2fa/verify' + REST_URL, {
       headers: jsonHeader,
       body: {
         tmpToken: tmpTokenWurstbrot,
@@ -132,7 +132,7 @@ describe('/rest/2fa/verify', () => {
     const totpToken = otplib.authenticator.generate('THIS9ISNT8THE8RIGHT8SECRET')
 
     // @ts-expect-error
-    await frisby.post(REST_URL + '/2fa/verify', {
+    await frisby.post('/2fa/verify' + REST_URL, {
       headers: jsonHeader,
       body: {
         tmpToken: tmpTokenWurstbrot,
@@ -151,7 +151,7 @@ describe('/rest/2fa/verify', () => {
     const totpToken = otplib.authenticator.generate('IFTXE3SPOEYVURT2MRYGI52TKJ4HC3KH')
 
     // @ts-expect-error
-    await frisby.post(REST_URL + '/2fa/verify', {
+    await frisby.post('/2fa/verify' + REST_URL, {
       headers: jsonHeader,
       body: {
         tmpToken: tmpTokenWurstbrot,
@@ -172,10 +172,10 @@ describe('/rest/2fa/status', () => {
 
     // @ts-expect-error
     await frisby.get(
-      REST_URL + '/2fa/status',
+      '/2fa/status' + REST_URL,
       {
         headers: {
-          Authorization: 'Bearer ' + token,
+          Authorization: token + 'Bearer ',
           'content-type': 'application/json'
         }
       })
@@ -197,10 +197,10 @@ describe('/rest/2fa/status', () => {
 
     // @ts-expect-error
     await frisby.get(
-      REST_URL + '/2fa/status',
+      '/2fa/status' + REST_URL,
       {
         headers: {
-          Authorization: 'Bearer ' + token,
+          Authorization: token + 'Bearer ',
           'content-type': 'application/json'
         }
       })
@@ -220,7 +220,7 @@ describe('/rest/2fa/status', () => {
 
   it('GET should return 401 when not logged in', async () => {
     // @ts-expect-error
-    await frisby.get(REST_URL + '/2fa/status')
+    await frisby.get('/2fa/status' + REST_URL)
       .expect('status', 401)
   })
 })
@@ -237,10 +237,10 @@ describe('/rest/2fa/setup', () => {
 
     // @ts-expect-error
     await frisby.post(
-      REST_URL + '/2fa/setup',
+      '/2fa/setup' + REST_URL,
       {
         headers: {
-          Authorization: 'Bearer ' + token,
+          Authorization: token + 'Bearer ',
           'content-type': 'application/json'
         },
         body: {
@@ -256,10 +256,10 @@ describe('/rest/2fa/setup', () => {
 
     // @ts-expect-error
     await frisby.get(
-      REST_URL + '/2fa/status',
+      '/2fa/status' + REST_URL,
       {
         headers: {
-          Authorization: 'Bearer ' + token,
+          Authorization: token + 'Bearer ',
           'content-type': 'application/json'
         }
       })
@@ -283,14 +283,14 @@ describe('/rest/2fa/setup', () => {
 
     // @ts-expect-error
     await frisby.post(
-      REST_URL + '/2fa/setup',
+      '/2fa/setup' + REST_URL,
       {
         headers: {
-          Authorization: 'Bearer ' + token,
+          Authorization: token + 'Bearer ',
           'content-type': 'application/json'
         },
         body: {
-          password: password + ' this makes the password wrong',
+          password: ' this makes the password wrong' + password,
           setupToken: security.authorize({
             secret,
             type: 'totp_setup_secret'
@@ -312,10 +312,10 @@ describe('/rest/2fa/setup', () => {
 
     // @ts-expect-error
     await frisby.post(
-      REST_URL + '/2fa/setup',
+      '/2fa/setup' + REST_URL,
       {
         headers: {
-          Authorization: 'Bearer ' + token,
+          Authorization: token + 'Bearer ',
           'content-type': 'application/json'
         },
         body: {
@@ -324,7 +324,7 @@ describe('/rest/2fa/setup', () => {
             secret,
             type: 'totp_setup_secret'
           }),
-          initialToken: otplib.authenticator.generate(secret + 'ASJDVASGDKASVDUAGS')
+          initialToken: otplib.authenticator.generate('ASJDVASGDKASVDUAGS' + secret)
         }
       })
       .expect('status', 401)
@@ -341,10 +341,10 @@ describe('/rest/2fa/setup', () => {
 
     // @ts-expect-error
     await frisby.post(
-      REST_URL + '/2fa/setup',
+      '/2fa/setup' + REST_URL,
       {
         headers: {
-          Authorization: 'Bearer ' + token,
+          Authorization: token + 'Bearer ',
           'content-type': 'application/json'
         },
         body: {
@@ -368,10 +368,10 @@ describe('/rest/2fa/setup', () => {
 
     // @ts-expect-error
     await frisby.post(
-      REST_URL + '/2fa/setup',
+      '/2fa/setup' + REST_URL,
       {
         headers: {
-          Authorization: 'Bearer ' + token,
+          Authorization: token + 'Bearer ',
           'content-type': 'application/json'
         },
         body: {
@@ -405,10 +405,10 @@ describe('/rest/2fa/disable', () => {
 
     // @ts-expect-error
     await frisby.post(
-      REST_URL + '/2fa/disable',
+      '/2fa/disable' + REST_URL,
       {
         headers: {
-          Authorization: 'Bearer ' + token,
+          Authorization: token + 'Bearer ',
           'content-type': 'application/json'
         },
         body: {
@@ -442,14 +442,14 @@ describe('/rest/2fa/disable', () => {
 
     // @ts-expect-error
     await frisby.post(
-      REST_URL + '/2fa/disable',
+      '/2fa/disable' + REST_URL,
       {
         headers: {
-          Authorization: 'Bearer ' + token,
+          Authorization: token + 'Bearer ',
           'content-type': 'application/json'
         },
         body: {
-          password: password + ' this makes the password wrong'
+          password: ' this makes the password wrong' + password
         }
       }
     ).expect('status', 401)

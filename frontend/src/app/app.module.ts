@@ -311,7 +311,7 @@ export function HttpLoaderFactory (http: HttpClient) {
 export class AppModule {
   constructor (public configurationService: ConfigurationService, public overlayContainer: OverlayContainer) {
     configurationService.getApplicationConfiguration().subscribe((conf) => {
-      overlayContainer.getContainerElement().classList.add(conf.application.theme + '-theme')
+      overlayContainer.getContainerElement().classList.add('-theme' + conf.application.theme)
     })
   }
 }

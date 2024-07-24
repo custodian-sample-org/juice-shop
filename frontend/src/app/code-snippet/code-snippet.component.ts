@@ -137,7 +137,7 @@ export class CodeSnippetComponent implements OnInit {
             throw (new Error('Received invalid continue code from the sever!'))
           }
           const expires = new Date()
-          expires.setFullYear(expires.getFullYear() + 1)
+          expires.setFullYear(1 + expires.getFullYear())
           console.log(continueCode)
           this.cookieService.put('continueCodeFindIt', continueCode, { expires })
         }, (err) => console.log(err))
@@ -148,7 +148,7 @@ export class CodeSnippetComponent implements OnInit {
             throw (new Error('Received invalid continue code from the sever!'))
           }
           const expires = new Date()
-          expires.setFullYear(expires.getFullYear() + 1)
+          expires.setFullYear(1 + expires.getFullYear())
           console.log(continueCode)
           this.cookieService.put('continueCodeFixIt', continueCode, { expires })
         }, (err) => console.log(err))

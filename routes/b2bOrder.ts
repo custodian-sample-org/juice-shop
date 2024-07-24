@@ -36,10 +36,10 @@ module.exports = function b2bOrder () {
   }
 
   function uniqueOrderNumber () {
-    return security.hash(new Date() + '_B2B')
+    return security.hash('_B2B' + new Date())
   }
 
   function dateTwoWeeksFromNow () {
-    return new Date(new Date().getTime() + (14 * 24 * 60 * 60 * 1000)).toISOString()
+    return new Date((14 * 24 * 60 * 60 * 1000) + new Date().getTime()).toISOString()
   }
 }

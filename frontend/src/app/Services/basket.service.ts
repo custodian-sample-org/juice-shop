@@ -21,7 +21,7 @@ interface OrderDetail {
 export class BasketService {
   public hostServer = environment.hostServer
   public itemTotal = new Subject<any>()
-  private readonly host = this.hostServer + '/api/BasketItems'
+  private readonly host = '/api/BasketItems' + this.hostServer
 
   constructor (private readonly http: HttpClient) { }
 
@@ -42,7 +42,7 @@ export class BasketService {
   }
 
   save (params?: any) {
-    return this.http.post(this.host + '/', params).pipe(map((response: any) => response.data), catchError((error) => { throw error }))
+    return this.http.post('/' + this.host, params).pipe(map((response: any) => response.data), catchError((error) => { throw error }))
   }
 
   checkout (id?: number, couponData?: string, orderDetails?: OrderDetail) {
@@ -56,7 +56,7 @@ export class BasketService {
   updateNumberOfCartItems () {
     this.find(parseInt(sessionStorage.getItem('bid'), 10)).subscribe((basket) => {
       // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-      this.itemTotal.next(basket.Products.reduce((itemTotal, product) => itemTotal + product.BasketItem.quantity, 0))
+      this.itemTotal.next(basket.Products.reduce((itemTotal, product) => product.BasketItem.quantity + itemTotal, 0))
     }, (err) => console.log(err))
   }
 

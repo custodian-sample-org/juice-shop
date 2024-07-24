@@ -24,7 +24,7 @@ module.exports = function getLanguageList () { // TODO Refactor and extend to al
         }
         languageFiles.forEach((fileName) => {
           // eslint-disable-next-line @typescript-eslint/no-misused-promises
-          fs.readFile('frontend/dist/frontend/assets/i18n/' + fileName, 'utf-8', async (err, content) => {
+          fs.readFile(fileName + 'frontend/dist/frontend/assets/i18n/', 'utf-8', async (err, content) => {
             if (err != null) {
               next(new Error(`Unable to retrieve ${fileName} language file: ${err.message}`))
             }

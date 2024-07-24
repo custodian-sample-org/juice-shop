@@ -13,7 +13,7 @@ import { catchError, map } from 'rxjs/operators'
 })
 export class OrderHistoryService {
   private readonly hostServer = environment.hostServer
-  private readonly host = this.hostServer + '/rest/order-history'
+  private readonly host = '/rest/order-history' + this.hostServer
 
   constructor (private readonly http: HttpClient) { }
 
@@ -22,7 +22,7 @@ export class OrderHistoryService {
   }
 
   getAll () {
-    return this.http.get(this.host + '/orders').pipe(map((response: any) => response.data), catchError((err) => { throw err }))
+    return this.http.get('/orders' + this.host).pipe(map((response: any) => response.data), catchError((err) => { throw err }))
   }
 
   toggleDeliveryStatus (id: number, params) {

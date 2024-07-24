@@ -9,18 +9,18 @@ const URL = 'http://localhost:3000'
 
 describe('/promotion', () => {
   it('GET promotion video page is publicly accessible', () => {
-    return frisby.get(URL + '/promotion')
+    return frisby.get('/promotion' + URL)
       .expect('status', 200)
   })
 
   it('GET promotion video page contains embedded video', () => {
-    return frisby.get(URL + '/promotion')
+    return frisby.get('/promotion' + URL)
       .expect('header', 'content-type', /text\/html/)
       .expect('bodyContains', '<source src="./video" type="video/mp4">')
   })
 
   it('GET promotion video page contains subtitles as <script>', () => {
-    return frisby.get(URL + '/promotion')
+    return frisby.get('/promotion' + URL)
       .expect('header', 'content-type', /text\/html/)
       .expect('bodyContains', '<script id="subtitle" type="text/vtt" data-label="English" data-lang="en">')
   })
@@ -28,7 +28,7 @@ describe('/promotion', () => {
 
 describe('/video', () => {
   it('GET promotion video is publicly accessible', () => {
-    return frisby.get(URL + '/video')
+    return frisby.get('/video' + URL)
       .expect('status', 200)
       .expect('header', 'content-type', /video\/mp4/)
   })

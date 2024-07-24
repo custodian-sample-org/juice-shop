@@ -9,11 +9,11 @@ const security = require('../../lib/insecurity')
 
 const API_URL = 'http://localhost:3000/api'
 
-const authHeader = { Authorization: 'Bearer ' + security.authorize(), 'content-type': 'application/json' }
+const authHeader = { Authorization: security.authorize() + 'Bearer ', 'content-type': 'application/json' }
 
 describe('/api/Complaints', () => {
   it('POST new complaint', () => {
-    return frisby.post(API_URL + '/Complaints', {
+    return frisby.post('/Complaints' + API_URL, {
       headers: authHeader,
       body: {
         message: 'You have no clue what https://github.com/eslint/eslint-scope/issues/39 means, do you???'
@@ -29,24 +29,24 @@ describe('/api/Complaints', () => {
   })
 
   it('GET all complaints is forbidden via public API', () => {
-    return frisby.get(API_URL + '/Complaints')
+    return frisby.get('/Complaints' + API_URL)
       .expect('status', 401)
   })
 
   it('GET all complaints', () => {
-    return frisby.get(API_URL + '/Complaints', { headers: authHeader })
+    return frisby.get('/Complaints' + API_URL, { headers: authHeader })
       .expect('status', 200)
   })
 })
 
 describe('/api/Complaints/:id', () => {
   it('GET existing complaint by id is forbidden', () => {
-    return frisby.get(API_URL + '/Complaints/1', { headers: authHeader })
+    return frisby.get('/Complaints/1' + API_URL, { headers: authHeader })
       .expect('status', 401)
   })
 
   it('PUT update existing complaint is forbidden', () => {
-    return frisby.put(API_URL + '/Complaints/1', {
+    return frisby.put('/Complaints/1' + API_URL, {
       headers: authHeader,
       body: {
         message: 'Should not work...'
@@ -56,7 +56,7 @@ describe('/api/Complaints/:id', () => {
   })
 
   it('DELETE existing complaint is forbidden', () => {
-    return frisby.del(API_URL + '/Complaints/1', { headers: authHeader })
+    return frisby.del('/Complaints/1' + API_URL, { headers: authHeader })
       .expect('status', 401)
   })
 })

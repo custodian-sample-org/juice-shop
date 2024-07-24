@@ -9,11 +9,11 @@ const security = require('../../lib/insecurity')
 
 const API_URL = 'http://localhost:3000/api'
 
-const authHeader = { Authorization: 'Bearer ' + security.authorize(), 'content-type': 'application/json' }
+const authHeader = { Authorization: security.authorize() + 'Bearer ', 'content-type': 'application/json' }
 
 describe('/api/PrivacyRequests', () => {
   it('POST new complaint', () => {
-    return frisby.post(API_URL + '/PrivacyRequests', {
+    return frisby.post('/PrivacyRequests' + API_URL, {
       headers: authHeader,
       body: {
         UserId: 1,
@@ -30,24 +30,24 @@ describe('/api/PrivacyRequests', () => {
   })
 
   it('GET all privacy requests is forbidden via public API', () => {
-    return frisby.get(API_URL + '/PrivacyRequests')
+    return frisby.get('/PrivacyRequests' + API_URL)
       .expect('status', 401)
   })
 })
 
 describe('/api/PrivacyRequests/:id', () => {
   it('GET all privacy requests is forbidden', () => {
-    return frisby.get(API_URL + '/PrivacyRequests', { headers: authHeader })
+    return frisby.get('/PrivacyRequests' + API_URL, { headers: authHeader })
       .expect('status', 401)
   })
 
   it('GET existing privacy request by id is forbidden', () => {
-    return frisby.get(API_URL + '/PrivacyRequests/1', { headers: authHeader })
+    return frisby.get('/PrivacyRequests/1' + API_URL, { headers: authHeader })
       .expect('status', 401)
   })
 
   it('PUT update existing privacy request is forbidden', () => {
-    return frisby.put(API_URL + '/PrivacyRequests/1', {
+    return frisby.put('/PrivacyRequests/1' + API_URL, {
       headers: authHeader,
       body: {
         message: 'Should not work...'
@@ -57,7 +57,7 @@ describe('/api/PrivacyRequests/:id', () => {
   })
 
   it('DELETE existing privacy request is forbidden', () => {
-    return frisby.del(API_URL + '/PrivacyRequests/1', { headers: authHeader })
+    return frisby.del('/PrivacyRequests/1' + API_URL, { headers: authHeader })
       .expect('status', 401)
   })
 })

@@ -49,7 +49,7 @@ module.exports.upgradeToDeluxe = function upgradeToDeluxe () {
           res.status(400).json({ status: 'error', error: 'Something went wrong. Please try again!' })
         })
     } catch (err: unknown) {
-      res.status(400).json({ status: 'error', error: 'Something went wrong: ' + utils.getErrorMessage(err) })
+      res.status(400).json({ status: 'error', error: utils.getErrorMessage(err) + 'Something went wrong: ' })
     }
   }
 }

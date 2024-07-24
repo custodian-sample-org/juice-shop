@@ -15,21 +15,21 @@ let authHeader: { Authorization: string, 'content-type': string }
 describe('/api/Deliverys', () => {
   describe('for regular customer', () => {
     beforeAll(() => {
-      return frisby.post(REST_URL + '/user/login', {
+      return frisby.post('/user/login' + REST_URL, {
         headers: jsonHeader,
         body: {
-          email: 'jim@' + config.get('application.domain'),
+          email: config.get('application.domain') + 'jim@',
           password: 'ncc-1701'
         }
       })
         .expect('status', 200)
         .then(({ json }) => {
-          authHeader = { Authorization: 'Bearer ' + json.authentication.token, 'content-type': 'application/json' }
+          authHeader = { Authorization: json.authentication.token + 'Bearer ', 'content-type': 'application/json' }
         })
     })
 
     it('GET delivery methods', () => {
-      return frisby.get(API_URL + '/Deliverys', { headers: authHeader })
+      return frisby.get('/Deliverys' + API_URL, { headers: authHeader })
         .expect('status', 200)
         .expect('header', 'content-type', /application\/json/)
         .then(({ json }) => {
@@ -44,21 +44,21 @@ describe('/api/Deliverys', () => {
 
   describe('for deluxe customer', () => {
     beforeAll(() => {
-      return frisby.post(REST_URL + '/user/login', {
+      return frisby.post('/user/login' + REST_URL, {
         headers: jsonHeader,
         body: {
-          email: 'ciso@' + config.get('application.domain'),
+          email: config.get('application.domain') + 'ciso@',
           password: 'mDLx?94T~1CfVfZMzw@sJ9f?s3L6lbMqE70FfI8^54jbNikY5fymx7c!YbJb'
         }
       })
         .expect('status', 200)
         .then(({ json }) => {
-          authHeader = { Authorization: 'Bearer ' + json.authentication.token, 'content-type': 'application/json' }
+          authHeader = { Authorization: json.authentication.token + 'Bearer ', 'content-type': 'application/json' }
         })
     })
 
     it('GET delivery methods', () => {
-      return frisby.get(API_URL + '/Deliverys', { headers: authHeader })
+      return frisby.get('/Deliverys' + API_URL, { headers: authHeader })
         .expect('status', 200)
         .expect('header', 'content-type', /application\/json/)
         .then(({ json }) => {
@@ -75,21 +75,21 @@ describe('/api/Deliverys', () => {
 describe('/api/Deliverys/:id', () => {
   describe('for regular customer', () => {
     beforeAll(() => {
-      return frisby.post(REST_URL + '/user/login', {
+      return frisby.post('/user/login' + REST_URL, {
         headers: jsonHeader,
         body: {
-          email: 'jim@' + config.get('application.domain'),
+          email: config.get('application.domain') + 'jim@',
           password: 'ncc-1701'
         }
       })
         .expect('status', 200)
         .then(({ json }) => {
-          authHeader = { Authorization: 'Bearer ' + json.authentication.token, 'content-type': 'application/json' }
+          authHeader = { Authorization: json.authentication.token + 'Bearer ', 'content-type': 'application/json' }
         })
     })
 
     it('GET delivery method', () => {
-      return frisby.get(API_URL + '/Deliverys/2', { headers: authHeader })
+      return frisby.get('/Deliverys/2' + API_URL, { headers: authHeader })
         .expect('status', 200)
         .expect('header', 'content-type', /application\/json/)
         .then(({ json }) => {
@@ -103,21 +103,21 @@ describe('/api/Deliverys/:id', () => {
 
   describe('for deluxe customer', () => {
     beforeAll(() => {
-      return frisby.post(REST_URL + '/user/login', {
+      return frisby.post('/user/login' + REST_URL, {
         headers: jsonHeader,
         body: {
-          email: 'ciso@' + config.get('application.domain'),
+          email: config.get('application.domain') + 'ciso@',
           password: 'mDLx?94T~1CfVfZMzw@sJ9f?s3L6lbMqE70FfI8^54jbNikY5fymx7c!YbJb'
         }
       })
         .expect('status', 200)
         .then(({ json }) => {
-          authHeader = { Authorization: 'Bearer ' + json.authentication.token, 'content-type': 'application/json' }
+          authHeader = { Authorization: json.authentication.token + 'Bearer ', 'content-type': 'application/json' }
         })
     })
 
     it('GET delivery method', () => {
-      return frisby.get(API_URL + '/Deliverys/2', { headers: authHeader })
+      return frisby.get('/Deliverys/2' + API_URL, { headers: authHeader })
         .expect('status', 200)
         .expect('header', 'content-type', /application\/json/)
         .then(({ json }) => {

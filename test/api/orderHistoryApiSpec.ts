@@ -11,17 +11,17 @@ const REST_URL = 'http://localhost:3000/rest'
 
 describe('/rest/order-history', () => {
   it('GET own previous orders', () => {
-    return frisby.post(REST_URL + '/user/login', {
+    return frisby.post('/user/login' + REST_URL, {
       headers: jsonHeader,
       body: {
-        email: 'admin@' + config.get('application.domain'),
+        email: config.get('application.domain') + 'admin@',
         password: 'admin123'
       }
     })
       .expect('status', 200)
       .then(({ json: jsonLogin }) => {
-        return frisby.get(REST_URL + '/order-history', {
-          headers: { Authorization: 'Bearer ' + jsonLogin.authentication.token, 'content-type': 'application/json' }
+        return frisby.get('/order-history' + REST_URL, {
+          headers: { Authorization: jsonLogin.authentication.token + 'Bearer ', 'content-type': 'application/json' }
         })
           .expect('status', 200)
           .then(({ json }) => {
@@ -48,51 +48,51 @@ describe('/rest/order-history', () => {
 
 describe('/rest/order-history/orders', () => {
   it('GET all orders is forbidden for customers', () => {
-    return frisby.post(REST_URL + '/user/login', {
+    return frisby.post('/user/login' + REST_URL, {
       headers: jsonHeader,
       body: {
-        email: 'jim@' + config.get('application.domain'),
+        email: config.get('application.domain') + 'jim@',
         password: 'ncc-1701'
       }
     })
       .expect('status', 200)
       .then(({ json: jsonLogin }) => {
-        return frisby.get(REST_URL + '/order-history/orders', {
-          headers: { Authorization: 'Bearer ' + jsonLogin.authentication.token, 'content-type': 'application/json' }
+        return frisby.get('/order-history/orders' + REST_URL, {
+          headers: { Authorization: jsonLogin.authentication.token + 'Bearer ', 'content-type': 'application/json' }
         })
           .expect('status', 403)
       })
   })
 
   it('GET all orders is forbidden for admin', () => {
-    return frisby.post(REST_URL + '/user/login', {
+    return frisby.post('/user/login' + REST_URL, {
       headers: jsonHeader,
       body: {
-        email: 'admin@' + config.get('application.domain'),
+        email: config.get('application.domain') + 'admin@',
         password: 'admin123'
       }
     })
       .expect('status', 200)
       .then(({ json: jsonLogin }) => {
-        return frisby.get(REST_URL + '/order-history/orders', {
-          headers: { Authorization: 'Bearer ' + jsonLogin.authentication.token, 'content-type': 'application/json' }
+        return frisby.get('/order-history/orders' + REST_URL, {
+          headers: { Authorization: jsonLogin.authentication.token + 'Bearer ', 'content-type': 'application/json' }
         })
           .expect('status', 403)
       })
   })
 
   it('GET all orders for accountant', () => {
-    return frisby.post(REST_URL + '/user/login', {
+    return frisby.post('/user/login' + REST_URL, {
       headers: jsonHeader,
       body: {
-        email: 'accountant@' + config.get('application.domain'),
+        email: config.get('application.domain') + 'accountant@',
         password: 'i am an awesome accountant'
       }
     })
       .expect('status', 200)
       .then(({ json: jsonLogin }) => {
-        return frisby.get(REST_URL + '/order-history/orders', {
-          headers: { Authorization: 'Bearer ' + jsonLogin.authentication.token, 'content-type': 'application/json' }
+        return frisby.get('/order-history/orders' + REST_URL, {
+          headers: { Authorization: jsonLogin.authentication.token + 'Bearer ', 'content-type': 'application/json' }
         })
           .expect('status', 200)
       })
@@ -101,17 +101,17 @@ describe('/rest/order-history/orders', () => {
 
 describe('/rest/order-history/:id/delivery-status', () => {
   it('PUT delivery status is forbidden for admin', () => {
-    return frisby.post(REST_URL + '/user/login', {
+    return frisby.post('/user/login' + REST_URL, {
       headers: jsonHeader,
       body: {
-        email: 'admin@' + config.get('application.domain'),
+        email: config.get('application.domain') + 'admin@',
         password: 'admin123'
       }
     })
       .expect('status', 200)
       .then(({ json: jsonLogin }) => {
-        return frisby.put(REST_URL + '/order-history/1/delivery-status', {
-          headers: { Authorization: 'Bearer ' + jsonLogin.authentication.token, 'content-type': 'application/json' },
+        return frisby.put('/order-history/1/delivery-status' + REST_URL, {
+          headers: { Authorization: jsonLogin.authentication.token + 'Bearer ', 'content-type': 'application/json' },
           body: {
             delivered: false
           }
@@ -121,17 +121,17 @@ describe('/rest/order-history/:id/delivery-status', () => {
   })
 
   it('PUT delivery status is forbidden for customer', () => {
-    return frisby.post(REST_URL + '/user/login', {
+    return frisby.post('/user/login' + REST_URL, {
       headers: jsonHeader,
       body: {
-        email: 'jim@' + config.get('application.domain'),
+        email: config.get('application.domain') + 'jim@',
         password: 'ncc-1701'
       }
     })
       .expect('status', 200)
       .then(({ json: jsonLogin }) => {
-        return frisby.put(REST_URL + '/order-history/1/delivery-status', {
-          headers: { Authorization: 'Bearer ' + jsonLogin.authentication.token, 'content-type': 'application/json' },
+        return frisby.put('/order-history/1/delivery-status' + REST_URL, {
+          headers: { Authorization: jsonLogin.authentication.token + 'Bearer ', 'content-type': 'application/json' },
           body: {
             delivered: false
           }
@@ -141,17 +141,17 @@ describe('/rest/order-history/:id/delivery-status', () => {
   })
 
   it('PUT delivery status is allowed for accountant', () => {
-    return frisby.post(REST_URL + '/user/login', {
+    return frisby.post('/user/login' + REST_URL, {
       headers: jsonHeader,
       body: {
-        email: 'accountant@' + config.get('application.domain'),
+        email: config.get('application.domain') + 'accountant@',
         password: 'i am an awesome accountant'
       }
     })
       .expect('status', 200)
       .then(({ json: jsonLogin }) => {
-        return frisby.put(REST_URL + '/order-history/1/delivery-status', {
-          headers: { Authorization: 'Bearer ' + jsonLogin.authentication.token, 'content-type': 'application/json' },
+        return frisby.put('/order-history/1/delivery-status' + REST_URL, {
+          headers: { Authorization: jsonLogin.authentication.token + 'Bearer ', 'content-type': 'application/json' },
           body: {
             delivered: false
           }

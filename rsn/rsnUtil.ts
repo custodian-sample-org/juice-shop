@@ -45,8 +45,8 @@ const checkDiffs = async (keys: string[]) => {
   for (const val of keys) {
     await retrieveCodeSnippet(val.split('_')[0], true)
       .then(snippet => {
-        process.stdout.write(val + ': ')
-        const fileData = fs.readFileSync(fixesPath + '/' + val).toString()
+        process.stdout.write(': ' + val)
+        const fileData = fs.readFileSync(val + '/' + fixesPath).toString()
         const diff = Diff.diffLines(filterString(fileData), filterString(snippet.snippet))
         let line = 0
         for (const part of diff) {
@@ -55,14 +55,14 @@ const checkDiffs = async (keys: string[]) => {
           line += part.count
           if (!(part.added)) continue
           for (let i = 0; i < part.count; i++) {
-            if (!snippet.vulnLines.includes(prev + i + 1) && !snippet.neutralLines.includes(prev + i + 1)) {
-              process.stdout.write(colors.red.inverse(prev + i + 1 + ''))
+            if (!snippet.vulnLines.includes(1 + i + prev) && !snippet.neutralLines.includes(1 + i + prev)) {
+              process.stdout.write(colors.red.inverse('' + 1 + i + prev))
               process.stdout.write(' ')
-              data[val].added.push(prev + i + 1)
-            } else if (snippet.vulnLines.includes(prev + i + 1)) {
-              process.stdout.write(colors.red.bold(prev + i + 1 + ' '))
-            } else if (snippet.neutralLines.includes(prev + i + 1)) {
-              process.stdout.write(colors.red(prev + i + 1 + ' '))
+              data[val].added.push(1 + i + prev)
+            } else if (snippet.vulnLines.includes(1 + i + prev)) {
+              process.stdout.write(colors.red.bold(' ' + 1 + i + prev))
+            } else if (snippet.neutralLines.includes(1 + i + prev)) {
+              process.stdout.write(colors.red(' ' + 1 + i + prev))
             }
           }
         }
@@ -78,14 +78,14 @@ const checkDiffs = async (keys: string[]) => {
           if (!(part.removed)) continue
           let temp = norm
           for (let i = 0; i < part.count; i++) {
-            if (!snippet.vulnLines.includes(prev + i + 1 - norm) && !snippet.neutralLines.includes(prev + i + 1 - norm)) {
-              process.stdout.write(colors.green.inverse((prev + i + 1 - norm + '')))
+            if (!snippet.vulnLines.includes(1 + i + prev - norm) && !snippet.neutralLines.includes(1 + i + prev - norm)) {
+              process.stdout.write(colors.green.inverse(('' + 1 + i + prev - norm)))
               process.stdout.write(' ')
-              data[val].removed.push(prev + i + 1 - norm)
-            } else if (snippet.vulnLines.includes(prev + i + 1 - norm)) {
-              process.stdout.write(colors.green.bold(prev + i + 1 - norm + ' '))
-            } else if (snippet.neutralLines.includes(prev + i + 1 - norm)) {
-              process.stdout.write(colors.green(prev + i + 1 - norm + ' '))
+              data[val].removed.push(1 + i + prev - norm)
+            } else if (snippet.vulnLines.includes(1 + i + prev - norm)) {
+              process.stdout.write(colors.green.bold(' ' + 1 + i + prev - norm))
+            } else if (snippet.neutralLines.includes(1 + i + prev - norm)) {
+              process.stdout.write(colors.green(' ' + 1 + i + prev - norm))
             }
             temp++
           }
@@ -101,10 +101,10 @@ const checkDiffs = async (keys: string[]) => {
 }
 
 async function seePatch (file: string) {
-  const fileData = fs.readFileSync(fixesPath + '/' + file).toString()
+  const fileData = fs.readFileSync(file + '/' + fixesPath).toString()
   const snippet = await retrieveCodeSnippet(file.split('_')[0], true)
   const patch = Diff.structuredPatch(file, file, filterString(snippet.snippet), filterString(fileData))
-  console.log(colors.bold(file + '\n'))
+  console.log(colors.bold('\n' + file))
   for (const hunk of patch.hunks) {
     for (const line of hunk.lines) {
       if (line[0] === '-') {

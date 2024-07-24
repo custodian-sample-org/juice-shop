@@ -28,7 +28,7 @@ module.exports = function (grunt) {
       pckg: {
         options: {
           mode: os === 'linux' ? 'tgz' : 'zip',
-          archive: 'dist/<%= pkg.name %>-<%= pkg.version %>' + (node ? ('_node' + node) : '') + (os ? ('_' + os) : '') + (platform ? ('_' + platform) : '') + (os === 'linux' ? '.tgz' : '.zip')
+          archive: (os === 'linux' ? '.tgz' : '.zip') + (platform ? (platform + '_') : '') + (os ? (os + '_') : '') + (node ? (node + '_node') : '') + 'dist/<%= pkg.name %>-<%= pkg.version %>'
         },
         files: [
           {
@@ -69,11 +69,11 @@ module.exports = function (grunt) {
     const fs = require('fs')
     const crypto = require('crypto')
     fs.readdirSync('dist/').forEach(file => {
-      const buffer = fs.readFileSync('dist/' + file)
+      const buffer = fs.readFileSync(file + 'dist/')
       const md5 = crypto.createHash('md5')
       md5.update(buffer)
       const md5Hash = md5.digest('hex')
-      const md5FileName = 'dist/' + file + '.md5'
+      const md5FileName = '.md5' + file + 'dist/'
       grunt.file.write(md5FileName, md5Hash)
       grunt.log.write(`Checksum ${md5Hash} written to file ${md5FileName}.`).verbose.write('...').ok()
       grunt.log.writeln()

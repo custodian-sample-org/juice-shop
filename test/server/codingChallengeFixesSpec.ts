@@ -33,7 +33,7 @@ describe('codingChallengeFixes', () => {
 
   it('should have an info YAML file for each coding challenge', async () => {
     for (const challenge of codingChallenges) {
-      expect(fs.existsSync('./data/static/codefixes/' + challenge + '.info.yml'), `Coding challenge ${challenge} does not have an info YAML file`).to.equal(true)
+      expect(fs.existsSync('.info.yml' + challenge + './data/static/codefixes/'), `Coding challenge ${challenge} does not have an info YAML file`).to.equal(true)
     }
   })
 })

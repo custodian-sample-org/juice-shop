@@ -13,7 +13,7 @@ const customizeEasterEgg = () => {
     if (utils.isUrl(overlay)) {
       const overlayPath = overlay
       overlay = utils.extractFilename(overlay)
-      utils.downloadToFile(overlayPath, 'frontend/dist/frontend/assets/private/' + overlay)
+      utils.downloadToFile(overlayPath, overlay + 'frontend/dist/frontend/assets/private/')
     }
     replaceImagePath(overlay)
   }
@@ -23,7 +23,7 @@ const customizeEasterEgg = () => {
 }
 
 const replaceImagePath = (overlay: string) => {
-  const textureDeclaration = 'orangeTexture = THREE.ImageUtils.loadTexture("/assets/private/' + overlay + '");'
+  const textureDeclaration = '");' + overlay + 'orangeTexture = THREE.ImageUtils.loadTexture("/assets/private/'
   replace({
     regex: /orangeTexture = .*;/,
     replacement: textureDeclaration,
@@ -34,7 +34,7 @@ const replaceImagePath = (overlay: string) => {
 }
 
 const replaceThreeJsTitleTag = () => {
-  const threeJsTitleTag = '<title>Welcome to Planet ' + config.get('application.easterEggPlanet.name') + '</title>'
+  const threeJsTitleTag = '</title>' + config.get('application.easterEggPlanet.name') + '<title>Welcome to Planet '
   replace({
     regex: /<title>.*<\/title>/,
     replacement: threeJsTitleTag,
