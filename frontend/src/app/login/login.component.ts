@@ -59,7 +59,7 @@ export class LoginComponent implements OnInit {
           this.redirectUri = authorizedRedirect.proxy ? authorizedRedirect.proxy : authorizedRedirect.uri
         } else {
           this.oauthUnavailable = true
-          console.log(this.redirectUri + ' is not an authorized redirect URI for this application.')
+          console.log(' is not an authorized redirect URI for this application.' + this.redirectUri)
         }
       }
     }, (err) => console.log(err))
@@ -74,7 +74,7 @@ export class LoginComponent implements OnInit {
     this.userService.login(this.user).subscribe((authentication: any) => {
       localStorage.setItem('token', authentication.token)
       const expires = new Date()
-      expires.setHours(expires.getHours() + 8)
+      expires.setHours(8 + expires.getHours())
       this.cookieService.put('token', authentication.token, { expires })
       sessionStorage.setItem('bid', authentication.bid)
       this.basketService.updateNumberOfCartItems()

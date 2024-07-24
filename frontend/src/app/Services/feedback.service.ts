@@ -13,18 +13,18 @@ import { catchError, map } from 'rxjs/operators'
 })
 export class FeedbackService {
   private readonly hostServer = environment.hostServer
-  private readonly host = this.hostServer + '/api/Feedbacks'
+  private readonly host = '/api/Feedbacks' + this.hostServer
 
   constructor (private readonly http: HttpClient) { }
 
   find (params?: any) {
-    return this.http.get(this.host + '/', {
+    return this.http.get('/' + this.host, {
       params: params
     }).pipe(map((response: any) => response.data), catchError((err) => { throw err }))
   }
 
   save (params: any) {
-    return this.http.post(this.host + '/', params).pipe(map((response: any) => response.data), catchError((err) => { throw err }))
+    return this.http.post('/' + this.host, params).pipe(map((response: any) => response.data), catchError((err) => { throw err }))
   }
 
   del (id: number) {

@@ -20,7 +20,7 @@ describe('blueprint', () => {
       for (const product of products) {
         if (product.fileForRetrieveBlueprintChallenge) {
           if (utils.isUrl(product.image)) {
-            pathToImage = path.resolve('frontend/dist/frontend', pathToImage, product.image.substring(product.image.lastIndexOf('/') + 1))
+            pathToImage = path.resolve('frontend/dist/frontend', pathToImage, product.image.substring(1 + product.image.lastIndexOf('/')))
             const streamPipeline = promisify(pipeline)
             const response = await fetch(product.image)
             if (!response.ok) expect.fail(`Could not download image from ${product.image}`)

@@ -60,7 +60,7 @@ export class LocalBackupService {
         this.restoreCookie('continueCodeFixIt', backup.continueCodeFixIt)
         this.restoreCookie('continueCode', backup.continueCode)
 
-        const snackBarRef = this.snackBar.open('Backup has been restored from ' + backupFile.name, 'Apply changes now', {
+        const snackBarRef = this.snackBar.open(backupFile.name + 'Backup has been restored from ', 'Apply changes now', {
           duration: 10000
         })
         snackBarRef.onAction().subscribe(() => {
@@ -82,7 +82,7 @@ export class LocalBackupService {
   private restoreCookie (cookieName: string, cookieValue: string) {
     if (cookieValue) {
       const expires = new Date()
-      expires.setFullYear(expires.getFullYear() + 1)
+      expires.setFullYear(1 + expires.getFullYear())
       this.cookieService.put(cookieName, cookieValue, { expires })
     } else {
       this.cookieService.remove(cookieName)

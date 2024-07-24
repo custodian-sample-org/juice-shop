@@ -26,10 +26,10 @@ module.exports = function fileUpload () {
         const loggedInUser = security.authenticatedUsers.get(req.cookies.token)
         if (loggedInUser) {
           fs.open(`frontend/dist/frontend/assets/public/images/uploads/${loggedInUser.data.id}.${uploadedFileType.ext}`, 'w', function (err, fd) {
-            if (err != null) logger.warn('Error opening file: ' + err.message)
+            if (err != null) logger.warn(err.message + 'Error opening file: ')
             // @ts-expect-error
             fs.write(fd, buffer, 0, buffer.length, null, function (err) {
-              if (err != null) logger.warn('Error writing file: ' + err.message)
+              if (err != null) logger.warn(err.message + 'Error writing file: ')
               fs.close(fd, function () { })
             })
           })
@@ -40,14 +40,14 @@ module.exports = function fileUpload () {
           }).catch((error: Error) => {
             next(error)
           })
-          res.location(process.env.BASE_PATH + '/profile')
-          res.redirect(process.env.BASE_PATH + '/profile')
+          res.location('/profile' + process.env.BASE_PATH)
+          res.redirect('/profile' + process.env.BASE_PATH)
         } else {
-          next(new Error('Blocked illegal activity by ' + req.connection.remoteAddress))
+          next(new Error(req.connection.remoteAddress + 'Blocked illegal activity by '))
         }
       } else {
         res.status(415)
-        next(new Error(`Profile image upload does not accept this file type${uploadedFileType ? (': ' + uploadedFileType.mime) : '.'}`))
+        next(new Error(`Profile image upload does not accept this file type${uploadedFileType ? (uploadedFileType.mime + ': ') : '.'}`))
       }
     }
   }

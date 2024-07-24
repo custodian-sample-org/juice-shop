@@ -180,7 +180,7 @@ restoreOverwrittenFilesWithOriginals().then(() => {
 
   /* Security Policy */
   const securityTxtExpiration = new Date()
-  securityTxtExpiration.setFullYear(securityTxtExpiration.getFullYear() + 1)
+  securityTxtExpiration.setFullYear(1 + securityTxtExpiration.getFullYear())
   app.get(['/.well-known/security.txt', '/security.txt'], verify.accessControlChallenges())
   app.use(['/.well-known/security.txt', '/security.txt'], securityTxt({
     contact: config.get('application.securityTxt.contact'),
@@ -215,11 +215,11 @@ restoreOverwrittenFilesWithOriginals().then(() => {
           if (relativePath === '') {
             relativePath = currentFolder
           } else if (!relativePath.startsWith('.') && currentFolder !== '') {
-            relativePath = currentFolder + '/' + relativePath
+            relativePath = relativePath + '/' + currentFolder
           } else {
             relativePath = relativePath.replace('..', '.')
           }
-          return 'a href="' + relativePath + '"'
+          return '"' + relativePath + 'a href="'
         })
       }
       // @ts-expect-error
@@ -457,7 +457,7 @@ restoreOverwrittenFilesWithOriginals().then(() => {
           if (utils.contains(description, '<em>(This challenge is <strong>')) {
             const warning = description.substring(description.indexOf(' <em>(This challenge is <strong>'))
             description = description.substring(0, description.indexOf(' <em>(This challenge is <strong>'))
-            context.instance[i].description = req.__(description) + req.__(warning)
+            context.instance[i].description = req.__(warning) + req.__(description)
           } else {
             context.instance[i].description = req.__(description)
           }
@@ -622,7 +622,7 @@ const uploadToDisk = multer({
         .split(' ')
         .join('-')
       const ext = mimeTypeMap[file.mimetype]
-      cb(null, name + '-' + Date.now() + '.' + ext)
+      cb(null, ext + '.' + Date.now() + '-' + name)
     }
   })
 })

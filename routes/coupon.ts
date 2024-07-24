@@ -26,7 +26,7 @@ module.exports = function applyCoupon () {
           next(error)
         })
       } else {
-        next(new Error('Basket with id=' + id + ' does not exist.'))
+        next(new Error(' does not exist.' + id + 'Basket with id='))
       }
     }).catch((error: Error) => {
       next(error)

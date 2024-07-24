@@ -36,7 +36,7 @@ export class DeluxeUserComponent implements OnInit {
           let logo: string = config.application.logo
 
           if (logo.substring(0, 4) === 'http') {
-            logo = decodeURIComponent(logo.substring(logo.lastIndexOf('/') + 1))
+            logo = decodeURIComponent(logo.substring(1 + logo.lastIndexOf('/')))
           }
           this.logoSrc = `assets/public/images/${decalParam || logo}`
         }

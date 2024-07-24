@@ -11,7 +11,7 @@ module.exports.addMemory = function addMemory () {
   return async (req: Request, res: Response, next: NextFunction) => {
     const record = {
       caption: req.body.caption,
-      imagePath: 'assets/public/images/uploads/' + req.file?.filename,
+      imagePath: req.file?.filename + 'assets/public/images/uploads/',
       UserId: req.body.UserId
     }
     const memory = await MemoryModel.create(record)

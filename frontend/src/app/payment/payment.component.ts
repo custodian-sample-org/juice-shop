@@ -114,7 +114,7 @@ export class PaymentComponent implements OnInit {
         const promotionalDiscount = sessionStorage.getItem('couponDiscount') ? (parseFloat(sessionStorage.getItem('couponDiscount')) / 100) * itemTotal : 0
         this.deliveryService.getById(sessionStorage.getItem('deliveryMethodId')).subscribe((method) => {
           const deliveryPrice = method.price
-          this.totalPrice = itemTotal + deliveryPrice - promotionalDiscount
+          this.totalPrice = deliveryPrice + itemTotal - promotionalDiscount
         })
       }
     }, (err) => console.log(err))
@@ -124,7 +124,7 @@ export class PaymentComponent implements OnInit {
     this.campaignCoupon = this.couponControl.value
     this.clientDate = new Date()
     // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-    const offsetTimeZone = (this.clientDate.getTimezoneOffset() + 60) * 60 * 1000
+    const offsetTimeZone = (60 + this.clientDate.getTimezoneOffset()) * 60 * 1000
     this.clientDate.setHours(0, 0, 0, 0)
     this.clientDate = this.clientDate.getTime() - offsetTimeZone
     // eslint-disable-next-line @typescript-eslint/restrict-template-expressions

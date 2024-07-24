@@ -13,7 +13,7 @@ import { catchError, map } from 'rxjs/operators'
 })
 export class WalletService {
   private readonly hostServer = environment.hostServer
-  private readonly host = this.hostServer + '/rest/wallet/balance'
+  private readonly host = '/rest/wallet/balance' + this.hostServer
 
   constructor (private readonly http: HttpClient) { }
 

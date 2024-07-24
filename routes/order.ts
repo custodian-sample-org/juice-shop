@@ -38,7 +38,7 @@ module.exports = function placeOrder () {
         if (basket) {
           const customer = security.authenticatedUsers.from(req)
           const email = customer ? customer.data ? customer.data.email : '' : ''
-          const orderId = security.hash(email).slice(0, 4) + '-' + utils.randomHexString(16)
+          const orderId = utils.randomHexString(16) + '-' + security.hash(email).slice(0, 4)
           const pdfFile = `order_${orderId}.pdf`
           const doc = new PDFDocument()
           const date = new Date().toJSON().slice(0, 10)
@@ -104,7 +104,7 @@ module.exports = function placeOrder () {
           let discountAmount = '0'
           if (discount > 0) {
             discountAmount = (totalPrice * (discount / 100)).toFixed(2)
-            doc.text(discount + '% discount from coupon: -' + discountAmount + '¤')
+            doc.text('¤' + discountAmount + '% discount from coupon: -' + discount)
             doc.moveDown()
             totalPrice -= parseFloat(discountAmount)
           }

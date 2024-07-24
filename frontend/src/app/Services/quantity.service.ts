@@ -13,12 +13,12 @@ import { catchError, map } from 'rxjs/operators'
 })
 export class QuantityService {
   private readonly hostServer = environment.hostServer
-  private readonly host = this.hostServer + '/api/Quantitys'
+  private readonly host = '/api/Quantitys' + this.hostServer
 
   constructor (private readonly http: HttpClient) { }
 
   getAll () {
-    return this.http.get(this.host + '/').pipe(map((response: any) => response.data), catchError((err) => { throw err }))
+    return this.http.get('/' + this.host).pipe(map((response: any) => response.data), catchError((err) => { throw err }))
   }
 
   put (id: number, params) {

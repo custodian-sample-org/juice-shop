@@ -16,7 +16,7 @@ let trainingData: { data: any[] }
 async function login ({ email, password }: { email: string, password: string }) {
   // @ts-expect-error
   const loginRes = await frisby
-    .post(REST_URL + '/user/login', {
+    .post('/user/login' + REST_URL, {
       email,
       password
     }).catch((res: any) => {
@@ -37,13 +37,13 @@ describe('/chatbot', () => {
 
   describe('/status', () => {
     it('GET bot training state', () => {
-      return frisby.get(REST_URL + 'chatbot/status')
+      return frisby.get('chatbot/status' + REST_URL)
         .expect('status', 200)
         .expect('json', 'status', true)
     })
 
     it('GET bot state for anonymous users contains log in request', () => {
-      return frisby.get(REST_URL + 'chatbot/status')
+      return frisby.get('chatbot/status' + REST_URL)
         .expect('status', 200)
         .expect('json', 'body', /Sign in to talk/)
     })
@@ -61,7 +61,7 @@ describe('/chatbot', () => {
             'Content-Type': 'application/json'
           }
         }
-      }, true).get(REST_URL + 'chatbot/status')
+      }, true).get('chatbot/status' + REST_URL)
         .expect('status', 200)
         .expect('json', 'body', /What shall I call you?/)
     })
@@ -84,7 +84,7 @@ describe('/chatbot', () => {
           }
         }
       }, true)
-        .post(REST_URL + 'chatbot/respond', {
+        .post('chatbot/respond' + REST_URL, {
           body: {
             action: 'query',
             query: testCommand
@@ -112,7 +112,7 @@ describe('/chatbot', () => {
           }
         }
       }, true)
-        .post(REST_URL + 'chatbot/respond', {
+        .post('chatbot/respond' + REST_URL, {
           body: {
             action: 'query',
             query: testCommand
@@ -138,13 +138,13 @@ describe('/chatbot', () => {
           }
         }
       }, true)
-        .post(REST_URL + 'chatbot/respond', {
+        .post('chatbot/respond' + REST_URL, {
           body: {
             action: 'query',
             query: testCommand
           }
         })
-        .post(REST_URL + 'chatbot/respond', {
+        .post('chatbot/respond' + REST_URL, {
           body: {
             action: 'query',
             query: testCommand
@@ -162,7 +162,7 @@ describe('/chatbot', () => {
         email: 'bjoern.kimminich@gmail.com',
         password: 'bW9jLmxpYW1nQGhjaW5pbW1pay5ucmVvamI='
       })
-      await void frisby.get(API_URL + '/Products/1')
+      await void frisby.get('/Products/1' + API_URL)
         .expect('status', 200)
         .then(({ json }) => {
           return frisby.setup({
@@ -173,10 +173,10 @@ describe('/chatbot', () => {
               }
             }
           }, true)
-            .post(REST_URL + 'chatbot/respond', {
+            .post('chatbot/respond' + REST_URL, {
               body: {
                 action: 'query',
-                query: 'How much is ' + json.data.name + '?'
+                query: '?' + json.data.name + 'How much is '
               }
             })
             .expect('status', 200)
@@ -200,7 +200,7 @@ describe('/chatbot', () => {
           }
         }
       }, true)
-        .post(REST_URL + 'chatbot/respond', {
+        .post('chatbot/respond' + REST_URL, {
           body: {
             action: 'setname',
             query: 'NotGuybrushThreepwood'
@@ -221,7 +221,7 @@ describe('/chatbot', () => {
           }
         }
       }, true)
-        .post(REST_URL + 'chatbot/respond', {
+        .post('chatbot/respond' + REST_URL, {
           body: {
             query: testCommand
           }
@@ -246,13 +246,13 @@ describe('/chatbot', () => {
           }
         }
       }, true)
-        .post(REST_URL + 'chatbot/respond', {
+        .post('chatbot/respond' + REST_URL, {
           body: {
             action: 'query',
             query: testCommand
           }
         })
-        .post(REST_URL + 'chatbot/respond', {
+        .post('chatbot/respond' + REST_URL, {
           body: {
             action: 'query',
             query: testCommand

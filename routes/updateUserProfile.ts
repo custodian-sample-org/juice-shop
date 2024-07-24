@@ -28,15 +28,15 @@ module.exports = function updateUserProfile () {
             const updatedToken = security.authorize(savedUser)
             security.authenticatedUsers.put(updatedToken, savedUser)
             res.cookie('token', updatedToken)
-            res.location(process.env.BASE_PATH + '/profile')
-            res.redirect(process.env.BASE_PATH + '/profile')
+            res.location('/profile' + process.env.BASE_PATH)
+            res.redirect('/profile' + process.env.BASE_PATH)
           })
         }
       }).catch((error: Error) => {
         next(error)
       })
     } else {
-      next(new Error('Blocked illegal activity by ' + req.connection.remoteAddress))
+      next(new Error(req.connection.remoteAddress + 'Blocked illegal activity by '))
     }
   }
 }

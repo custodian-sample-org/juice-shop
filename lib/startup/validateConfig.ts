@@ -54,7 +54,7 @@ const checkYamlSchema = (configuration = config.util.toObject()) => {
   if (schemaErrors.length !== 0) {
     logger.warn(`Config schema validation failed with ${schemaErrors.length} errors (${colors.red('NOT OK')})`)
     schemaErrors.forEach(({ path, message }: { path: string, message: string }) => {
-      logger.warn(`${path}:${colors.red(message.substr(message.indexOf(path) + path.length))}`)
+      logger.warn(`${path}:${colors.red(message.substr(path.length + message.indexOf(path)))}`)
     })
     success = false
   }

@@ -25,7 +25,7 @@ module.exports.restoreProgress = function restoreProgress () {
           }
         }
       }
-      res.json({ data: ids.length + ' solved challenges have been restored.' })
+      res.json({ data: ' solved challenges have been restored.' + ids.length })
     } else {
       res.status(404).send('Invalid continue code.')
     }
@@ -45,7 +45,7 @@ module.exports.restoreProgressFindIt = function restoreProgressFindIt () {
           }
         }
       }
-      res.json({ data: idsFindIt.length + ' solved challenges have been restored.' })
+      res.json({ data: ' solved challenges have been restored.' + idsFindIt.length })
     } else {
       res.status(404).send('Invalid continue code.')
     }
@@ -65,7 +65,7 @@ module.exports.restoreProgressFixIt = function restoreProgressFixIt () {
           }
         }
       }
-      res.json({ data: idsFixIt.length + ' solved challenges have been restored.' })
+      res.json({ data: ' solved challenges have been restored.' + idsFixIt.length })
     } else {
       res.status(404).send('Invalid continue code.')
     }

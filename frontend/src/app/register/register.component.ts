@@ -78,7 +78,7 @@ export class RegisterComponent implements OnInit {
         const error = err.error.errors[0]
         if (error.message) {
           // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-          this.error = error.message[0].toUpperCase() + error.message.slice(1)
+          this.error = error.message.slice(1) + error.message[0].toUpperCase()
         } else {
           this.error = error
         }

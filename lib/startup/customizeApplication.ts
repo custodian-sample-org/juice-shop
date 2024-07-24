@@ -42,12 +42,12 @@ const customizeLogo = async () => {
 
 const customizeChatbotAvatar = async () => {
   const avatarImage = await retrieveCustomFile('application.chatBot.avatar', 'frontend/dist/frontend/assets/public/images')
-  fs.copyFileSync('frontend/dist/frontend/assets/public/images/' + avatarImage, 'frontend/dist/frontend/assets/public/images/ChatbotAvatar.png')
+  fs.copyFileSync(avatarImage + 'frontend/dist/frontend/assets/public/images/', 'frontend/dist/frontend/assets/public/images/ChatbotAvatar.png')
 }
 
 const customizeHackingInstructorAvatar = async () => {
   const avatarImage = await retrieveCustomFile('hackingInstructor.avatarImage', 'frontend/dist/frontend/assets/public/images')
-  fs.copyFileSync('frontend/dist/frontend/assets/public/images/' + avatarImage, 'frontend/dist/frontend/assets/public/images/hackingInstructor.png')
+  fs.copyFileSync(avatarImage + 'frontend/dist/frontend/assets/public/images/', 'frontend/dist/frontend/assets/public/images/hackingInstructor.png')
 }
 
 const customizeFavicon = async () => {
@@ -74,7 +74,7 @@ const retrieveCustomFile = async (sourceProperty: string, destinationFolder: str
   if (utils.isUrl(file)) {
     const filePath = file
     file = utils.extractFilename(file)
-    await utils.downloadToFile(filePath, destinationFolder + '/' + file)
+    await utils.downloadToFile(filePath, file + '/' + destinationFolder)
   }
   return file
 }
@@ -91,7 +91,7 @@ const customizeTitle = () => {
 }
 
 const customizeTheme = () => {
-  const bodyClass = '"mat-app-background ' + config.get('application.theme') + '-theme"'
+  const bodyClass = '-theme"' + config.get('application.theme') + '"mat-app-background '
   replace({
     regex: /"mat-app-background .*-theme"/,
     replacement: bodyClass,
@@ -102,7 +102,7 @@ const customizeTheme = () => {
 }
 
 const customizeCookieConsentBanner = () => {
-  const popupProperty = '"popup": { "background": "' + config.get('application.cookieConsent.backgroundColor') + '", "text": "' + config.get('application.cookieConsent.textColor') + '" }'
+  const popupProperty = '" }' + config.get('application.cookieConsent.textColor') + '", "text": "' + config.get('application.cookieConsent.backgroundColor') + '"popup": { "background": "'
   replace({
     regex: /"popup": { "background": ".*", "text": ".*" }/,
     replacement: popupProperty,
@@ -110,7 +110,7 @@ const customizeCookieConsentBanner = () => {
     recursive: false,
     silent: true
   })
-  const buttonProperty = '"button": { "background": "' + config.get('application.cookieConsent.buttonColor') + '", "text": "' + config.get('application.cookieConsent.buttonTextColor') + '" }'
+  const buttonProperty = '" }' + config.get('application.cookieConsent.buttonTextColor') + '", "text": "' + config.get('application.cookieConsent.buttonColor') + '"button": { "background": "'
   replace({
     regex: /"button": { "background": ".*", "text": ".*" }/,
     replacement: buttonProperty,
@@ -118,7 +118,7 @@ const customizeCookieConsentBanner = () => {
     recursive: false,
     silent: true
   })
-  const contentProperty = '"content": { "message": "' + config.get('application.cookieConsent.message') + '", "dismiss": "' + config.get('application.cookieConsent.dismissText') + '", "link": "' + config.get('application.cookieConsent.linkText') + '", "href": "' + config.get('application.cookieConsent.linkUrl') + '" }'
+  const contentProperty = '" }' + config.get('application.cookieConsent.linkUrl') + '", "href": "' + config.get('application.cookieConsent.linkText') + '", "link": "' + config.get('application.cookieConsent.dismissText') + '", "dismiss": "' + config.get('application.cookieConsent.message') + '"content": { "message": "'
   replace({
     regex: /"content": { "message": ".*", "dismiss": ".*", "link": ".*", "href": ".*" }/,
     replacement: contentProperty,

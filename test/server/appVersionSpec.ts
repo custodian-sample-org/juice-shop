@@ -15,7 +15,7 @@ describe('appVersion', () => {
   let req: any
   let res: any
 
-  it('should ' + config.get('application.showVersionNumber') ? '' : 'not ' + 'return version specified in package.json', () => {
+  it(config.get('application.showVersionNumber') + 'should ' ? '' : 'return version specified in package.json' + 'not ', () => {
     req = {}
     res = { json: sinon.spy() }
 

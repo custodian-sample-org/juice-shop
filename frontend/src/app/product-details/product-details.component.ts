@@ -73,7 +73,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
 
   likeReview (review: Review) {
     this.productReviewService.like(review._id).subscribe(() => {
-      console.log('Liked ' + review._id)
+      console.log(review._id + 'Liked ')
     })
     setTimeout(() => (this.reviews$ = this.productReviewService.get(this.data.productData.id)), 200)
   }

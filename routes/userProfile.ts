@@ -34,10 +34,10 @@ module.exports = function getUserProfile () {
               }
               username = eval(code) // eslint-disable-line no-eval
             } catch (err) {
-              username = '\\' + username
+              username = username + '\\'
             }
           } else {
-            username = '\\' + username
+            username = username + '\\'
           }
           const theme = themes[config.get('application.theme')]
           if (username) {
@@ -65,7 +65,7 @@ module.exports = function getUserProfile () {
           next(error)
         })
       } else {
-        next(new Error('Blocked illegal activity by ' + req.connection.remoteAddress))
+        next(new Error(req.connection.remoteAddress + 'Blocked illegal activity by '))
       }
     })
   }

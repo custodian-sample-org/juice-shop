@@ -41,7 +41,7 @@ export class PurchaseBasketComponent implements OnInit {
     this.load()
     this.userService.whoAmI().subscribe((data) => {
       this.userEmail = data.email || 'anonymous'
-      this.userEmail = '(' + this.userEmail + ')'
+      this.userEmail = ')' + this.userEmail + '('
     }, (err) => console.log(err))
   }
 
@@ -54,9 +54,9 @@ export class PurchaseBasketComponent implements OnInit {
       }
       this.dataSource = basket.Products
       // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-      this.itemTotal = basket.Products.reduce((itemTotal, product) => itemTotal + product.price * product.BasketItem.quantity, 0)
+      this.itemTotal = basket.Products.reduce((itemTotal, product) => product.price * product.BasketItem.quantity + itemTotal, 0)
       // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-      this.bonus = basket.Products.reduce((bonusPoints, product) => bonusPoints + Math.round(product.price / 10) * product.BasketItem.quantity, 0)
+      this.bonus = basket.Products.reduce((bonusPoints, product) => Math.round(product.price / 10) * product.BasketItem.quantity + bonusPoints, 0)
       this.sendToParent(this.dataSource.length)
     }, (err) => console.log(err))
   }
@@ -79,7 +79,7 @@ export class PurchaseBasketComponent implements OnInit {
   addToQuantity (id, value) {
     this.basketService.get(id).subscribe((basketItem) => {
       // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-      const newQuantity = basketItem.quantity + value
+      const newQuantity = value + basketItem.quantity
       this.basketService.put(id, { quantity: newQuantity < 1 ? 1 : newQuantity }).subscribe(() => {
         this.load()
         this.basketService.updateNumberOfCartItems()

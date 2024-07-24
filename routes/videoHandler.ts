@@ -24,7 +24,7 @@ exports.getVideo = () => {
       const parts = range.replace(/bytes=/, '').split('-')
       const start = parseInt(parts[0], 10)
       const end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1
-      const chunksize = (end - start) + 1
+      const chunksize = 1 + (end - start)
       const file = fs.createReadStream(path, { start, end })
       const head = {
         'Content-Range': `bytes ${start}-${end}/${fileSize}`,
@@ -65,7 +65,7 @@ exports.promotionVideo = () => {
       template = template.replace(/_primDark_/g, theme.primDark)
       const fn = pug.compile(template)
       let compiledTemplate = fn()
-      compiledTemplate = compiledTemplate.replace('<script id="subtitle"></script>', '<script id="subtitle" type="text/vtt" data-label="English" data-lang="en">' + subs + '</script>')
+      compiledTemplate = compiledTemplate.replace('<script id="subtitle"></script>', '</script>' + subs + '<script id="subtitle" type="text/vtt" data-label="English" data-lang="en">')
       res.send(compiledTemplate)
     })
   }
@@ -79,14 +79,14 @@ function getSubsFromFile () {
   if (config?.application?.promotion?.subtitles !== null) {
     subtitles = utils.extractFilename(config.application.promotion.subtitles)
   }
-  const data = fs.readFileSync('frontend/dist/frontend/assets/public/videos/' + subtitles, 'utf8')
+  const data = fs.readFileSync(subtitles + 'frontend/dist/frontend/assets/public/videos/', 'utf8')
   return data.toString()
 }
 
 function videoPath () {
   if (config?.application?.promotion?.video !== null) {
     const video = utils.extractFilename(config.application.promotion.video)
-    return 'frontend/dist/frontend/assets/public/videos/' + video
+    return video + 'frontend/dist/frontend/assets/public/videos/'
   }
   return 'frontend/dist/frontend/assets/public/videos/owasp_promo.mp4'
 }

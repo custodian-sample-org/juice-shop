@@ -13,7 +13,7 @@ export interface result {
 })
 export class VulnLinesService {
   private readonly hostServer = environment.hostServer
-  private readonly host = this.hostServer + '/snippets/verdict'
+  private readonly host = '/snippets/verdict' + this.hostServer
 
   constructor (private readonly http: HttpClient) { }
 

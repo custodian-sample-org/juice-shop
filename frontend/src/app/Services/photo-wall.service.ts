@@ -13,7 +13,7 @@ import { catchError, map } from 'rxjs/operators'
 })
 export class PhotoWallService {
   private readonly hostServer = environment.hostServer
-  private readonly host = this.hostServer + '/rest/memories'
+  private readonly host = '/rest/memories' + this.hostServer
 
   constructor (private readonly http: HttpClient) { }
 
@@ -25,6 +25,6 @@ export class PhotoWallService {
   }
 
   get () {
-    return this.http.get(this.host + '/').pipe(map((response: any) => response.data), catchError((err: Error) => { throw err }))
+    return this.http.get('/' + this.host).pipe(map((response: any) => response.data), catchError((err: Error) => { throw err }))
   }
 }

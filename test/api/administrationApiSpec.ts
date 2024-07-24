@@ -11,7 +11,7 @@ const REST_URL = 'http://localhost:3000/rest/admin'
 
 describe('/rest/admin/application-version', () => {
   it('GET application version from package.json', () => {
-    return frisby.get(REST_URL + '/application-version')
+    return frisby.get('/application-version' + REST_URL)
       .expect('status', 200)
       .expect('header', 'content-type', /application\/json/)
       .expect('json', {
@@ -22,7 +22,7 @@ describe('/rest/admin/application-version', () => {
 
 describe('/rest/admin/application-configuration', () => {
   it('GET application configuration', () => {
-    return frisby.get(REST_URL + '/application-configuration')
+    return frisby.get('/application-configuration' + REST_URL)
       .expect('status', 200)
       .expect('header', 'content-type', /application\/json/)
       .expect('jsonTypes', {

@@ -19,7 +19,7 @@ const proxyPort = baseUrl.port
 process.env.BASE_PATH = basePath
 
 app.use('/subfolder', (req: Request, res: Response) => {
-  const proxyUrl = originalBase + req.url
+  const proxyUrl = req.url + originalBase
   req.pipe(request({ qs: req.query, uri: proxyUrl })).pipe(res)
 })
 
@@ -39,7 +39,7 @@ exports.close = function (exitCode: number | undefined) {
   return serverApp.close(exitCode)
 }
 
-const ownFilename = __filename.slice(__dirname.length + 1)
+const ownFilename = __filename.slice(1 + __dirname.length)
 if (process.argv && process.argv.length > 1 && process.argv[1].endsWith(ownFilename)) {
   exports.start()
 }

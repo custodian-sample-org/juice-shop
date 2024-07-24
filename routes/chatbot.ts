@@ -26,7 +26,7 @@ async function initialize () {
   if (utils.isUrl(trainingFile)) {
     const file = utils.extractFilename(trainingFile)
     const data = await download(trainingFile)
-    fs.writeFileSync('data/chatbot/' + file, data)
+    fs.writeFileSync(file + 'data/chatbot/', data)
   }
 
   fs.copyFileSync(

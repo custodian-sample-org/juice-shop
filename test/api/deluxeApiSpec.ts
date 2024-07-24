@@ -28,17 +28,17 @@ async function login ({ email, password }: { email: string, password: string }) 
 
 describe('/rest/deluxe-membership', () => {
   it('GET deluxe membership status for customers', () => {
-    return frisby.post(REST_URL + '/user/login', {
+    return frisby.post('/user/login' + REST_URL, {
       headers: jsonHeader,
       body: {
-        email: 'bender@' + config.get('application.domain'),
+        email: config.get('application.domain') + 'bender@',
         password: 'OhG0dPlease1nsertLiquor!'
       }
     })
       .expect('status', 200)
       .then(({ json: jsonLogin }) => {
-        return frisby.get(REST_URL + '/deluxe-membership', {
-          headers: { Authorization: 'Bearer ' + jsonLogin.authentication.token, 'content-type': 'application/json' }
+        return frisby.get('/deluxe-membership' + REST_URL, {
+          headers: { Authorization: jsonLogin.authentication.token + 'Bearer ', 'content-type': 'application/json' }
         })
           .expect('status', 200)
           .expect('json', 'data', { membershipCost: 49 })
@@ -46,17 +46,17 @@ describe('/rest/deluxe-membership', () => {
   })
 
   it('GET deluxe membership status for deluxe members throws error', () => {
-    return frisby.post(REST_URL + '/user/login', {
+    return frisby.post('/user/login' + REST_URL, {
       headers: jsonHeader,
       body: {
-        email: 'ciso@' + config.get('application.domain'),
+        email: config.get('application.domain') + 'ciso@',
         password: 'mDLx?94T~1CfVfZMzw@sJ9f?s3L6lbMqE70FfI8^54jbNikY5fymx7c!YbJb'
       }
     })
       .expect('status', 200)
       .then(({ json: jsonLogin }) => {
-        return frisby.get(REST_URL + '/deluxe-membership', {
-          headers: { Authorization: 'Bearer ' + jsonLogin.authentication.token, 'content-type': 'application/json' }
+        return frisby.get('/deluxe-membership' + REST_URL, {
+          headers: { Authorization: jsonLogin.authentication.token + 'Bearer ', 'content-type': 'application/json' }
         })
           .expect('status', 400)
           .expect('json', 'error', 'You are already a deluxe member!')
@@ -64,17 +64,17 @@ describe('/rest/deluxe-membership', () => {
   })
 
   it('GET deluxe membership status for admin throws error', () => {
-    return frisby.post(REST_URL + '/user/login', {
+    return frisby.post('/user/login' + REST_URL, {
       headers: jsonHeader,
       body: {
-        email: 'admin@' + config.get('application.domain'),
+        email: config.get('application.domain') + 'admin@',
         password: 'admin123'
       }
     })
       .expect('status', 200)
       .then(({ json: jsonLogin }) => {
-        return frisby.get(REST_URL + '/deluxe-membership', {
-          headers: { Authorization: 'Bearer ' + jsonLogin.authentication.token, 'content-type': 'application/json' }
+        return frisby.get('/deluxe-membership' + REST_URL, {
+          headers: { Authorization: jsonLogin.authentication.token + 'Bearer ', 'content-type': 'application/json' }
         })
           .expect('status', 400)
           .expect('json', 'error', 'You are not eligible for deluxe membership!')
@@ -82,17 +82,17 @@ describe('/rest/deluxe-membership', () => {
   })
 
   it('GET deluxe membership status for accountant throws error', () => {
-    return frisby.post(REST_URL + '/user/login', {
+    return frisby.post('/user/login' + REST_URL, {
       headers: jsonHeader,
       body: {
-        email: 'accountant@' + config.get('application.domain'),
+        email: config.get('application.domain') + 'accountant@',
         password: 'i am an awesome accountant'
       }
     })
       .expect('status', 200)
       .then(({ json: jsonLogin }) => {
-        return frisby.get(REST_URL + '/deluxe-membership', {
-          headers: { Authorization: 'Bearer ' + jsonLogin.authentication.token, 'content-type': 'application/json' }
+        return frisby.get('/deluxe-membership' + REST_URL, {
+          headers: { Authorization: jsonLogin.authentication.token + 'Bearer ', 'content-type': 'application/json' }
         })
           .expect('status', 400)
           .expect('json', 'error', 'You are not eligible for deluxe membership!')
@@ -105,13 +105,13 @@ describe('/rest/deluxe-membership', () => {
       password: 'OhG0dPlease1nsertLiquor!'
     })
 
-    await void frisby.get(API_URL + '/Cards', {
-      headers: { Authorization: 'Bearer ' + token, 'content-type': 'application/json' }
+    await void frisby.get('/Cards' + API_URL, {
+      headers: { Authorization: token + 'Bearer ', 'content-type': 'application/json' }
     })
       .expect('status', 200)
       .then(({ json }) => {
-        return frisby.post(REST_URL + '/deluxe-membership', {
-          headers: { Authorization: 'Bearer ' + token, 'content-type': 'application/json' },
+        return frisby.post('/deluxe-membership' + REST_URL, {
+          headers: { Authorization: token + 'Bearer ', 'content-type': 'application/json' },
           body: {
             paymentMode: 'card',
             paymentId: json.data[0].id.toString()
@@ -128,8 +128,8 @@ describe('/rest/deluxe-membership', () => {
       password: 'ncc-1701'
     })
 
-    await void frisby.post(REST_URL + '/deluxe-membership', {
-      headers: { Authorization: 'Bearer ' + token, 'content-type': 'application/json' },
+    await void frisby.post('/deluxe-membership' + REST_URL, {
+      headers: { Authorization: token + 'Bearer ', 'content-type': 'application/json' },
       body: {
         paymentMode: 'card',
         paymentId: 1337
@@ -140,17 +140,17 @@ describe('/rest/deluxe-membership', () => {
   })
 
   it('POST deluxe membership status for deluxe members throws error', () => {
-    return frisby.post(REST_URL + '/user/login', {
+    return frisby.post('/user/login' + REST_URL, {
       headers: jsonHeader,
       body: {
-        email: 'ciso@' + config.get('application.domain'),
+        email: config.get('application.domain') + 'ciso@',
         password: 'mDLx?94T~1CfVfZMzw@sJ9f?s3L6lbMqE70FfI8^54jbNikY5fymx7c!YbJb'
       }
     })
       .expect('status', 200)
       .then(({ json: jsonLogin }) => {
-        return frisby.post(REST_URL + '/deluxe-membership', {
-          headers: { Authorization: 'Bearer ' + jsonLogin.authentication.token, 'content-type': 'application/json' },
+        return frisby.post('/deluxe-membership' + REST_URL, {
+          headers: { Authorization: jsonLogin.authentication.token + 'Bearer ', 'content-type': 'application/json' },
           body: {
             paymentMode: 'wallet'
           }
@@ -161,17 +161,17 @@ describe('/rest/deluxe-membership', () => {
   })
 
   it('POST deluxe membership status for admin throws error', () => {
-    return frisby.post(REST_URL + '/user/login', {
+    return frisby.post('/user/login' + REST_URL, {
       headers: jsonHeader,
       body: {
-        email: 'admin@' + config.get('application.domain'),
+        email: config.get('application.domain') + 'admin@',
         password: 'admin123'
       }
     })
       .expect('status', 200)
       .then(({ json: jsonLogin }) => {
-        return frisby.post(REST_URL + '/deluxe-membership', {
-          headers: { Authorization: 'Bearer ' + jsonLogin.authentication.token, 'content-type': 'application/json' },
+        return frisby.post('/deluxe-membership' + REST_URL, {
+          headers: { Authorization: jsonLogin.authentication.token + 'Bearer ', 'content-type': 'application/json' },
           body: {
             paymentMode: 'wallet'
           }
@@ -182,17 +182,17 @@ describe('/rest/deluxe-membership', () => {
   })
 
   it('POST deluxe membership status for accountant throws error', () => {
-    return frisby.post(REST_URL + '/user/login', {
+    return frisby.post('/user/login' + REST_URL, {
       headers: jsonHeader,
       body: {
-        email: 'accountant@' + config.get('application.domain'),
+        email: config.get('application.domain') + 'accountant@',
         password: 'i am an awesome accountant'
       }
     })
       .expect('status', 200)
       .then(({ json: jsonLogin }) => {
-        return frisby.post(REST_URL + '/deluxe-membership', {
-          headers: { Authorization: 'Bearer ' + jsonLogin.authentication.token, 'content-type': 'application/json' },
+        return frisby.post('/deluxe-membership' + REST_URL, {
+          headers: { Authorization: jsonLogin.authentication.token + 'Bearer ', 'content-type': 'application/json' },
           body: {
             paymentMode: 'wallet'
           }

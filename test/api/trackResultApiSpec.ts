@@ -10,7 +10,7 @@ const REST_URL = 'http://localhost:3000/rest'
 
 describe('/rest/track-order/:id', () => {
   it('GET tracking results for the order id', () => {
-    return frisby.get(REST_URL + '/track-order/5267-f9cd5882f54c75a3')
+    return frisby.get('/track-order/5267-f9cd5882f54c75a3' + REST_URL)
       .expect('status', 200)
       .expect('json', {})
   })
@@ -22,7 +22,7 @@ describe('/rest/track-order/:id', () => {
       price: Joi.number(),
       total: Joi.number()
     })
-    return frisby.get(REST_URL + '/track-order/%27%20%7C%7C%20true%20%7C%7C%20%27')
+    return frisby.get('/track-order/%27%20%7C%7C%20true%20%7C%7C%20%27' + REST_URL)
       .expect('status', 200)
       .expect('header', 'content-type', /application\/json/)
       .expect('jsonTypes', 'data.*', {

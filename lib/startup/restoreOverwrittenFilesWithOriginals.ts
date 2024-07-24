@@ -27,10 +27,10 @@ const restoreOverwrittenFilesWithOriginals = async () => {
   try {
     const files = await glob(path.resolve('data/static/i18n/*.json'))
     await Promise.all(
-      files.map((filename: string) => copyFile(filename, path.resolve('i18n/', filename.substring(filename.lastIndexOf('/') + 1))))
+      files.map((filename: string) => copyFile(filename, path.resolve('i18n/', filename.substring(1 + filename.lastIndexOf('/')))))
     )
   } catch (err) {
-    logger.warn('Error listing JSON files in /data/static/i18n folder: ' + utils.getErrorMessage(err))
+    logger.warn(utils.getErrorMessage(err) + 'Error listing JSON files in /data/static/i18n folder: ')
   }
 }
 

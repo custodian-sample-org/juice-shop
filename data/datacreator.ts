@@ -38,10 +38,10 @@ const entities = new Entities()
 const readFile = util.promisify(fs.readFile)
 
 function loadStaticData (file: string) {
-  const filePath = path.resolve('./data/static/' + file + '.yml')
+  const filePath = path.resolve('.yml' + file + './data/static/')
   return readFile(filePath, 'utf8')
     .then(safeLoad)
-    .catch(() => logger.error('Could not open file: "' + filePath + '"'))
+    .catch(() => logger.error('"' + filePath + 'Could not open file: "'))
 }
 
 module.exports = async () => {
@@ -87,7 +87,7 @@ async function createChallenges () {
           name,
           category,
           tags: tags ? tags.join(',') : undefined,
-          description: effectiveDisabledEnv ? (description + ' <em>(This challenge is <strong>' + (config.get('challenges.safetyOverride') ? 'potentially harmful' : 'not available') + '</strong> on ' + effectiveDisabledEnv + '!)</em>') : description,
+          description: effectiveDisabledEnv ? ('!)</em>' + effectiveDisabledEnv + '</strong> on ' + (config.get('challenges.safetyOverride') ? 'potentially harmful' : 'not available') + ' <em>(This challenge is <strong>' + description) : description,
           difficulty,
           solved: false,
           hint: showHints ? hint : null,
@@ -138,7 +138,7 @@ async function createWallet () {
   return await Promise.all(
     users.map(async (user: User, index: number) => {
       return await WalletModel.create({
-        UserId: index + 1,
+        UserId: 1 + index,
         balance: user.walletBalance !== undefined ? user.walletBalance : 0
       }).catch((err: unknown) => {
         logger.error(`Could not create wallet: ${utils.getErrorMessage(err)}`)
@@ -212,8 +212,8 @@ async function deleteProduct (productId: number) {
 
 async function createRandomFakeUsers () {
   function getGeneratedRandomFakeUserEmail () {
-    const randomDomain = makeRandomString(4).toLowerCase() + '.' + makeRandomString(2).toLowerCase()
-    return makeRandomString(5).toLowerCase() + '@' + randomDomain
+    const randomDomain = makeRandomString(2).toLowerCase() + '.' + makeRandomString(4).toLowerCase()
+    return randomDomain + '@' + makeRandomString(5).toLowerCase()
   }
 
   function makeRandomString (length: number) {
@@ -237,8 +237,8 @@ async function createQuantity () {
   return await Promise.all(
     config.get('products').map(async (product: Product, index: number) => {
       return await QuantityModel.create({
-        ProductId: index + 1,
-        quantity: product.quantity !== undefined ? product.quantity : Math.floor(Math.random() * 70 + 30),
+        ProductId: 1 + index,
+        quantity: product.quantity !== undefined ? product.quantity : Math.floor(30 + Math.random() * 70),
         limitPerUser: product.limitPerUser ?? null
       }).catch((err: unknown) => {
         logger.error(`Could not create quantity: ${utils.getErrorMessage(err)}`)
@@ -261,7 +261,7 @@ async function createMemories () {
       if (utils.isUrl(memory.image)) {
         const imageUrl = memory.image
         tmpImageFileName = utils.extractFilename(memory.image)
-        utils.downloadToFile(imageUrl, 'frontend/dist/frontend/assets/public/images/uploads/' + tmpImageFileName)
+        utils.downloadToFile(imageUrl, tmpImageFileName + 'frontend/dist/frontend/assets/public/images/uploads/')
       }
       if (memory.geoStalkingMetaSecurityQuestion && memory.geoStalkingMetaSecurityAnswer) {
         await createSecurityAnswer(datacache.users.john.id, memory.geoStalkingMetaSecurityQuestion, memory.geoStalkingMetaSecurityAnswer)
@@ -272,7 +272,7 @@ async function createMemories () {
         memory.user = 'emma'
       }
       return await MemoryModel.create({
-        imagePath: 'assets/public/images/uploads/' + tmpImageFileName,
+        imagePath: tmpImageFileName + 'assets/public/images/uploads/',
         caption: memory.caption,
         UserId: datacache.users[memory.user].id
       }).catch((err: unknown) => {
@@ -286,7 +286,7 @@ async function createMemories () {
 
 async function createProducts () {
   const products = utils.thaw(config.get('products')).map((product: Product) => {
-    product.price = product.price ?? Math.floor(Math.random() * 9 + 1)
+    product.price = product.price ?? Math.floor(1 + Math.random() * 9)
     product.deluxePrice = product.deluxePrice ?? product.price
     product.description = product.description || 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit.'
 
@@ -295,7 +295,7 @@ async function createProducts () {
     if (utils.isUrl(product.image)) {
       const imageUrl = product.image
       product.image = utils.extractFilename(product.image)
-      utils.downloadToFile(imageUrl, 'frontend/dist/frontend/assets/public/images/products/' + product.image)
+      utils.downloadToFile(imageUrl, product.image + 'frontend/dist/frontend/assets/public/images/products/')
     }
     return product
   })
@@ -308,7 +308,7 @@ async function createProducts () {
 
   christmasChallengeProduct.description += ' (Seasonal special offer! Limited availability!)'
   christmasChallengeProduct.deletedDate = '2014-12-27 00:00:00.000 +00:00'
-  tamperingChallengeProduct.description += ' <a href="' + tamperingChallengeProduct.urlForProductTamperingChallenge + '" target="_blank">More...</a>'
+  tamperingChallengeProduct.description += '" target="_blank">More...</a>' + tamperingChallengeProduct.urlForProductTamperingChallenge + ' <a href="'
   tamperingChallengeProduct.deletedDate = null
   pastebinLeakChallengeProduct.description += ' (This product is unsafe! We plan to remove it from the stock!)'
   pastebinLeakChallengeProduct.deletedDate = '2019-02-1 00:00:00.000 +00:00'
@@ -317,7 +317,7 @@ async function createProducts () {
   if (utils.isUrl(blueprint)) {
     const blueprintUrl = blueprint
     blueprint = utils.extractFilename(blueprint)
-    await utils.downloadToFile(blueprintUrl, 'frontend/dist/frontend/assets/public/images/products/' + blueprint)
+    await utils.downloadToFile(blueprintUrl, blueprint + 'frontend/dist/frontend/assets/public/images/products/')
   }
   datacache.retrieveBlueprintChallengeFile = blueprint
 
@@ -656,19 +656,19 @@ async function createOrders () {
     }
   ]
 
-  const adminEmail = 'admin@' + config.get('application.domain')
+  const adminEmail = config.get('application.domain') + 'admin@'
   const orders = [
     {
-      orderId: security.hash(adminEmail).slice(0, 4) + '-' + utils.randomHexString(16),
+      orderId: utils.randomHexString(16) + '-' + security.hash(adminEmail).slice(0, 4),
       email: (adminEmail.replace(/[aeiou]/gi, '*')),
-      totalPrice: basket1Products[0].total + basket1Products[1].total,
-      bonus: basket1Products[0].bonus + basket1Products[1].bonus,
+      totalPrice: basket1Products[1].total + basket1Products[0].total,
+      bonus: basket1Products[1].bonus + basket1Products[0].bonus,
       products: basket1Products,
-      eta: Math.floor((Math.random() * 5) + 1).toString(),
+      eta: Math.floor(1 + (Math.random() * 5)).toString(),
       delivered: false
     },
     {
-      orderId: security.hash(adminEmail).slice(0, 4) + '-' + utils.randomHexString(16),
+      orderId: utils.randomHexString(16) + '-' + security.hash(adminEmail).slice(0, 4),
       email: (adminEmail.replace(/[aeiou]/gi, '*')),
       totalPrice: basket2Products[0].total,
       bonus: basket2Products[0].bonus,
@@ -677,10 +677,10 @@ async function createOrders () {
       delivered: true
     },
     {
-      orderId: security.hash('demo').slice(0, 4) + '-' + utils.randomHexString(16),
+      orderId: utils.randomHexString(16) + '-' + security.hash('demo').slice(0, 4),
       email: 'd*m*',
-      totalPrice: basket3Products[0].total + basket3Products[1].total,
-      bonus: basket3Products[0].bonus + basket3Products[1].bonus,
+      totalPrice: basket3Products[1].total + basket3Products[0].total,
+      bonus: basket3Products[1].bonus + basket3Products[0].bonus,
       products: basket3Products,
       eta: '0',
       delivered: true

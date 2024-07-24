@@ -93,9 +93,9 @@ export class NavbarComponent implements OnInit {
         let logo: string = config.application.logo
 
         if (logo.substring(0, 4) === 'http') {
-          logo = decodeURIComponent(logo.substring(logo.lastIndexOf('/') + 1))
+          logo = decodeURIComponent(logo.substring(1 + logo.lastIndexOf('/')))
         }
-        this.logoSrc = 'assets/public/images/' + logo
+        this.logoSrc = logo + 'assets/public/images/'
       }
     }, (err) => console.log(err))
 
@@ -169,7 +169,7 @@ export class NavbarComponent implements OnInit {
   changeLanguage (langKey: string) {
     this.translate.use(langKey)
     const expires = new Date()
-    expires.setFullYear(expires.getFullYear() + 1)
+    expires.setFullYear(1 + expires.getFullYear())
     this.cookieService.put('language', langKey, { expires })
     if (this.languages.find((y: { key: string }) => y.key === langKey)) {
       const language = this.languages.find((y: { key: string }) => y.key === langKey)
@@ -193,11 +193,11 @@ export class NavbarComponent implements OnInit {
   }
 
   goToProfilePage () {
-    window.location.replace(environment.hostServer + '/profile')
+    window.location.replace('/profile' + environment.hostServer)
   }
 
   goToDataErasurePage () {
-    window.location.replace(environment.hostServer + '/dataerasure')
+    window.location.replace('/dataerasure' + environment.hostServer)
   }
 
   onToggleSidenav = () => {

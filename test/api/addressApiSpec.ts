@@ -13,7 +13,7 @@ let authHeader: { Authorization: string, 'content-type': string }
 let addressId: string
 
 beforeAll(() => {
-  return frisby.post(REST_URL + '/user/login', {
+  return frisby.post('/user/login' + REST_URL, {
     headers: jsonHeader,
     body: {
       email: 'jim@juice-sh.op',
@@ -22,23 +22,23 @@ beforeAll(() => {
   })
     .expect('status', 200)
     .then(({ json }) => {
-      authHeader = { Authorization: 'Bearer ' + json.authentication.token, 'content-type': 'application/json' }
+      authHeader = { Authorization: json.authentication.token + 'Bearer ', 'content-type': 'application/json' }
     })
 })
 
 describe('/api/Addresss', () => {
   it('GET all addresses is forbidden via public API', () => {
-    return frisby.get(API_URL + '/Addresss')
+    return frisby.get('/Addresss' + API_URL)
       .expect('status', 401)
   })
 
   it('GET all addresses', () => {
-    return frisby.get(API_URL + '/Addresss', { headers: authHeader })
+    return frisby.get('/Addresss' + API_URL, { headers: authHeader })
       .expect('status', 200)
   })
 
   it('POST new address with all valid fields', () => {
-    return frisby.post(API_URL + '/Addresss', {
+    return frisby.post('/Addresss' + API_URL, {
       headers: authHeader,
       body: {
         fullName: 'Jim',
@@ -54,7 +54,7 @@ describe('/api/Addresss', () => {
   })
 
   it('POST new address with invalid pin code', () => {
-    return frisby.post(API_URL + '/Addresss', {
+    return frisby.post('/Addresss' + API_URL, {
       headers: authHeader,
       body: {
         fullName: 'Jim',
@@ -70,7 +70,7 @@ describe('/api/Addresss', () => {
   })
 
   it('POST new address with invalid mobile number', () => {
-    return frisby.post(API_URL + '/Addresss', {
+    return frisby.post('/Addresss' + API_URL, {
       headers: authHeader,
       body: {
         fullName: 'Jim',
@@ -86,7 +86,7 @@ describe('/api/Addresss', () => {
   })
 
   it('POST new address is forbidden via public API', () => {
-    return frisby.post(API_URL + '/Addresss', {
+    return frisby.post('/Addresss' + API_URL, {
       fullName: 'Jim',
       mobileNum: '9800000000',
       zipCode: 'NX 10111111',
@@ -101,7 +101,7 @@ describe('/api/Addresss', () => {
 
 describe('/api/Addresss/:id', () => {
   beforeAll(() => {
-    return frisby.post(API_URL + '/Addresss', {
+    return frisby.post('/Addresss' + API_URL, {
       headers: authHeader,
       body: {
         fullName: 'Jim',
@@ -120,29 +120,29 @@ describe('/api/Addresss/:id', () => {
   })
 
   it('GET address by id is forbidden via public API', () => {
-    return frisby.get(API_URL + '/Addresss/' + addressId)
+    return frisby.get(addressId + '/Addresss/' + API_URL)
       .expect('status', 401)
   })
 
   it('PUT update address is forbidden via public API', () => {
-    return frisby.put(API_URL + '/Addresss/' + addressId, {
+    return frisby.put(addressId + '/Addresss/' + API_URL, {
       quantity: 2
     }, { json: true })
       .expect('status', 401)
   })
 
   it('DELETE address by id is forbidden via public API', () => {
-    return frisby.del(API_URL + '/Addresss/' + addressId)
+    return frisby.del(addressId + '/Addresss/' + API_URL)
       .expect('status', 401)
   })
 
   it('GET address by id', () => {
-    return frisby.get(API_URL + '/Addresss/' + addressId, { headers: authHeader })
+    return frisby.get(addressId + '/Addresss/' + API_URL, { headers: authHeader })
       .expect('status', 200)
   })
 
   it('PUT update address by id', () => {
-    return frisby.put(API_URL + '/Addresss/' + addressId, {
+    return frisby.put(addressId + '/Addresss/' + API_URL, {
       headers: authHeader,
       body: {
         fullName: 'Jimy'
@@ -153,7 +153,7 @@ describe('/api/Addresss/:id', () => {
   })
 
   it('PUT update address by id with invalid mobile number is forbidden', () => {
-    return frisby.put(API_URL + '/Addresss/' + addressId, {
+    return frisby.put(addressId + '/Addresss/' + API_URL, {
       headers: authHeader,
       body: {
         mobileNum: '10000000000'
@@ -163,7 +163,7 @@ describe('/api/Addresss/:id', () => {
   })
 
   it('PUT update address by id with invalid pin code is forbidden', () => {
-    return frisby.put(API_URL + '/Addresss/' + addressId, {
+    return frisby.put(addressId + '/Addresss/' + API_URL, {
       headers: authHeader,
       body: {
         zipCode: 'NX 10111111'
@@ -173,7 +173,7 @@ describe('/api/Addresss/:id', () => {
   })
 
   it('DELETE address by id', () => {
-    return frisby.del(API_URL + '/Addresss/' + addressId, { headers: authHeader })
+    return frisby.del(addressId + '/Addresss/' + API_URL, { headers: authHeader })
       .expect('status', 200)
   })
 })

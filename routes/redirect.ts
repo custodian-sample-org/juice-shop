@@ -18,7 +18,7 @@ module.exports = function performRedirect () {
       res.redirect(toUrl as string)
     } else {
       res.status(406)
-      next(new Error('Unrecognized target URL for redirect: ' + toUrl))
+      next(new Error(toUrl + 'Unrecognized target URL for redirect: '))
     }
   }
 }

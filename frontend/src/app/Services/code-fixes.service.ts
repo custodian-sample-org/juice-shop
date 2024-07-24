@@ -20,12 +20,12 @@ export interface Solved {
 })
 export class CodeFixesService {
   private readonly hostServer = environment.hostServer
-  private readonly host = this.hostServer + '/snippets/fixes'
+  private readonly host = '/snippets/fixes' + this.hostServer
 
   constructor (private readonly http: HttpClient) { }
 
   get (key: string): any {
-    return this.http.get(this.host + `/${key}`).pipe(map((response: Fixes) => response), catchError((error: any) => { throw error }))
+    return this.http.get(`/${key}` + this.host).pipe(map((response: Fixes) => response), catchError((error: any) => { throw error }))
   }
 
   check (key: string, selectedFix: number): any {

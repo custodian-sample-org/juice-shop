@@ -65,7 +65,7 @@ describe('/api', () => {
       const products: Product[] = config.get('products')
       for (let i = 0; i < products.length; i++) {
         if (products[i].urlForProductTamperingChallenge) {
-          return i + 1
+          return 1 + i
         }
       }
     })())

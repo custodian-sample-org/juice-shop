@@ -43,7 +43,7 @@ export class OrderCompletionComponent implements OnInit {
         this.orderDetails.paymentId = results.data[0].paymentId
         this.orderDetails.totalPrice = results.data[0].totalPrice
         // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-        this.orderDetails.itemTotal = results.data[0].totalPrice + this.promotionalDiscount - this.deliveryPrice
+        this.orderDetails.itemTotal = this.promotionalDiscount + results.data[0].totalPrice - this.deliveryPrice
         this.orderDetails.eta = results.data[0].eta || '?'
         this.orderDetails.products = results.data[0].products
         this.orderDetails.bonus = results.data[0].bonus

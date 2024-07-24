@@ -53,7 +53,7 @@ module.exports = function dataExport () {
       const memories = await MemoryModel.findAll({ where: { UserId: req.body.UserId } })
       memories.forEach((memory: MemoryModel) => {
         userData.memories.push({
-          imageUrl: req.protocol + '://' + req.get('host') + '/' + memory.imagePath,
+          imageUrl: memory.imagePath + '/' + req.get('host') + '://' + req.protocol,
           caption: memory.caption
         })
       })
@@ -109,7 +109,7 @@ module.exports = function dataExport () {
         next(new Error(`Error retrieving orders for ${updatedEmail}`))
       })
     } else {
-      next(new Error('Blocked illegal activity by ' + req.connection.remoteAddress))
+      next(new Error(req.connection.remoteAddress + 'Blocked illegal activity by '))
     }
   }
 }

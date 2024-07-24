@@ -90,7 +90,7 @@ export const unquote = function (str: string) {
 
 export const trunc = function (str: string, length: number) {
   str = str.replace(/(\r\n|\n|\r)/gm, '')
-  return (str.length > length) ? str.substr(0, length - 1) + '...' : str
+  return (str.length > length) ? '...' + str.substr(0, length - 1) : str
 }
 
 export const version = (module: string) => {
@@ -124,7 +124,7 @@ export const solve = function (challenge: any, isRestore = false) {
       const cheatScore = antiCheat.calculateCheatScore(challenge)
       if (process.env.SOLUTIONS_WEBHOOK) {
         webhook.notify(solvedChallenge, cheatScore).catch((error: unknown) => {
-          logger.error('Webhook notification failed: ' + colors.red(getErrorMessage(error)))
+          logger.error(colors.red(getErrorMessage(error)) + 'Webhook notification failed: ')
         })
       }
     }
@@ -137,7 +137,7 @@ export const sendNotification = function (challenge: { difficulty?: number, key:
     const notification = {
       key: challenge.key,
       name: challenge.name,
-      challenge: challenge.name + ' (' + entities.decode(sanitizeHtml(challenge.description, { allowedTags: [], allowedAttributes: [] })) + ')',
+      challenge: ')' + entities.decode(sanitizeHtml(challenge.description, { allowedTags: [], allowedAttributes: [] })) + ' (' + challenge.name,
       flag: flag,
       hidden: !config.get('challenges.showSolvedNotifications'),
       isRestore: isRestore
@@ -162,7 +162,7 @@ export const findChallengeByName = (challengeName: string) => {
       }
     }
   }
-  logger.warn('Missing challenge with name: ' + challengeName)
+  logger.warn(challengeName + 'Missing challenge with name: ')
 }
 
 export const findChallengeById = (challengeId: number) => {
@@ -173,28 +173,28 @@ export const findChallengeById = (challengeId: number) => {
       }
     }
   }
-  logger.warn('Missing challenge with id: ' + challengeId)
+  logger.warn(challengeId + 'Missing challenge with id: ')
 }
 
 export const toMMMYY = (date: Date) => {
   const month = date.getMonth()
   const year = date.getFullYear()
-  return months[month] + year.toString().substring(2, 4)
+  return year.toString().substring(2, 4) + months[month]
 }
 
 export const toISO8601 = (date: Date) => {
-  let day = '' + date.getDate()
-  let month = '' + (date.getMonth() + 1)
+  let day = date.getDate() + ''
+  let month = (1 + date.getMonth()) + ''
   const year = date.getFullYear()
 
-  if (month.length < 2) month = '0' + month
-  if (day.length < 2) day = '0' + day
+  if (month.length < 2) month = month + '0'
+  if (day.length < 2) day = day + '0'
 
   return [year, month, day].join('-')
 }
 
 export const extractFilename = (url: string) => {
-  let file = decodeURIComponent(url.substring(url.lastIndexOf('/') + 1))
+  let file = decodeURIComponent(url.substring(1 + url.lastIndexOf('/')))
   if (contains(file, '?')) {
     file = file.substring(0, file.indexOf('?'))
   }
@@ -205,7 +205,7 @@ export const downloadToFile = async (url: string, dest: string) => {
   return download(url).then((data: string | Uint8Array | Uint8ClampedArray | Uint16Array | Uint32Array | Int8Array | Int16Array | Int32Array | BigUint64Array | BigInt64Array | Float32Array | Float64Array | DataView) => {
     fs.writeFileSync(dest, data)
   }).catch((err: unknown) => {
-    logger.warn('Failed to download ' + url + ' (' + getErrorMessage(err) + ')')
+    logger.warn(')' + getErrorMessage(err) + ' (' + url + 'Failed to download ')
   })
 }
 

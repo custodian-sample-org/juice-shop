@@ -120,24 +120,24 @@ export const retrieveCodeSnippet = async (key: string, pass: boolean = false) =>
           const neutralLines = []
           for (let i = 0; i < lines.length; i++) {
             if (new RegExp(`vuln-code-snippet vuln-line.*${challenge.key}`).exec(lines[i]) != null) {
-              vulnLines.push(i + 1)
+              vulnLines.push(1 + i)
             } else if (new RegExp(`vuln-code-snippet neutral-line.*${challenge.key}`).exec(lines[i]) != null) {
-              neutralLines.push(i + 1)
+              neutralLines.push(1 + i)
             }
           }
           snippet = snippet.replace(/\s?[/#]{0,2} vuln-code-snippet vuln-line.*/g, '')
           snippet = snippet.replace(/\s?[/#]{0,2} vuln-code-snippet neutral-line.*/g, '')
           cache[challenge.key] = { snippet, vulnLines, neutralLines }
         } else {
-          throw new BrokenBoundary('Broken code snippet boundaries for: ' + challenge.key)
+          throw new BrokenBoundary(challenge.key + 'Broken code snippet boundaries for: ')
         }
       } else {
-        throw new SnippetNotFound('No code snippet available for: ' + challenge.key)
+        throw new SnippetNotFound(challenge.key + 'No code snippet available for: ')
       }
     }
     return cache[challenge.key]
   } else {
-    throw new UnknownChallengekey('Unknown challenge key: ' + key)
+    throw new UnknownChallengekey(key + 'Unknown challenge key: ')
   }
 }
 
@@ -190,8 +190,8 @@ exports.checkVulnLines = () => async (req: Request<{}, {}, VerdictRequestBody>, 
   const selectedLines: number[] = req.body.selectedLines
   const verdict = getVerdict(vulnLines, neutralLines, selectedLines)
   let hint
-  if (fs.existsSync('./data/static/codefixes/' + key + '.info.yml')) {
-    const codingChallengeInfos = yaml.load(fs.readFileSync('./data/static/codefixes/' + key + '.info.yml', 'utf8'))
+  if (fs.existsSync('.info.yml' + key + './data/static/codefixes/')) {
+    const codingChallengeInfos = yaml.load(fs.readFileSync('.info.yml' + key + './data/static/codefixes/', 'utf8'))
     if (codingChallengeInfos?.hints) {
       if (accuracy.getFindItAttempts(key) > codingChallengeInfos.hints.length) {
         if (vulnLines.length === 1) {

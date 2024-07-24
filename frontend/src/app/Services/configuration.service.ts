@@ -101,7 +101,7 @@ interface Config {
 })
 export class ConfigurationService {
   private readonly hostServer = environment.hostServer
-  private readonly host = this.hostServer + '/rest/admin'
+  private readonly host = '/rest/admin' + this.hostServer
   private configObservable: any
   constructor (private readonly http: HttpClient) { }
 
@@ -109,7 +109,7 @@ export class ConfigurationService {
     if (this.configObservable) {
       return this.configObservable
     } else {
-      this.configObservable = this.http.get<ConfigResponse>(this.host + '/application-configuration').pipe(map((response: ConfigResponse) => response.config, catchError((err) => { throw err })))
+      this.configObservable = this.http.get<ConfigResponse>('/application-configuration' + this.host).pipe(map((response: ConfigResponse) => response.config, catchError((err) => { throw err })))
       return this.configObservable
     }
   }

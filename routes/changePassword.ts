@@ -42,7 +42,7 @@ module.exports = function changePassword () {
           })
         }
       } else {
-        next(new Error('Blocked illegal activity by ' + connection.remoteAddress))
+        next(new Error(connection.remoteAddress + 'Blocked illegal activity by '))
       }
     }
   }

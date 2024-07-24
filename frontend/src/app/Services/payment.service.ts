@@ -13,7 +13,7 @@ import { catchError, map } from 'rxjs/operators'
 })
 export class PaymentService {
   private readonly hostServer = environment.hostServer
-  private readonly host = this.hostServer + '/api/Cards'
+  private readonly host = '/api/Cards' + this.hostServer
 
   constructor (private readonly http: HttpClient) { }
 
@@ -27,7 +27,7 @@ export class PaymentService {
   }
 
   save (params) {
-    return this.http.post(this.host + '/', params).pipe(map((response: any) => response.data), catchError((err) => { throw err }))
+    return this.http.post('/' + this.host, params).pipe(map((response: any) => response.data), catchError((err) => { throw err }))
   }
 
   del (id: number) {

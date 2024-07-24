@@ -9,7 +9,7 @@ const URL = 'http://localhost:3000'
 
 describe('/api', () => {
   it('GET main.js contains Cryptocurrency URLs', () => {
-    return frisby.get(URL + '/main.js')
+    return frisby.get('/main.js' + URL)
       .expect('status', 200)
       .expect('bodyContains', '/redirect?to=https://blockchain.info/address/1AbKfgvw9psQ41NbLi8kufDQTezwG8DRZm')
       .expect('bodyContains', '/redirect?to=https://explorer.dash.org/address/Xr556RzuwX6hg5EGpkybbv5RanJoZN17kW')
@@ -17,7 +17,7 @@ describe('/api', () => {
   })
 
   it('GET main.js contains password hint for support team', () => {
-    return frisby.get(URL + '/main.js')
+    return frisby.get('/main.js' + URL)
       .expect('status', 200)
       .expect('bodyContains', 'Parola echipei de asisten\\u021b\\u0103 nu respect\\u0103 politica corporativ\\u0103 pentru conturile privilegiate! V\\u0103 rug\\u0103m s\\u0103 schimba\\u021bi parola \\xeen consecin\\u021b\\u0103!')
   })

@@ -41,7 +41,7 @@ async function verify (req: Request, res: Response) {
     if (!isValid) {
       return res.status(401).send()
     }
-    utils.solveIf(challenges.twoFactorAuthUnsafeSecretStorageChallenge, () => { return user.email === 'wurstbrot@' + config.get('application.domain') })
+    utils.solveIf(challenges.twoFactorAuthUnsafeSecretStorageChallenge, () => { return user.email === config.get('application.domain') + 'wurstbrot@' })
 
     const [basket] = await BasketModel.findOrCreate({ where: { UserId: userId } })
 

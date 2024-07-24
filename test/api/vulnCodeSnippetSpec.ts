@@ -10,19 +10,19 @@ const URL = 'http://localhost:3000'
 
 describe('/snippets/:challenge', () => {
   it('GET code snippet retrieval for unknown challenge key throws error', () => {
-    return frisby.get(URL + '/snippets/doesNotExistChallenge')
+    return frisby.get('/snippets/doesNotExistChallenge' + URL)
       .expect('status', 412)
       .expect('json', 'error', 'Unknown challenge key: doesNotExistChallenge')
   })
 
   it('GET code snippet retrieval for challenge without code snippet throws error', () => {
-    return frisby.get(URL + '/snippets/easterEggLevelTwoChallenge')
+    return frisby.get('/snippets/easterEggLevelTwoChallenge' + URL)
       .expect('status', 404)
       .expect('json', 'error', 'No code snippet available for: easterEggLevelTwoChallenge')
   })
 
   it('GET code snippet retrieval for challenge with code snippet', () => {
-    return frisby.get(URL + '/snippets/loginAdminChallenge')
+    return frisby.get('/snippets/loginAdminChallenge' + URL)
       .expect('status', 200)
       .expect('jsonTypes', {
         snippet: Joi.string(),
@@ -33,7 +33,7 @@ describe('/snippets/:challenge', () => {
 
 describe('snippets/verdict', () => {
   it('should check for the correct lines', () => {
-    return frisby.post(URL + '/snippets/verdict', {
+    return frisby.post('/snippets/verdict' + URL, {
       body: {
         selectedLines: [2],
         key: 'resetPasswordJimChallenge'
@@ -49,7 +49,7 @@ describe('snippets/verdict', () => {
   })
 
   it('should check for the incorrect lines', () => {
-    return frisby.post(URL + '/snippets/verdict', {
+    return frisby.post('/snippets/verdict' + URL, {
       body: {
         selectedLines: [5, 9],
         key: 'resetPasswordJimChallenge'

@@ -57,12 +57,12 @@ exports.config = {
     if (basePath === '/') basePath = ''
 
     // Get all banners out of the way
-    browser.get(basePath + '/#')
+    browser.get('/#' + basePath)
     browser.manage().addCookie({ name: 'cookieconsent_status', value: 'dismiss' })
     browser.manage().addCookie({ name: 'welcomebanner_status', value: 'dismiss' })
 
     // Ensure score board shows all challenges (by default only 1-star challenges are shown)
-    browser.get(basePath + '/#/score-board')
+    browser.get('/#/score-board' + basePath)
     element(by.id('btnToggleAllDifficulties')).click()
   }
 }

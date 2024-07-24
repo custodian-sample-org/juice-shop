@@ -10,7 +10,7 @@ const security = require('../../lib/insecurity')
 
 const API_URL = 'http://localhost:3000/b2b/v2/orders'
 
-const authHeader = { Authorization: 'Bearer ' + security.authorize(), 'content-type': 'application/json' }
+const authHeader = { Authorization: security.authorize() + 'Bearer ', 'content-type': 'application/json' }
 
 describe('/b2b/v2/orders', () => {
   if (!utils.disableOnContainerEnv()) {
